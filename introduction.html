@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction — Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .part-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--seafoam);
+      margin-bottom: 0.3rem;
+    }
+
+    .definition {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .letter-body {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--ink);
+      margin-bottom: 2rem;
+    }
+
+    /* ── Privacy notice ── */
+    .privacy-notice {
+      background: rgba(143,188,176,0.08);
+      border: 1px solid rgba(143,188,176,0.3);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0 2rem;
+    }
+    .privacy-notice-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--seafoam);
+      margin-bottom: 0.75rem;
+    }
+    .privacy-notice p {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--ink);
+      margin: 0 0 0.65rem;
+    }
+    .privacy-notice p:last-child { margin-bottom: 0; }
+    .privacy-notice ul {
+      margin: 0.5rem 0 0.65rem 1.25rem;
+      padding: 0;
+      font-size: 0.85rem;
+      color: var(--ink);
+      line-height: 1.75;
+    }
+
+    /* ── Tips list ── */
+    .tips-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem;
+    }
+    .tips-list li {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--sand-dark);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .tips-list li:last-child { border-bottom: none; }
+
+    /* ── What's inside ── */
+    .contents-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2.5rem;
+      counter-reset: part;
+    }
+    .contents-list li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--sand-dark);
+      counter-increment: part;
+    }
+    .contents-list li:last-child { border-bottom: none; }
+    .contents-list .part-num {
+      flex-shrink: 0;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      background: var(--seafoam);
+      color: var(--white);
+      font-size: 0.78rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.1rem;
+    }
+    .contents-list .part-body { flex: 1; }
+    .contents-list .part-title {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--ocean);
+      margin-bottom: 0.2rem;
+    }
+    .contents-list .part-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="part-label">Welcome</div>
+    <h1 class="page-title">A letter from Drew &amp; Giuli</h1>
+
+    <p class="definition">
+      <em>Relationship</em> &nbsp;/rɪˈleɪʃnʃɪp/ &nbsp;noun<br>
+      the way in which two or more people or things are connected, or the state of being connected.
+    </p>
+
+    <div class="letter-body">
+      <p>Hi,</p>
+      <p>
+        The tools we are sharing here have been instrumental in developing and enriching our relationship from the very start. As we discussed these concepts with friends and family, their curiosity and desire to learn more inspired us to create a relationship development programme.
+      </p>
+      <p>
+        We developed this with you, our friends, in mind. We sincerely hope these tools prove as fruitful and enriching for your relationships as they have been for us.
+      </p>
+      <p>
+        This is a brief, practical sample of a more in-depth programme we are currently building. We would like to offer you this excerpt for free. In exchange, we request that you take notes of your practice throughout and invite you for a 30-minute feedback call to hear your thoughts, ideas, and outcomes with these tools. Your insights will be invaluable as we inform the next phase of development.
+      </p>
+      <p>
+        We are so grateful to have you in our lives and are excited at the opportunity to contribute to many happy relationships around us. You are free to contact us by phone or email if you have any questions throughout, our inboxes are open.
+      </p>
+      <p>With love,<br><em>Drew and Giuli</em></p>
+    </div>
+
+    <!-- ── Section: Before you begin ── -->
+    <h2 class="section-heading">Before you begin, a gentle note:</h2>
+
+    <ul class="tips-list">
+      <li><em><strong>Make it yours.</strong></em> Rephrase things as you wish, use the vocabulary that you use in your relationship.</li>
+      <li><em><strong>Pace yourself.</strong></em> This programme is designed to be worked through at your own pace. There is no rush. Pause, go make dinner, enjoy a coffee, and come back whenever it feels right. Make sure you either download your reflections using the dedicated buttons or take notes on paper as the session expires every time you move to a new page. You might want to consider agreeing as a couple on a timeline to complete the modules as this can help memory and maintain energy. We leave that entirely up to you.</li>
+      <li><em><strong>Take your time.</strong></em> Suggested timings are a guide, not a rule. Pause and come back, another day or another week is perfectly fine.</li>
+      <li><em><strong>Read first, then do.</strong></em> Before starting an activity, read the steps together so you both have a shared understanding of what you're about to do.</li>
+      <li><em><strong>One device or two?</strong></em> Most activities can be done on a shared device together, or each on your own device separately, choose what works for you.</li>
+    </ul>
+
+    <!-- ── Privacy notice ── -->
+    <div class="privacy-notice">
+      <div class="privacy-notice-title">🔒 A NOTE ON YOUR PRIVACY</div>
+      <p>
+        We want to be direct with you about how this programme handles your information. Because what you share here is personal, and you deserve to know it stays private. What this programme does and doesn't collect:
+      </p>
+      <ul>
+        <li><strong>Names (optional):</strong> If you choose to enter your names on the home screen, they are stored only in your browser's session memory. They are never sent to us, never saved to any database, and disappear completely when you close the tab.</li>
+        <li><strong>Notes and reflections:</strong> Any notes you write inside the exercises exist only on your device. They are not transmitted anywhere. Only you can access or download them. Once you refresh or move to the next page this information disappears.</li>
+        <li><strong>Feedback form:</strong> If you choose to submit the feedback form, your responses are collected securely via Netlify Forms and stored on Netlify's servers. This is the only data we receive from you, and it is used solely to improve the programme. Netlify processes this data in accordance with their privacy policy.</li>
+        <li><strong>No tracking:</strong> This programme does not use advertising trackers, analytics cookies, or third-party data tools.</li>
+      </ul>
+      <p>
+        If you have any questions about how your information is handled, please reach out to Drew &amp; Giuli directly.
+      </p>
+    </div>
+
+    <!-- ── Section: What's inside ── -->
+    <h2 class="section-heading">What's inside</h2>
+
+    <ol class="contents-list">
+      <li>
+        <div class="part-num">1</div>
+        <div class="part-body">
+          <div class="part-title">Relationship Snapshot</div>
+          <div class="part-desc">Use the Wheel of Life to see where you each are right now, your satisfactions, your hopes, and where your lives overlap. <em>~50 minutes</em></div>
+        </div>
+      </li>
+      <li>
+        <div class="part-num">2</div>
+        <div class="part-body">
+          <div class="part-title">Relationship Alliance</div>
+          <div class="part-desc">Define the culture and principles of your relationship together, how you want to be with each other, especially when things get difficult. <em>~30–60 minutes</em></div>
+        </div>
+      </li>
+      <li>
+        <div class="part-num">3</div>
+        <div class="part-body">
+          <div class="part-title">Co-Dreaming</div>
+          <div class="part-desc">Explore your shared future, your hopes, your direction, and what a life together really looks like for both of you. <em>~1–2 hours</em></div>
+        </div>
+      </li>
+    </ol>
+
+    <a href="module-1.html" class="btn btn-primary">Begin Part 1 →</a>
+
+    <div style="margin-top: 1.5rem;">
+      <a href="index.html" class="back-link">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew &amp; Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script>
+    // Show personalised welcome if names were set on homepage
+    const nameA = sessionStorage.getItem('nameA') || '';
+    const nameB = sessionStorage.getItem('nameB') || '';
+    if (nameA || nameB) {
+      const names = [nameA, nameB].filter(Boolean).join(' & ');
+      const header = document.querySelector('.part-label');
+      if (header) header.textContent = 'Welcome, ' + names;
+    }
+  </script>
+</body>
+</html>

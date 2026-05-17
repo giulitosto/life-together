@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback — Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .part-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--seafoam);
+      margin-bottom: 0.3rem;
+    }
+
+    /* ── Form layout ── */
+    .feedback-form {
+      margin-top: 2rem;
+    }
+
+    .q-block {
+      margin-bottom: 2rem;
+    }
+
+    .q-number {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--seafoam);
+      margin-bottom: 0.25rem;
+    }
+
+    .q-label {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--ocean);
+      margin-bottom: 0.6rem;
+      line-height: 1.5;
+    }
+
+    .q-hint {
+      font-size: 0.78rem;
+      color: #aaa;
+      margin-bottom: 0.6rem;
+    }
+
+    /* Sliders */
+    .slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .slider-wrap input[type="range"] {
+      flex: 1;
+      accent-color: var(--seafoam);
+      height: 4px;
+      cursor: pointer;
+    }
+    .slider-value {
+      min-width: 2rem;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--seafoam);
+    }
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: #bbb;
+      margin-top: 0.3rem;
+    }
+
+    /* Selects */
+    select.q-select {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      color: var(--ink);
+      background: var(--sand);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='7' viewBox='0 0 12 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238FBCB0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      cursor: pointer;
+    }
+    select.q-select:focus {
+      outline: none;
+      border-color: var(--seafoam);
+    }
+
+    /* Textareas */
+    textarea.q-textarea {
+      width: 100%;
+      min-height: 96px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-family: inherit;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--sand);
+      resize: vertical;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+    textarea.q-textarea:focus {
+      outline: none;
+      border-color: var(--seafoam);
+      background: #fff;
+    }
+    textarea.q-textarea::placeholder { color: #ccc; }
+
+    /* Fieldset reset */
+    .q-fieldset {
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+    .q-fieldset .q-label { display: block; }
+
+    /* Checkboxes */
+    .checkbox-group { display: flex; flex-direction: column; gap: 0.6rem; }
+    .checkbox-group label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--ink);
+      cursor: pointer;
+      line-height: 1.4;
+    }
+    .checkbox-group input[type="checkbox"] {
+      accent-color: var(--seafoam);
+      margin-top: 0.15rem;
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* Divider */
+    .q-divider {
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 0 0 2rem;
+    }
+
+    /* Submit button */
+    .btn-submit {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: #8FBCB0;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.92rem;
+      letter-spacing: 0.03em;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+    .btn-submit:hover { background: #7aada0; }
+    .btn-submit:disabled { background: #ccc; cursor: default; }
+
+    /* ── Thank you state ── */
+    #thank-you {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+    #thank-you .ty-icon { font-size: 2rem; margin-bottom: 1rem; }
+    #thank-you h2 { font-size: 1.4rem; margin-bottom: 0.75rem; color: #1a1a1a; }
+    #thank-you p { font-size: 0.92rem; color: #666; line-height: 1.7; }
+
+    /* Error message */
+    .form-error {
+      display: none;
+      font-size: 0.85rem;
+      color: #c0392b;
+      margin-top: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="part-label">Feedback</div>
+    <h1 class="page-title">Share your experience</h1>
+
+    <p class="prose">
+      Thank you for working through this programme with us. Your honest reflections are genuinely invaluable — they will directly shape the next phase of what we're building. This takes just a few minutes.
+    </p>
+
+    <!-- ══ FORM — Netlify Forms enabled ══ -->
+    <!-- data-netlify="true" tells Netlify to collect submissions automatically -->
+    <form
+      name="feedback"
+      id="feedback-form"
+      class="feedback-form"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+    >
+      <!-- Required hidden fields for Netlify -->
+      <input type="hidden" name="form-name" value="feedback">
+      <!-- Honeypot spam filter — hidden from real users -->
+      <p style="display:none;">
+        <label>Don't fill this in: <input name="bot-field"></label>
+      </p>
+
+      <!-- Q1: Overall rating -->
+      <div class="q-block">
+        <div class="q-number">Question 1</div>
+        <div class="q-label">How would you rate your overall experience of the programme?</div>
+        <div class="q-hint">1 = not valuable at all &nbsp;·&nbsp; 10 = incredibly valuable</div>
+        <div class="slider-wrap">
+          <span style="font-size:0.78rem; color:#bbb;">Not valuable</span>
+          <input type="range" name="overall-rating" id="slider-1" min="1" max="10" value="7"
+            oninput="document.getElementById('val-1').textContent = this.value">
+          <span class="slider-value" id="val-1">7</span>
+          <span style="font-size:0.78rem; color:#bbb;">Incredibly valuable</span>
+        </div>
+      </div>
+
+      <hr class="q-divider">
+
+      <!-- Q2: Which part resonated -->
+      <div class="q-block">
+        <div class="q-number">Question 2</div>
+        <div class="q-label">Which part of the programme resonated with you most?</div>
+        <select name="resonated-most" class="q-select">
+          <option value="" disabled selected>Select one…</option>
+          <option>Part 1 — Relationship Snapshot (Wheel of Life)</option>
+          <option>Part 2 — Relationship Alliance</option>
+          <option>Part 3 — Co-Dreaming</option>
+          <option>All parts equally</option>
+        </select>
+      </div>
+
+      <hr class="q-divider">
+
+      <!-- Q3: Most useful -->
+      <div class="q-block">
+        <div class="q-number">Question 3</div>
+        <div class="q-label">What was most useful or meaningful about the experience?</div>
+        <textarea name="most-useful" class="q-textarea" placeholder="Share whatever comes to mind…"></textarea>
+      </div>
+
+      <hr class="q-divider">
+
+      <!-- Q4: Improvements -->
+      <div class="q-block">
+        <div class="q-number">Question 4</div>
+        <div class="q-label">What could be improved, clarified or added?</div>
+        <textarea name="improvements" class="q-textarea" placeholder="Your honest thoughts help us shape what comes next…"></textarea>
+      </div>
+
+      <hr class="q-divider">
+
+      <!-- Q5: Shifts or insights -->
+      <div class="q-block">
+        <div class="q-number">Question 5</div>
+        <div class="q-label">Did working through this programme create any shifts or insights for you as a couple?</div>
+        <textarea name="shifts-insights" class="q-textarea" placeholder="Big or small — all reflections welcome…"></textarea>
+      </div>
+
+      <hr class="q-divider">
+
+      <!-- Q6: Pacing -->
+      <div class="q-block">
+        <div class="q-number">Question 6</div>
+        <div class="q-label">How did the pacing and timing feel?</div>
+        <select name="pacing" class="q-select">
+          <option value="" disabled selected>Select one…</option>
+          <option>Too short — we wanted more</option>
+          <option>Just right</option>
+          <option>A bit long in places</option>
+          <option>Too long overall</option>
+        </select>
+      </div>
+
+      <hr class="q-divider">
+
+      <!-- Q7: Recommend -->
+      <div class="q-block">
+        <div class="q-number">Question 7</div>
+        <div class="q-label">How likely are you to recommend something like this to a friend?</div>
+        <div class="q-hint">1 = not at all likely &nbsp;·&nbsp; 10 = absolutely</div>
+        <div class="slider-wrap">
+          <span style="font-size:0.78rem; color:#bbb;">Not likely</span>
+          <input type="range" name="recommend-rating" id="slider-7" min="1" max="10" value="8"
+            oninput="document.getElementById('val-7').textContent = this.value">
+          <span class="slider-value" id="val-7">8</span>
+          <span style="font-size:0.78rem; color:#bbb;">Absolutely</span>
+        </div>
+      </div>
+
+      <hr class="q-divider">
+
+      <!-- Q8: Fuller programme -->
+      <div class="q-block">
+        <div class="q-number">Question 8</div>
+        <div class="q-label">Would you be interested in a fuller version of this programme?</div>
+        <select name="fuller-programme" class="q-select">
+          <option value="" disabled selected>Select one…</option>
+          <option>Yes, definitely</option>
+          <option>Yes, possibly</option>
+          <option>Not sure yet</option>
+          <option>Probably not</option>
+        </select>
+      </div>
+
+      <hr class="q-divider">
+
+      <!-- Q9: Format preference -->
+      <div class="q-block">
+        <div class="q-number">Question 9</div>
+        <fieldset class="q-fieldset">
+          <legend class="q-label">What format would you prefer for a fuller programme? <span style="font-weight:400; color:#aaa;">(select all that apply)</span></legend>
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" name="format-self-guided" value="Self-guided (work at your own pace)">
+              Self-guided (like this — work at your own pace)
+            </label>
+            <label>
+              <input type="checkbox" name="format-facilitated" value="Facilitated sessions with Drew & Giuli">
+              Facilitated sessions with Drew &amp; Giuli
+            </label>
+            <label>
+              <input type="checkbox" name="format-group" value="Group workshop with other couples">
+              Group workshop with other couples
+            </label>
+            <label>
+              <input type="checkbox" name="format-mixed" value="A mix of self-guided and live sessions">
+              A mix of self-guided and live sessions
+            </label>
+          </div>
+        </fieldset>
+      </div>
+
+      <hr class="q-divider">
+
+      <!-- Q10: Anything else -->
+      <div class="q-block">
+        <div class="q-number">Question 10</div>
+        <div class="q-label">Anything else you'd like to share?</div>
+        <textarea name="anything-else" class="q-textarea" placeholder="The floor is yours…"></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submit-btn">Submit feedback</button>
+      <p class="form-error" id="form-error">Something went wrong. Please try again or email us directly.</p>
+
+    </form>
+
+    <!-- ── Thank you message (shown after successful submission) ── -->
+    <div id="thank-you">
+      <div class="ty-icon">✦</div>
+      <h2>Thank you</h2>
+      <p>
+        Your feedback has been received and means the world to us.<br>
+        Drew &amp; Giuli will be in touch to arrange your 30-minute call.
+      </p>
+      <a href="index.html" class="back-link" style="display:inline-block; margin-top:1.5rem;">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew &amp; Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script>
+    const form   = document.getElementById('feedback-form');
+    const btn    = document.getElementById('submit-btn');
+    const tyDiv  = document.getElementById('thank-you');
+    const errMsg = document.getElementById('form-error');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      btn.disabled    = true;
+      btn.textContent = 'Sending…';
+      errMsg.style.display = 'none';
+
+      fetch(window.location.pathname, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body:    new URLSearchParams(new FormData(form)).toString()
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        form.style.display  = 'none';
+        tyDiv.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      })
+      .catch(() => {
+        btn.disabled        = false;
+        btn.textContent     = 'Submit feedback';
+        errMsg.style.display = 'block';
+      });
+    });
+  </script>
+</body>
+</html>

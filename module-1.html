@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Part 1: Relationship Snapshot — Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .wheel-container { background: var(--white); border: 1px solid rgba(44,74,90,0.1); border-radius: 16px; padding: 1.5rem; margin: 1.5rem 0; }
+    .mode-toggle, .person-tabs { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .mode-btn, .ptab { padding: 6px 16px; border-radius: 30px; border: 1px solid rgba(44,74,90,0.2); background: transparent; color: var(--muted); cursor: pointer; font-family: 'Jost',sans-serif; font-size: 0.78rem; letter-spacing: 0.08em; transition: all 0.2s; }
+    .mode-btn.active, .ptab.active { background: var(--ocean); color: var(--white); border-color: var(--ocean); }
+    .sliders-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; margin-bottom: 1.25rem; }
+    .slider-row label { font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 2px; letter-spacing: 0.03em; }
+    .slider-row .val { font-size: 0.75rem; font-weight: 500; color: var(--ocean); float: right; }
+    .slider-row input[type=range] { width: 100%; accent-color: var(--seafoam); }
+    canvas { display: block; margin: 0 auto; max-width: 100%; }
+    .wheel-legend { display: flex; gap: 20px; justify-content: center; margin-top: 10px; font-size: 0.78rem; color: var(--muted); }
+    .wheel-legend span { display: flex; align-items: center; gap: 6px; }
+    .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink:0; }
+    @media (max-width: 420px) { .sliders-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Course progress">
+      <div class="progress-step active">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">Snapshot</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Alliance</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">Co-Dreaming</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Part 1</div>
+    <h1 class="page-title">Relationship Snapshot</h1>
+    <div class="timing-badge">⏱ ~50 minutes &nbsp;·&nbsp; Individual + Couple</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>The Wheel of Life helps you visualise the core areas of your life at once — a bird's eye view of where things are flourishing and where they need attention. Each relationship is made up of two separate individuals and a shared third entity. By overlapping your two wheels, you begin to see your relationship as its own living thing.</p>
+    </div>
+
+    <div class="info-note">
+      <strong>Before you start:</strong> Read through all the steps together first, then come back and begin. You can each fill in the wheel separately (on your own device or at separate times) and come together for the conversation steps.
+    </div>
+
+    <h2 class="section-heading">Steps</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3 class="step-title">Set up your space</h3>
+          <div class="step-text">Find a comfortable, quiet spot. Gather what you need — water, a snack, a notebook if you like taking notes by hand. (~5 min)</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3 class="step-title">Fill in your wheel individually using Individual mode below.</h3>
+          <div class="step-text">Rate your current <strong>satisfaction level</strong> in each area on a scale of 0 to 10 (0 at the center, 10 at the outer edge). Be honest and go with your gut feeling.<br><br>Do this independently — don't compare yet. (~5 min each)</div>
+          <div class="info-note" style="margin-top:0.75rem; font-size:0.82rem;">
+            <!-- name-aware device tip — updated by JS -->
+            <span id="device-tip"><strong>Two devices?</strong> Each person opens this page on their own phone and fills in their own wheel. <strong>One device?</strong> Use the Person A / Person B tabs in Couple mode — Person A fills in, then passes to Person B.</span>
+          </div>
+
+          <!-- WHEEL TOOL -->
+          <div class="wheel-container">
+            <div class="mode-toggle">
+              <button class="mode-btn active" onclick="setMode('individual')">Individual</button>
+              <button class="mode-btn" onclick="setMode('couple')">Couple — overlapping view</button>
+            </div>
+            <div id="person-tabs" class="person-tabs" style="display:none">
+              <!-- labels set by JS -->
+              <button class="ptab active" id="tab-a" onclick="setPerson(0)">Person A</button>
+              <button class="ptab" id="tab-b" onclick="setPerson(1)">Person B</button>
+            </div>
+            <div class="sliders-grid" id="sliders"></div>
+            <canvas id="wol" width="320" height="320"></canvas>
+            <div class="wheel-legend" id="legend"></div>
+            <div class="btn-group" style="justify-content:center; margin-top:1rem;">
+              <button class="btn btn-outline" onclick="exportWheelPDF()" style="font-size:0.75rem;">Download as PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3 class="step-title">Reflect on your own wheel (~10 min)</h3>
+          <div class="step-text">Before sharing, spend some quiet time with your own results. Consider what stands out to you.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>How satisfied am I with my life in general?</li>
+              <li>Which areas contribute most to my satisfaction?</li>
+              <li>Which areas detract from it?</li>
+              <li>What do I want to be different?</li>
+              <li>Is there anything surprising?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">Your personal notes (optional)</span>
+            <textarea class="reflection-textarea" id="r-personal" placeholder="Jot down anything that comes up for you…" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3 class="step-title">Come together — share your wheels (~20 min)</h3>
+          <div class="step-text">Switch to <strong>Couple mode</strong> above to see both wheels overlapping. Take turns, 10 minutes each, sharing what you noticed. Listen with curiosity.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>What surprised you while exploring your wheel?</li>
+              <li>What would you like me to know about your life right now?</li>
+              <li>From what you shared, what is important for me to remember?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">Notes from your conversation</span>
+            <textarea class="reflection-textarea" id="r-together" placeholder="What came up as you shared your wheels together?…" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3 class="step-title">Your relationship — Explore the third wheel (~10 min)</h3>
+          <div class="step-text">Looking at the overlapping view, observe the gaps, discrepancies and alignments. Pick one or two areas that draw your attention and explore them together.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>How satisfied are we with our life in this area?</li>
+              <li>What factors contribute to our satisfaction here?</li>
+              <li>What factors detract from it?</li>
+              <li>Is there anything that stands out or surprises us?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">Areas that drew your attention</span>
+            <textarea class="reflection-textarea" id="r-third" placeholder="Which areas stood out when you looked at your wheels together?…" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3 class="step-title">Explore what to bring forward (~20 min)</h3>
+          <div class="step-text">As a partnership, talk about the most important learnings from this exercise.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>What is important about this for our relationship?</li>
+              <li>What do we want to be different?</li>
+              <li>What would a first step look like? (Pick your top 1–3 areas)</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">What we want to bring forward</span>
+            <textarea class="reflection-textarea" id="r-forward" placeholder="What are your 1–3 key takeaways or next steps?…" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h3 class="step-title">Close the exercise (~5 min)</h3>
+          <div class="step-text">Take a moment to thank each other for showing up. Acknowledge the courage it takes to reflect honestly on your life and share that with someone you love.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download my reflections</button>
+      <a href="module-2.html" class="btn btn-primary">Continue to Part 2 →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // ── Names from sessionStorage ──
+    const nameA = sessionStorage.getItem('nameA') || 'Person A';
+    const nameB = sessionStorage.getItem('nameB') || 'Person B';
+    const hasCustomNames = sessionStorage.getItem('nameA') || sessionStorage.getItem('nameB');
+
+    // Update tab labels and device tip with real names
+    document.getElementById('tab-a').textContent = nameA;
+    document.getElementById('tab-b').textContent = nameB;
+    if (hasCustomNames) {
+      document.getElementById('device-tip').innerHTML =
+        `<strong>Two devices?</strong> Each person opens this page on their own phone and fills in their own wheel. <strong>One device?</strong> Use the ${nameA} / ${nameB} tabs in Couple mode — ${nameA} fills in first, then passes to ${nameB}.`;
+    }
+
+    // ── Wheel of Life logic (unchanged) ──
+    const categories = ['Career','Finances','Health','Family','Relationships','Personal growth','Fun &\nleisure','Environment'];
+    const COLORS = [
+      { fill:'rgba(44,74,90,0.2)', stroke:'#2C4A5A', pdf:[44,74,90] },
+      { fill:'rgba(143,188,176,0.3)', stroke:'#5A9E90', pdf:[90,158,144] }
+    ];
+    let mode = 'individual', activePerson = 0;
+    const scores = [Array(8).fill(5), Array(8).fill(5)];
+
+    function setMode(m) {
+      mode = m;
+      document.querySelectorAll('.mode-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&m==='individual')||(i===1&&m==='couple')));
+      document.getElementById('person-tabs').style.display = m==='couple'?'flex':'none';
+      if(m==='individual') activePerson=0;
+      renderSliders(); draw();
+    }
+
+    function setPerson(p) {
+      activePerson=p;
+      document.querySelectorAll('.ptab').forEach((b,i)=>b.classList.toggle('active',i===p));
+      renderSliders();
+    }
+
+    function renderSliders() {
+      const grid=document.getElementById('sliders'); grid.innerHTML='';
+      categories.forEach((cat,i)=>{
+        const row=document.createElement('div'); row.className='slider-row';
+        row.innerHTML=`<label><span class="val" id="v${i}">${scores[activePerson][i]}</span>${cat.replace('\n',' ')}</label>
+          <input type="range" min="1" max="10" step="1" value="${scores[activePerson][i]}" oninput="update(${i},this.value)">`;
+        grid.appendChild(row);
+      });
+    }
+
+    function update(i,val) {
+      scores[activePerson][i]=parseInt(val);
+      document.getElementById('v'+i).textContent=val;
+      draw();
+    }
+
+    function draw() {
+      const canvas=document.getElementById('wol');
+      const size=Math.min(320, canvas.parentElement.offsetWidth-32);
+      canvas.width=size; canvas.height=size;
+      const ctx=canvas.getContext('2d');
+      const cx=size/2, cy=size/2, R=size*0.38;
+      const n=categories.length;
+      ctx.clearRect(0,0,size,size);
+      const gridC='rgba(0,0,0,0.06)', axisC='rgba(0,0,0,0.12)', textC='rgba(30,45,53,0.7)';
+
+      for(let ring=1;ring<=10;ring++){
+        ctx.beginPath();
+        for(let k=0;k<n;k++){
+          const a=(k/n)*2*Math.PI-Math.PI/2, r=(ring/10)*R;
+          k===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+        }
+        ctx.closePath();
+        ctx.strokeStyle=ring===10?axisC:gridC; ctx.lineWidth=ring===10?1:0.5; ctx.stroke();
+      }
+      for(let k=0;k<n;k++){
+        const a=(k/n)*2*Math.PI-Math.PI/2;
+        ctx.beginPath(); ctx.moveTo(cx,cy);
+        ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));
+        ctx.strokeStyle=axisC; ctx.lineWidth=0.5; ctx.stroke();
+      }
+
+      const toDraw=mode==='couple'?[0,1]:[activePerson===1?1:0];
+      toDraw.forEach(p=>{
+        ctx.beginPath();
+        categories.forEach((_,k)=>{
+          const a=(k/n)*2*Math.PI-Math.PI/2, r=(scores[p][k]/10)*R;
+          k===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+        });
+        ctx.closePath(); ctx.fillStyle=COLORS[p].fill; ctx.fill();
+        ctx.strokeStyle=COLORS[p].stroke; ctx.lineWidth=2; ctx.stroke();
+      });
+
+      const fontSize=Math.max(9,size*0.032);
+      ctx.font=`${fontSize}px Jost,sans-serif`; ctx.fillStyle=textC;
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      categories.forEach((cat,k)=>{
+        const a=(k/n)*2*Math.PI-Math.PI/2, r=R+size*0.1;
+        const x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
+        if(cat.includes('\n')){
+          const lines=cat.split('\n'), lh=fontSize*1.3;
+          lines.forEach((line,li)=>ctx.fillText(line,x,y+(li-(lines.length-1)/2)*lh));
+        } else {
+          ctx.fillText(cat,x,y);
+        }
+      });
+
+      // Use real names in legend
+      const legend=document.getElementById('legend');
+      legend.innerHTML=mode==='couple'
+        ?`<span><span class="leg-dot" style="background:${COLORS[0].stroke}"></span>${nameA}</span>
+          <span><span class="leg-dot" style="background:${COLORS[1].stroke}"></span>${nameB}</span>`
+        :`<span><span class="leg-dot" style="background:${COLORS[activePerson===1?1:0].stroke}"></span>${activePerson===1?nameB:nameA}</span>`;
+    }
+
+    function exportWheelPDF() {
+      const {jsPDF}=window.jspdf;
+      const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+      const off=document.createElement('canvas'); off.width=600; off.height=600;
+      const ctx=off.getContext('2d'); ctx.fillStyle='#FDFAF5'; ctx.fillRect(0,0,600,600);
+      const cx=300,cy=300,R=220,n=categories.length;
+      for(let ring=1;ring<=10;ring++){
+        ctx.beginPath();
+        for(let k=0;k<n;k++){
+          const a=(k/n)*2*Math.PI-Math.PI/2,r=(ring/10)*R;
+          k===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+        }
+        ctx.closePath(); ctx.strokeStyle=ring===10?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.07)'; ctx.lineWidth=ring===10?1.5:0.8; ctx.stroke();
+      }
+      for(let k=0;k<n;k++){
+        const a=(k/n)*2*Math.PI-Math.PI/2;
+        ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));
+        ctx.strokeStyle='rgba(0,0,0,0.15)'; ctx.lineWidth=0.8; ctx.stroke();
+      }
+      const toDraw=mode==='couple'?[0,1]:[activePerson===1?1:0];
+      toDraw.forEach(p=>{
+        ctx.beginPath();
+        categories.forEach((_,k)=>{
+          const a=(k/n)*2*Math.PI-Math.PI/2,r=(scores[p][k]/10)*R;
+          k===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+        });
+        ctx.closePath(); const[r,g,b]=COLORS[p].pdf;
+        ctx.fillStyle=`rgba(${r},${g},${b},0.25)`; ctx.fill();
+        ctx.strokeStyle=COLORS[p].stroke; ctx.lineWidth=3; ctx.stroke();
+      });
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      categories.forEach((cat,k)=>{
+        const a=(k/n)*2*Math.PI-Math.PI/2,r=R+36;
+        const px=cx+r*Math.cos(a), py=cy+r*Math.sin(a);
+        ctx.font='bold 16px sans-serif'; ctx.fillStyle='#2C4A5A';
+        if(cat.includes('\n')){
+          const lines=cat.split('\n');
+          lines.forEach((line,li)=>ctx.fillText(line,px,py+(li-(lines.length-1)/2)*20));
+        } else {
+          ctx.fillText(cat,px,py);
+        }
+      });
+
+      doc.setFont('helvetica','bold'); doc.setFontSize(18); doc.setTextColor(44,74,90);
+      doc.text('Relation-ship — Wheel of Life',105,18,{align:'center'});
+      doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(120,141,138);
+      doc.text(mode==='couple'?'Couple view':'Individual view',105,25,{align:'center'});
+      doc.addImage(off.toDataURL('image/png'),'PNG',27,30,152,152);
+
+      let y=190;
+      doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.setTextColor(44,74,90);
+      doc.text('Scores',20,y); y+=7;
+      doc.setFontSize(8); doc.setTextColor(100,100,100);
+      if(mode==='couple'){
+        doc.text('Area',20,y); doc.text(nameA,100,y,{align:'right'}); doc.text(nameB,130,y,{align:'right'});
+        doc.line(20,y+2,190,y+2); y+=7;
+        doc.setFont('helvetica','normal');
+        categories.forEach((cat,i)=>{
+          doc.setTextColor(50,50,50); doc.text(cat,20,y);
+          doc.setTextColor(...COLORS[0].pdf); doc.text(String(scores[0][i]),100,y,{align:'right'});
+          doc.setTextColor(...COLORS[1].pdf); doc.text(String(scores[1][i]),130,y,{align:'right'});
+          y+=7;
+        });
+      } else {
+        const p=activePerson===1?1:0;
+        const pName=p===1?nameB:nameA;
+        doc.text('Area',20,y); doc.text('Score — '+pName,100,y,{align:'right'});
+        doc.line(20,y+2,190,y+2); y+=7;
+        doc.setFont('helvetica','normal');
+        categories.forEach((cat,i)=>{
+          doc.setTextColor(50,50,50); doc.text(cat,20,y);
+          doc.setTextColor(...COLORS[p].pdf); doc.text(String(scores[p][i]),100,y,{align:'right'});
+          y+=7;
+        });
+      }
+      doc.setFontSize(7); doc.setTextColor(180,180,180);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`,105,285,{align:'center'});
+      doc.save('relation-ship-wheel.pdf');
+    }
+
+    function downloadReflections() {
+      const {jsPDF}=window.jspdf;
+      const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+      doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(44,74,90);
+      doc.text('Relation-ship — Part 1 Reflections',105,18,{align:'center'});
+      doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(150,150,150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`,105,25,{align:'center'});
+      let y=35;
+      const fields=[
+        {label:'Personal reflections',id:'r-personal'},
+        {label:'Notes from our conversation',id:'r-together'},
+        {label:'Areas that drew our attention',id:'r-third'},
+        {label:'What we want to bring forward',id:'r-forward'},
+      ];
+      fields.forEach(f=>{
+        const val=document.getElementById(f.id).value||'(no notes)';
+        doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(44,74,90);
+        doc.text(f.label,20,y); y+=6;
+        doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(50,50,50);
+        const lines=doc.splitTextToSize(val,170);
+        doc.text(lines,20,y); y+=lines.length*5+10;
+        if(y>260){doc.addPage();y=20;}
+      });
+      doc.save('relation-ship-reflections-part1.pdf');
+    }
+
+    renderSliders(); draw();
+    window.addEventListener('resize', draw);
+  </script>
+</body>
+</html>

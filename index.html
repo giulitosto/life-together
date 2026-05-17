@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relation-ship — Navigating the waves of life together</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Name prompt card ── */
+    .name-prompt {
+      background: #f5f8f7;
+      border: 1px solid #d9ece8;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0 2rem;
+    }
+    .name-prompt-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #8FBCB0;
+      margin-bottom: 0.9rem;
+    }
+    .name-fields {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .name-field {
+      flex: 1;
+      min-width: 120px;
+    }
+    .name-field label {
+      display: block;
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.05em;
+    }
+    .name-field input {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      color: #333;
+      background: #fff;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+    .name-field input:focus {
+      outline: none;
+      border-color: #8FBCB0;
+    }
+    .name-field input::placeholder { color: #ccc; }
+    .name-prompt-hint {
+      font-size: 0.75rem;
+      color: #bbb;
+      margin-top: 0.85rem;
+      line-height: 1.5;
+    }
+    .name-save-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.9rem;
+    }
+    .btn-save-names {
+      padding: 0.5rem 1.1rem;
+      background: #8FBCB0;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-save-names:hover { background: #7aada0; }
+    .btn-skip-names {
+      font-size: 0.8rem;
+      color: #bbb;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: underline;
+      padding: 0;
+    }
+    .btn-skip-names:hover { color: #999; }
+    .names-saved-msg {
+      display: none;
+      font-size: 0.82rem;
+      color: #8FBCB0;
+    }
+
+    /* ── Welcome greeting (shown after names saved) ── */
+    .welcome-greeting {
+      display: none;
+      font-size: 0.88rem;
+      color: #8FBCB0;
+      text-align: center;
+      margin: 1.5rem 0 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <p class="prose" style="text-align:center; font-size:0.88rem; color:var(--muted);">
+      A brief, practical programme for couples.<br>Work through each part at your own pace.
+    </p>
+
+    <!-- ── Optional name prompt ── -->
+    <div class="name-prompt" id="name-prompt">
+      <div class="name-prompt-title">Before you begin — optional</div>
+      <div class="name-fields">
+        <div class="name-field">
+          <label for="input-name-a">Person A's name</label>
+          <input type="text" id="input-name-a" placeholder="e.g. Alex" autocomplete="off">
+        </div>
+        <div class="name-field">
+          <label for="input-name-b">Person B's name</label>
+          <input type="text" id="input-name-b" placeholder="e.g. Sam" autocomplete="off">
+        </div>
+      </div>
+      <p class="name-prompt-hint">
+        Adding your names lets the programme address you personally throughout. This is completely optional — names are only stored in your browser for this session and never sent to us.
+      </p>
+      <div class="name-save-row">
+        <button class="btn-save-names" onclick="saveNames()">Save names</button>
+        <button class="btn-skip-names" onclick="skipNames()">Skip for now</button>
+        <span class="names-saved-msg" id="names-saved-msg">✓ Names saved for this session</span>
+      </div>
+    </div>
+
+    <!-- Shown after names are entered -->
+    <p class="welcome-greeting" id="welcome-greeting"></p>
+
+    <nav class="modules-grid" aria-label="Course modules" style="margin-top:2rem;">
+
+      <a href="introduction.html" class="module-card">
+        <div class="card-icon" aria-hidden="true">✦</div>
+        <div class="card-body">
+          <div class="card-label">Welcome</div>
+          <div class="card-title">Introduction</div>
+          <div class="card-desc">A letter from Drew & Giuli, and how to get the most from this programme.</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a href="module-1.html" class="module-card">
+        <div class="card-icon" aria-hidden="true">◎</div>
+        <div class="card-body">
+          <div class="card-label">Part 1 · 50 min</div>
+          <div class="card-title">Relationship Snapshot</div>
+          <div class="card-desc">Visualise where you are individually in life right now and where you overlap as a couple.</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a href="module-2.html" class="module-card">
+        <div class="card-icon" aria-hidden="true">⚓</div>
+        <div class="card-body">
+          <div class="card-label">Part 2 · 30–60 min</div>
+          <div class="card-title">Relationship Alliance</div>
+          <div class="card-desc">Define how your relationship works, your shared principles and culture.</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a href="module-3.html" class="module-card">
+        <div class="card-icon" aria-hidden="true">☽</div>
+        <div class="card-body">
+          <div class="card-label">Part 3 · 1–2 hours</div>
+          <div class="card-title">Co-Dreaming</div>
+          <div class="card-desc">Explore your future hopes and build a shared vision together.</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a href="feedback.html" class="module-card">
+        <div class="card-icon" aria-hidden="true">◇</div>
+        <div class="card-body">
+          <div class="card-label">Feedback</div>
+          <div class="card-title">Share your experience</div>
+          <div class="card-desc">Help Drew & Giuli shape the next phase of the programme.</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+    </nav>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script>
+    function saveNames() {
+      const a = document.getElementById('input-name-a').value.trim();
+      const b = document.getElementById('input-name-b').value.trim();
+
+      if (a) sessionStorage.setItem('nameA', a);
+      if (b) sessionStorage.setItem('nameB', b);
+
+      if (a || b) {
+        document.getElementById('names-saved-msg').style.display = 'inline';
+        showGreeting(a, b);
+      }
+    }
+
+    function skipNames() {
+      document.getElementById('name-prompt').style.display = 'none';
+    }
+
+    function showGreeting(a, b) {
+      const names = [a, b].filter(Boolean).join(' & ');
+      const greet = document.getElementById('welcome-greeting');
+      greet.textContent = 'Welcome, ' + names + ' ☽';
+      greet.style.display = 'block';
+    }
+
+    // Allow Enter key to save names
+    ['input-name-a', 'input-name-b'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') saveNames();
+      });
+    });
+
+    // Restore saved names on return — hide prompt and show greeting
+    const storedA = sessionStorage.getItem('nameA') || '';
+    const storedB = sessionStorage.getItem('nameB') || '';
+    if (storedA || storedB) {
+      document.getElementById('input-name-a').value = storedA;
+      document.getElementById('input-name-b').value = storedB;
+      document.getElementById('name-prompt').style.display = 'none';
+      showGreeting(storedA, storedB);
+    }
+  </script>
+</body>
+</html>

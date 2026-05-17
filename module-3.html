@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Part 3: Co-Dreaming — Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Audio card ── */
+    .audio-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+    .audio-card-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rope);
+      margin-bottom: 0.75rem;
+    }
+    audio { width: 100%; border-radius: 8px; }
+    .audio-hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    /* ── Collapsible script — uses existing prompt-box aesthetic ── */
+    details.script-toggle { margin: 0.75rem 0 0; }
+    details.script-toggle summary {
+      cursor: pointer;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--seafoam);
+      list-style: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      user-select: none;
+      transition: color 0.2s;
+    }
+    details.script-toggle summary::-webkit-details-marker { display: none; }
+    details.script-toggle summary::before {
+      content: '▶';
+      font-size: 0.55rem;
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    details[open].script-toggle summary::before { transform: rotate(90deg); }
+    details.script-toggle summary:hover { color: var(--ocean); }
+    .script-text {
+      background: rgba(143,188,176,0.1);
+      border-left: 3px solid var(--seafoam);
+      border-radius: 0 12px 12px 0;
+      padding: 1rem 1.25rem;
+      margin-top: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--ocean);
+      font-style: italic;
+      line-height: 1.8;
+    }
+    .script-text p { margin: 0 0 0.75rem; }
+    .script-text p:last-child { margin-bottom: 0; }
+
+    /* ── Closing quote card ── */
+    .closing-card {
+      background: linear-gradient(135deg, rgba(143,188,176,0.12), rgba(196,149,106,0.06));
+      border: 1px solid rgba(143,188,176,0.25);
+      border-radius: 16px;
+      padding: 1.75rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .closing-card p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--ocean);
+      line-height: 2;
+      font-style: italic;
+    }
+
+    /* ── Opening/closing step icons ── */
+    .step-num-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--seafoam);
+      color: var(--white);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Course progress">
+      <div class="progress-step done">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">Snapshot</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step done">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Alliance</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step active">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">Co-Dreaming</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Part 3</div>
+    <h1 class="page-title">Co-Dreaming</h1>
+    <div class="timing-badge">⏱ 1–2 hours &nbsp;·&nbsp; Individual + Couple</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>This exercise is a guided visualisation for relationships. It will offer you a space to dive deep and recognise your hopes and dreams for the future, to guide your partner(s) to find their hopes and dreams and then offer a space for sharing, connecting, and exploring similarities and differences in your dreams. From there you will be able to support, encourage and align your dreams, allowing them to unfold while simultaneously letting your partner(s) in to be an informed and supportive cheerleader on your journey.</p>
+    </div>
+
+    <div class="info-note">
+      <strong>Before you start:</strong> Allow ~30–45 minutes for the guided visualisation and 45–60 minutes for sharing together. These can be completed in one sitting with a short break, or continued on a different date. Before starting please consider if you would like to listen to the recordings of the exercise read by Drew and Giuli or do it yourself. There are 3 ways to go about this exercise:
+      <ol style="margin-top:0.75rem; padding-left:1.25rem; line-height:1.7;">
+        <li style="margin-bottom:0.4rem;">Go to the recording and press play and let the voice guide you through the visualisation</li>
+        <li style="margin-bottom:0.4rem;">Read each section in turns as a couple: You both dream simultaneously and complete the sections after each stage. Person A starts with the first script and person B does the second.</li>
+        <li>Take turns reading the full script: Reading the whole exercise for Person A, followed by the whole exercise for Person B. This allows both partners to fully immerse themselves in the activity, although it reveals the visualisation journey to the second dreamer.</li>
+      </ol>
+    </div>
+
+    <!-- Audio player — upload files to Netlify as: codreaming-giuli.mp3 and codreaming-drew.mp3 -->
+    <div class="audio-card">
+      <div class="audio-card-label">🎧 Guided Visualisation</div>
+      <div style="display:flex; gap:8px; justify-content:center; margin-bottom:1rem; flex-wrap:wrap;">
+        <button id="btn-voice-giuli" onclick="setVoice('giuli')" style="padding:6px 18px; border-radius:30px; border:2px solid #2C4A5A; background:#2C4A5A; color:#fff; cursor:pointer; font-family:'Jost',sans-serif; font-size:0.78rem; letter-spacing:0.08em; transition:all 0.2s;">Giuli's voice</button>
+        <button id="btn-voice-drew" onclick="setVoice('drew')" style="padding:6px 18px; border-radius:30px; border:1px solid rgba(44,74,90,0.2); background:transparent; color:#aaa; cursor:pointer; font-family:'Jost',sans-serif; font-size:0.78rem; letter-spacing:0.08em; transition:all 0.2s;">Drew's voice</button>
+      </div>
+      <audio id="audio-player" controls style="width:100%; border-radius:8px;">
+        <source id="audio-source" src="codreaming-giuli.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+      <p class="audio-hint">Press play, close your eyes, and follow the journey together.<br>At each pause, open your eyes and use the note boxes below to capture what arose.</p>
+    </div>
+
+    <div class="info-note">
+      <strong>How to use the script:</strong> The recording guides you through each stop. If you'd prefer to read instead, expand any section using the arrow. Each script box is optional.
+    </div>
+
+    <h2 class="section-heading">The Journey</h2>
+
+    <div class="steps">
+
+      <!-- Opening -->
+      <div class="step">
+        <div class="step-num-icon">☽</div>
+        <div class="step-body">
+          <h3 class="step-title">Opening — Grounding &amp; Connection</h3>
+          <details class="script-toggle">
+            <summary>Read the Opening script</summary>
+            <div class="script-text">
+              <p>Take a long, slow breath in… and an even softer breath out…</p>
+              <p>Feel your feet resting on the ground. Feel the air around you, wrapping you in a gentle embrace. Feel your heart gently beating, steady and alive.</p>
+              <p>Now, become aware of the person you are journeying with. Sense their presence. Feel the invisible thread that connects you.</p>
+              <p>There's nothing to do right now except be here, together. Let silence surround you like a soft blanket. You are safe. You are ready. You are open to dreaming together.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Stop 1 -->
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3 class="step-title">Ten Years From Now</h3>
+          <details class="script-toggle">
+            <summary>Read the Ten Years script</summary>
+            <div class="script-text">
+              <p>Allow yourself to drift ten years into the future…</p>
+              <p>You have built a life that feels rich, expansive, meaningful.</p>
+              <p>(pause)</p>
+              <p>Now, gently open your eyes.</p>
+              <p>Take one minute to write down anything you want to remember — images, feelings, words.</p>
+              <p>No need to overthink. Simply capture what is alive within you.</p>
+              <p>(pause)</p>
+              <p>When you're ready, gently close your eyes again, and let's continue the dream…</p>
+            </div>
+          </details>
+          <div class="reflection-block">
+            <span class="reflection-label" id="label-1">Your reflections</span>
+            <textarea class="reflection-textarea" id="note-1" placeholder="Images, feelings, words that came up…" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stop 2 -->
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3 class="step-title">Five Years From Now</h3>
+          <details class="script-toggle">
+            <summary>Read the Five Years script</summary>
+            <div class="script-text">
+              <p>Float gently back to your visualisation</p>
+              <p>Imagine life five years from now…</p>
+              <p>You are creating something extraordinary.</p>
+              <p>You are in the middle of your journey, building, nurturing, expanding.</p>
+              <p>What are you working on together?<br>What does your daily rhythm feel like?<br>How do you navigate joy, challenges, growth?<br>What makes you proud of each other?</p>
+              <p>(pause)</p>
+              <p>Open your eyes.</p>
+              <p>Take a minute to capture your impressions, anything you wish to hold close.</p>
+              <p>(pause)</p>
+              <p>Now, returning to your dreaming…</p>
+            </div>
+          </details>
+          <div class="reflection-block">
+            <span class="reflection-label" id="label-2">Your reflections</span>
+            <textarea class="reflection-textarea" id="note-2" placeholder="Images, feelings, words that came up…" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stop 3 -->
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3 class="step-title">Three Years From Now</h3>
+          <details class="script-toggle">
+            <summary>Read the Three Years script</summary>
+            <div class="script-text">
+              <p>See yourselves three years into the future…</p>
+              <p>Your roots have deepened.</p>
+              <p>There is trust, flow, movement.</p>
+              <p>What does a typical week look like?<br>What traditions or rituals anchor you?<br>How do you celebrate life's big and small moments together?</p>
+              <p>(pause)</p>
+              <p>Open your eyes.</p>
+              <p>Take one minute to write down what touches your heart.</p>
+              <p>Let's keep exploring…</p>
+            </div>
+          </details>
+          <div class="reflection-block">
+            <span class="reflection-label" id="label-3">Your reflections</span>
+            <textarea class="reflection-textarea" id="note-3" placeholder="Images, feelings, words that came up…" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stop 4 -->
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3 class="step-title">One Year From Now</h3>
+          <details class="script-toggle">
+            <summary>Read the One Year script</summary>
+            <div class="script-text">
+              <p>Come closer to the present, one year from today.</p>
+              <p>What changes have taken root?<br>What choices have you made in the past year that shaped your path?<br>What is blossoming in your life together?</p>
+              <p>(pause)</p>
+              <p>Open your eyes.</p>
+              <p>Take a moment to note any feelings, images, or dreams.</p>
+              <p>(pause)</p>
+              <p>And now… even closer still…</p>
+            </div>
+          </details>
+          <div class="reflection-block">
+            <span class="reflection-label" id="label-4">Your reflections</span>
+            <textarea class="reflection-textarea" id="note-4" placeholder="Images, feelings, words that came up…" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stop 5 -->
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3 class="step-title">One Month From Now</h3>
+          <details class="script-toggle">
+            <summary>Read the One Month script</summary>
+            <div class="script-text">
+              <p>See yourselves just one month into the future…</p>
+              <p>What first steps have you already taken?<br>What small, significant changes are already in motion?</p>
+              <p>(pause)</p>
+              <p>Open your eyes.</p>
+              <p>Capture the essence of what is starting to bloom.</p>
+              <p>(pause)</p>
+              <p>Almost there…</p>
+            </div>
+          </details>
+          <div class="reflection-block">
+            <span class="reflection-label" id="label-5">Your reflections</span>
+            <textarea class="reflection-textarea" id="note-5" placeholder="Images, feelings, words that came up…" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stop 6 -->
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3 class="step-title">Tomorrow — One Day From Now</h3>
+          <details class="script-toggle">
+            <summary>Read the Tomorrow script</summary>
+            <div class="script-text">
+              <p>Now imagine… just one day from now.</p>
+              <p>What small action will you take to honor the dream you hold in your heart today?<br>What feeling, energy, or word will you carry forward into tomorrow?</p>
+              <p>(pause)</p>
+              <p>Open your eyes one final time.</p>
+              <p>This is your last moment to write down what came up. Capture anything that feels important.</p>
+            </div>
+          </details>
+          <div class="reflection-block">
+            <span class="reflection-label" id="label-6">Your reflections</span>
+            <textarea class="reflection-textarea" id="note-6" placeholder="Images, feelings, words that came up…" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 7: Close the exercise -->
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h3 class="step-title">Close the exercise (~5 min)</h3>
+          <details class="script-toggle">
+            <summary>Read the Closing script</summary>
+            <div class="script-text">
+              <p>And now…</p>
+              <p>Rest in the gratitude of having dreamed together.</p>
+              <p>You have planted seeds.</p>
+              <p>You have honored your shared heart.</p>
+              <p>When you feel ready, open your eyes fully, return to one another.</p>
+              <p>Share a smile. A touch. A word of thanks.</p>
+              <p>And if you wish, speak softly:</p>
+              <p>"Thank you for dreaming with me."<br>"I see you."<br>"I believe in what we are building."</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Come together -->
+      <div class="step">
+        <div class="step-num">8</div>
+        <div class="step-body">
+          <h3 class="step-title">Come together — share your reflections (~45–60 min)</h3>
+          <div class="step-text">When you're both ready, come back together. Take turns sharing what arose during the journey. Listen with open hearts and genuine curiosity.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>What images or feelings stayed with you most?</li>
+              <li>What surprised you about what came up?</li>
+              <li>Where do you notice alignment in your visions?</li>
+              <li>Where do you see differences, and how might you honour both?</li>
+              <li>What do you want to remember from what your partner shared?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">Notes from your conversation</span>
+            <textarea class="reflection-textarea" id="note-together" placeholder="What came up as you shared your visions together?…" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /steps -->
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download my reflections</button>
+      <a href="feedback.html" class="btn btn-primary">Share your feedback →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew &amp; Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // ── Voice selector ──
+    function setVoice(voice) {
+      const src = voice === 'giuli' ? 'codreaming-giuli.mp3' : 'codreaming-drew.mp3';
+      const player = document.getElementById('audio-player');
+      const source = document.getElementById('audio-source');
+      source.src = src;
+      player.load();
+      const btnGiuli = document.getElementById('btn-voice-giuli');
+      const btnDrew  = document.getElementById('btn-voice-drew');
+      if (voice === 'giuli') {
+        btnGiuli.style.background = '#2C4A5A'; btnGiuli.style.color = '#fff'; btnGiuli.style.borderWidth = '2px'; btnGiuli.style.borderColor = '#2C4A5A';
+        btnDrew.style.background  = 'transparent'; btnDrew.style.color = '#aaa'; btnDrew.style.borderWidth = '1px'; btnDrew.style.borderColor = 'rgba(44,74,90,0.2)';
+      } else {
+        btnDrew.style.background  = '#2C4A5A'; btnDrew.style.color = '#fff'; btnDrew.style.borderWidth = '2px'; btnDrew.style.borderColor = '#2C4A5A';
+        btnGiuli.style.background = 'transparent'; btnGiuli.style.color = '#aaa'; btnGiuli.style.borderWidth = '1px'; btnGiuli.style.borderColor = 'rgba(44,74,90,0.2)';
+      }
+    }
+
+    // ── Names from sessionStorage ──
+    const nameA = sessionStorage.getItem('nameA') || '';
+    const nameB = sessionStorage.getItem('nameB') || '';
+    const coupleDisplay = [nameA, nameB].filter(Boolean).join(' & ');
+
+    // Update reflection labels with names if set
+    if (coupleDisplay) {
+      for (let i = 1; i <= 6; i++) {
+        const el = document.getElementById('label-' + i);
+        if (el) el.textContent = coupleDisplay + '\u2019s reflections';
+      }
+    }
+
+    // ── Download reflections as PDF (matches module-1/2 style) ──
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(44, 74, 90);
+      doc.text('Relation-ship — Part 3 Reflections', 105, 18, { align: 'center' });
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      if (coupleDisplay) doc.text(coupleDisplay + ' · Co-Dreaming', 105, 25, { align: 'center' });
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, coupleDisplay ? 30 : 25, { align: 'center' });
+
+      let y = 40;
+      const fields = [
+        { label: 'Ten Years From Now',          id: 'note-1' },
+        { label: 'Five Years From Now',          id: 'note-2' },
+        { label: 'Three Years From Now',         id: 'note-3' },
+        { label: 'One Year From Now',            id: 'note-4' },
+        { label: 'One Month From Now',           id: 'note-5' },
+        { label: 'Tomorrow — One Day From Now',  id: 'note-6' },
+        { label: 'Notes from our conversation',  id: 'note-together' },
+      ];
+
+      fields.forEach(f => {
+        const val = document.getElementById(f.id).value || '(no notes)';
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(44, 74, 90);
+        doc.text(f.label, 20, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(50, 50, 50);
+        const lines = doc.splitTextToSize(val, 170);
+        doc.text(lines, 20, y);
+        y += lines.length * 5 + 10;
+        if (y > 265) { doc.addPage(); y = 20; }
+      });
+
+      doc.save('relation-ship-reflections-part3.pdf');
+    }
+  </script>
+</body>
+</html>
