@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Part 2: Relationship Alliance — Relation-ship</title>
+  <title>Part 2: Relationship Alliance, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <style>
@@ -66,7 +66,7 @@
     </div>
 
     <div class="prose">
-      <p>The Design Relationship Alliance (DRA) draws on the ORSC™ Design Team Alliance tool. It acts as a foundational agreement — a living document that helps you navigate your relationship with clarity and care. It can be refreshed and updated whenever life calls for it.</p>
+      <p>The Design Relationship Alliance (DRA) draws on the ORSC™ Design Team Alliance tool. It acts as a foundational agreement, a living document that helps you navigate your relationship with clarity and care. It can be refreshed and updated whenever life calls for it.</p>
       <p>It is composed of two parts: <strong>A.</strong> Creating and clarifying the culture or atmosphere you want together, and <strong>B.</strong> Understanding shared responsibility in maintaining that culture.</p>
     </div>
 
@@ -112,7 +112,7 @@
             <div class="dta-cols">
               <div class="dta-col" id="col-0">
                 <div class="dta-col-header">What atmosphere or culture do we want to have together?</div>
-                <div class="dta-col-sub">Part A — our shared culture</div>
+                <div class="dta-col-sub">Part A: our shared culture</div>
                 <div class="sticky-notes" id="notes-0"></div>
                 <div class="add-sticky">
                   <input class="sticky-input" id="inp-0" placeholder="Add an idea…" onkeydown="if(event.key==='Enter')addNote(0)">
@@ -122,7 +122,7 @@
               </div>
               <div class="dta-col" id="col-1">
                 <div class="dta-col-header">How do we want to be together when things are difficult?</div>
-                <div class="dta-col-sub">Part A — navigating difficulty</div>
+                <div class="dta-col-sub">Part A: navigating difficulty</div>
                 <div class="sticky-notes" id="notes-1"></div>
                 <div class="add-sticky">
                   <input class="sticky-input" id="inp-1" placeholder="Add an idea…" onkeydown="if(event.key==='Enter')addNote(1)">
@@ -132,7 +132,7 @@
               </div>
               <div class="dta-col" id="col-2">
                 <div class="dta-col-header">What else would help our relationship to thrive?</div>
-                <div class="dta-col-sub">Part B — shared responsibility</div>
+                <div class="dta-col-sub">Part B: shared responsibility</div>
                 <div class="sticky-notes" id="notes-2"></div>
                 <div class="add-sticky">
                   <input class="sticky-input" id="inp-2" placeholder="Add an idea…" onkeydown="if(event.key==='Enter')addNote(2)">
@@ -273,7 +273,7 @@
       const pw=297, ph=210, margin=15, colW=(pw-margin*2-20)/3;
 
       doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(44,74,90);
-      doc.text('Relation-ship — Design Relationship Alliance',pw/2,14,{align:'center'});
+      doc.text('Relation-ship, Design Relationship Alliance',pw/2,14,{align:'center'});
       doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(150,150,150);
       doc.text(`Generated ${new Date().toLocaleDateString()}`,pw/2,20,{align:'center'});
 
@@ -316,7 +316,7 @@
       const {jsPDF}=window.jspdf;
       const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
       doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(44,74,90);
-      doc.text('Relation-ship — Part 2 Reflections',105,18,{align:'center'});
+      doc.text('Relation-ship, Part 2 Reflections',105,18,{align:'center'});
       doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(150,150,150);
       doc.text(`Generated ${new Date().toLocaleDateString()}`,105,25,{align:'center'});
       let y=35;
