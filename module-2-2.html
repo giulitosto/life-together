@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lights & Shadows Together — You and I, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .ls-share-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+    @media (max-width: 520px) { .ls-share-grid { grid-template-columns: 1fr; } }
+
+    .ls-share-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+    }
+    .ls-share-header {
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-bottom: 0.85rem;
+    }
+    .ls-share-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 500; flex-shrink: 0;
+      color: var(--white);
+    }
+    .ls-share-avatar.a { background: var(--ocean); }
+    .ls-share-avatar.b { background: var(--seafoam); }
+    .ls-share-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; color: var(--ocean); font-weight: 500;
+    }
+
+    .ls-section-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0.75rem 0 0.4rem;
+    }
+    .ls-section-label.lights { color: var(--seafoam); }
+    .ls-section-label.shadows { color: var(--rope); }
+
+    .ls-tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0.25rem; }
+    .ls-tag {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-family: 'Jost', sans-serif;
+    }
+    .ls-tag.light { background: rgba(143,188,176,0.15); color: var(--ocean); border: 1px solid rgba(143,188,176,0.3); }
+    .ls-tag.shadow { background: rgba(196,149,106,0.12); color: var(--rope); border: 1px solid rgba(196,149,106,0.2); }
+    .ls-tag-input-row {
+      display: flex; gap: 6px; margin-top: 0.4rem; align-items: center;
+    }
+    .ls-tag-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--sand-dark);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.8rem;
+      color: var(--ink);
+      padding: 2px 0;
+    }
+    .ls-tag-input:focus { outline: none; border-bottom-color: var(--seafoam); }
+    .ls-tag-input::placeholder { color: var(--muted); opacity: 0.4; font-style: italic; }
+    .ls-tag-add-btn {
+      background: none; border: none;
+      color: var(--seafoam); cursor: pointer;
+      font-size: 1.1rem; line-height: 1; padding: 0 4px;
+      transition: color 0.2s;
+    }
+    .ls-tag-add-btn:hover { color: var(--ocean); }
+
+    .celebration-card {
+      background: linear-gradient(135deg, rgba(143,188,176,0.1), rgba(196,149,106,0.06));
+      border: 1px solid rgba(143,188,176,0.2);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 1.25rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 2 progress">
+      <div class="progress-step">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">Land work</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step active">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Lights & Shadows</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">Intentions</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">Love Languages</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Conversations</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 2 · Part 2</div>
+    <h1 class="page-title">Seeing Each Other</h1>
+    <div class="timing-badge">⏱ ~60 minutes &nbsp;·&nbsp; Together</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>In Module 1, you each mapped your own lights and shadows — alone, honestly, privately. Now you bring those maps into the open and share them with each other.</p>
+      <p>This isn't a moment for analysis or advice. It's a moment for witnessing. To be truly seen by someone — lights and all, shadows and all — is one of the most intimate things two people can offer each other.</p>
+    </div>
+
+    <div class="info-note">
+      <strong>The invitation:</strong> Enter this with curiosity and warmth. Your partner is offering you something vulnerable. Receive it as a gift.
+    </div>
+
+    <h2 class="section-heading">Steps</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3 class="step-title">Share your lights and shadows (~30 min)</h3>
+          <div class="step-text">Each person shares what they wrote in Module 1 Part 3 — their lights and their shadows. Enter each other's lists below as they share. The listener listens without interrupting. 15 minutes each.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>Listener: receive what you hear without fixing or disagreeing — just let it land</li>
+              <li>Sharer: be as honest as you were when you were alone</li>
+            </ul>
+          </div>
+
+          <div class="ls-share-grid">
+            <div class="ls-share-card">
+              <div class="ls-share-header">
+                <div class="ls-share-avatar a" id="avatar-a"></div>
+                <div class="ls-share-name" id="name-a-display">Person A</div>
+              </div>
+
+              <div class="ls-section-label lights">☀ Lights</div>
+              <div class="ls-tag-list" id="a-lights"></div>
+              <div class="ls-tag-input-row">
+                <input type="text" class="ls-tag-input" id="a-light-input" placeholder="Add a light…">
+                <button class="ls-tag-add-btn" onclick="addTag('a','light')" title="Add">+</button>
+              </div>
+
+              <div class="ls-section-label shadows" style="margin-top:1rem;">◑ Shadows</div>
+              <div class="ls-tag-list" id="a-shadows"></div>
+              <div class="ls-tag-input-row">
+                <input type="text" class="ls-tag-input" id="a-shadow-input" placeholder="Add a shadow…">
+                <button class="ls-tag-add-btn" onclick="addTag('a','shadow')" title="Add">+</button>
+              </div>
+            </div>
+
+            <div class="ls-share-card">
+              <div class="ls-share-header">
+                <div class="ls-share-avatar b" id="avatar-b"></div>
+                <div class="ls-share-name" id="name-b-display">Person B</div>
+              </div>
+
+              <div class="ls-section-label lights">☀ Lights</div>
+              <div class="ls-tag-list" id="b-lights"></div>
+              <div class="ls-tag-input-row">
+                <input type="text" class="ls-tag-input" id="b-light-input" placeholder="Add a light…">
+                <button class="ls-tag-add-btn" onclick="addTag('b','light')" title="Add">+</button>
+              </div>
+
+              <div class="ls-section-label shadows" style="margin-top:1rem;">◑ Shadows</div>
+              <div class="ls-tag-list" id="b-shadows"></div>
+              <div class="ls-tag-input-row">
+                <input type="text" class="ls-tag-input" id="b-shadow-input" placeholder="Add a shadow…">
+                <button class="ls-tag-add-btn" onclick="addTag('b','shadow')" title="Add">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3 class="step-title">Celebrate each other (~20 min)</h3>
+          <div class="step-text">Now it's time to actively celebrate what you see. Not just acknowledge — celebrate. Look at each other's lights and name what you love about them. Then look at the shadows and name what you appreciate about those too — because the flip side of a shadow is almost always a strength.</div>
+
+          <div class="celebration-card">
+            <div class="prompt-box" style="margin-bottom:1rem;">
+              <ul>
+                <li>What light in your partner do you most benefit from — and have you told them?</li>
+                <li>What shadow in your partner have you struggled with — and can you now see the strength inside it?</li>
+                <li>What do you want them to know about how you see them — the whole them?</li>
+              </ul>
+            </div>
+            <div class="reflection-block" style="margin-top:0;">
+              <span class="reflection-label" id="celebrate-a-label">To Person A, from Person B</span>
+              <textarea class="reflection-textarea" id="r-celebrate-a" placeholder="What do you see in them? What do you want them to know?…" rows="4"></textarea>
+            </div>
+            <div class="reflection-block">
+              <span class="reflection-label" id="celebrate-b-label">To Person B, from Person A</span>
+              <textarea class="reflection-textarea" id="r-celebrate-b" placeholder="What do you see in them? What do you want them to know?…" rows="4"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3 class="step-title">What this opens up (~10 min)</h3>
+          <div class="step-text">Take a moment together to reflect on what this exercise brought up.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>Was there anything your partner shared that you didn't fully know before?</li>
+              <li>Was there anything you shared that felt difficult — and how did it feel to be received?</li>
+              <li>How might understanding each other's shadows change how you show up for each other?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">Together</span>
+            <textarea class="reflection-textarea" id="r-together" placeholder="What shifted? What do you want to carry forward from this?…" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
+      <a href="module-2-3.html" class="btn btn-primary">Continue: Intentions & Words →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const nameA = sessionStorage.getItem('nameA') || 'Person A';
+    const nameB = sessionStorage.getItem('nameB') || 'Person B';
+    document.getElementById('name-a-display').textContent = nameA;
+    document.getElementById('name-b-display').textContent = nameB;
+    document.getElementById('avatar-a').textContent = nameA.charAt(0).toUpperCase();
+    document.getElementById('avatar-b').textContent = nameB.charAt(0).toUpperCase();
+    document.getElementById('celebrate-a-label').textContent = `To ${nameA}, from ${nameB}`;
+    document.getElementById('celebrate-b-label').textContent = `To ${nameB}, from ${nameA}`;
+
+    const tags = { a: { light: [], shadow: [] }, b: { light: [], shadow: [] } };
+
+    function addTag(person, type) {
+      const inputId = `${person}-${type}-input`;
+      const input = document.getElementById(inputId);
+      const val = input.value.trim();
+      if (!val) return;
+      tags[person][type].push(val);
+      renderTags(person, type);
+      input.value = '';
+      input.focus();
+    }
+
+    function removeTag(person, type, idx) {
+      tags[person][type].splice(idx, 1);
+      renderTags(person, type);
+    }
+
+    function renderTags(person, type) {
+      const listId = `${person}-${type}s`;
+      const list = document.getElementById(listId);
+      list.innerHTML = '';
+      tags[person][type].forEach((t, i) => {
+        const tag = document.createElement('span');
+        tag.className = `ls-tag ${type}`;
+        tag.style.cursor = 'pointer';
+        tag.title = 'Click to remove';
+        tag.textContent = t;
+        tag.onclick = () => removeTag(person, type, i);
+        list.appendChild(tag);
+      });
+    }
+
+    ['a-light-input','a-shadow-input','b-light-input','b-shadow-input'].forEach(id => {
+      const [person, type] = id.replace('-input','').split('-');
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') addTag(person, type);
+      });
+    });
+
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(44, 74, 90);
+      doc.text('Relation-ship — Seeing Each Other', 105, 18, { align: 'center' });
+
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(150, 150, 150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+
+      let y = 35;
+
+      function addBlock(title, body) {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(44, 74, 90);
+        doc.text(title, 20, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(50, 50, 50);
+        const lines = doc.splitTextToSize(body || '(no notes)', 170);
+        doc.text(lines, 20, y);
+        y += lines.length * 5 + 8;
+      }
+
+      addBlock(`${nameA} — Lights`, tags.a.light.join(', ') || '(none)');
+      addBlock(`${nameA} — Shadows`, tags.a.shadow.join(', ') || '(none)');
+      addBlock(`${nameB} — Lights`, tags.b.light.join(', ') || '(none)');
+      addBlock(`${nameB} — Shadows`, tags.b.shadow.join(', ') || '(none)');
+      addBlock(`To ${nameA}, from ${nameB}`, document.getElementById('r-celebrate-a').value);
+      addBlock(`To ${nameB}, from ${nameA}`, document.getElementById('r-celebrate-b').value);
+      addBlock('Together', document.getElementById('r-together').value);
+
+      doc.save('relation-ship-seeing-each-other.pdf');
+    }
+  </script>
+</body>
+</html>

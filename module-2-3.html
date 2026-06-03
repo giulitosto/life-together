@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intentions & Words — You and I, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .intention-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+    .intention-type {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--rope);
+      margin-bottom: 0.5rem;
+    }
+    .intention-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--sand-dark);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--ocean);
+      padding: 0 2rem 0.3rem 0;
+      font-weight: 400;
+      transition: border-bottom-color 0.2s;
+    }
+    .intention-input:focus { outline: none; border-bottom-color: var(--seafoam); }
+    .intention-input::placeholder { color: var(--muted); opacity: 0.4; font-style: italic; }
+    .intention-delete {
+      position: absolute;
+      top: 0.9rem; right: 1rem;
+      background: none; border: none;
+      color: var(--muted); cursor: pointer;
+      font-size: 1.1rem; line-height: 1; padding: 0;
+      transition: color 0.2s;
+    }
+    .intention-delete:hover { color: var(--rope); }
+    .add-intention-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; background: none;
+      border: 1px dashed rgba(44,74,90,0.2);
+      border-radius: 12px; padding: 0.75rem 1rem;
+      font-family: 'Jost', sans-serif; font-size: 0.82rem;
+      color: var(--muted); cursor: pointer; transition: all 0.2s;
+      margin-bottom: 1.5rem;
+    }
+    .add-intention-btn:hover {
+      border-color: var(--seafoam); color: var(--ocean);
+      background: rgba(143,188,176,0.06);
+    }
+
+    details.script-toggle { margin: 0.75rem 0 0; }
+    details.script-toggle summary {
+      cursor: pointer; font-size: 0.78rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--seafoam);
+      list-style: none; display: inline-flex; align-items: center;
+      gap: 0.5rem; user-select: none; transition: color 0.2s;
+    }
+    details.script-toggle summary::-webkit-details-marker { display: none; }
+    details.script-toggle summary::before {
+      content: '▶'; font-size: 0.55rem; display: inline-block; transition: transform 0.2s;
+    }
+    details[open].script-toggle summary::before { transform: rotate(90deg); }
+    details.script-toggle summary:hover { color: var(--ocean); }
+    .script-text {
+      background: rgba(143,188,176,0.1); border-left: 3px solid var(--seafoam);
+      border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; margin-top: 0.75rem;
+      font-size: 0.88rem; color: var(--ocean); line-height: 1.8;
+    }
+    .script-text p { margin: 0 0 0.75rem; }
+    .script-text p:last-child { margin-bottom: 0; }
+
+    .word-pair {
+      display: flex; gap: 0.75rem; margin-bottom: 0.75rem; align-items: center;
+    }
+    .word-input {
+      flex: 1;
+      background: var(--white); border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 10px; padding: 0.6rem 0.9rem;
+      font-family: 'Jost', sans-serif; font-size: 0.85rem; color: var(--ink);
+      transition: border-color 0.2s;
+    }
+    .word-input:focus { outline: none; border-color: var(--seafoam); }
+    .word-input::placeholder { color: var(--muted); opacity: 0.45; font-style: italic; }
+    .word-arrow { color: var(--rope); font-size: 1rem; flex-shrink: 0; }
+    .word-delete {
+      background: none; border: none; color: var(--muted);
+      cursor: pointer; font-size: 1rem; padding: 0 2px; transition: color 0.2s;
+    }
+    .word-delete:hover { color: var(--rope); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 2 progress">
+      <div class="progress-step">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">Land work</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Lights & Shadows</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step active">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">Intentions</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">Love Languages</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Conversations</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 2 · Part 3</div>
+    <h1 class="page-title">Intentions & Words</h1>
+    <div class="timing-badge">⏱ ~45 minutes &nbsp;·&nbsp; Together</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>The words we use in a relationship are not neutral. They shape what we notice, what we expect, and how we treat each other. <em>Partner</em> carries different weight than <em>soulmate</em>. <em>We need to talk</em> lands differently than <em>can I share something with you?</em></p>
+      <p>Intention, too, is a force. A relationship held with clear, shared intention moves differently than one that drifts. This section is about getting deliberate — about the language you use and the intentions you set.</p>
+    </div>
+
+    <details class="script-toggle">
+      <summary>Read the theory</summary>
+      <div class="script-text">
+        <p>In systems coaching, we speak about the power of naming things — because what you name, you can work with. A relationship without named intentions is like a ship without a compass. It may still move, but not necessarily where you want to go.</p>
+        <p>Words, too, carry energy. Some words open space in a relationship — they signal safety, curiosity, care. Others close it down — they trigger defensiveness, distance, or resignation. Most couples develop their own language over time without ever noticing it.</p>
+        <p>Today you'll do two things: set shared intentions for your relationship going forward, and examine the words you use — naming what to bring more of and what to use less of.</p>
+      </div>
+    </details>
+
+    <h2 class="section-heading">Steps</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3 class="step-title">Set your intentions (~20 min)</h3>
+          <div class="step-text">An intention is a conscious direction — not a goal with a deadline, but a quality you want to cultivate. Add intentions for your relationship: how you want to be together, what you're moving toward, what you're committing to.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>How do we want to feel in this relationship — day to day?</li>
+              <li>What do we want more of? What are we moving away from?</li>
+              <li>What kind of partnership are we building?</li>
+            </ul>
+          </div>
+
+          <div id="intentions-list"></div>
+          <button class="add-intention-btn" onclick="addIntention()">+ Add an intention</button>
+
+          <div class="reflection-block">
+            <span class="reflection-label">Our shared intention for this relationship</span>
+            <textarea class="reflection-textarea" id="r-intention" placeholder="Distil your intentions into one clear statement — a compass you can return to…" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3 class="step-title">The words between you (~20 min)</h3>
+          <div class="step-text">Think about the language you use with each other — the phrases that appear when you're stressed, when you're loving, when you're in conflict. Some words open things up. Some close them down.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>Are there phrases one of you uses that land badly — and a better alternative?</li>
+              <li>Are there words or rituals of connection you want to use more?</li>
+              <li>What would you like to say more often? What would you like to say less?</li>
+            </ul>
+          </div>
+
+          <div class="info-note" style="font-size:0.82rem;">
+            <strong>How it works:</strong> For each entry, name a word or phrase to use <em>less</em> and the alternative to use <em>more</em>. This isn't about blame — it's about designing the language of your relationship together.
+          </div>
+
+          <div id="word-pairs-list" style="margin:1rem 0;"></div>
+          <button class="add-intention-btn" onclick="addWordPair()">+ Add a word swap</button>
+
+          <div class="reflection-block">
+            <span class="reflection-label">Words we want to bring into our relationship</span>
+            <textarea class="reflection-textarea" id="r-words" placeholder="Phrases, rituals, ways of speaking that you want to cultivate…" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
+      <a href="module-2-4.html" class="btn btn-primary">Continue: Love Languages together →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    let itemCount = 0;
+
+    function addIntention(val) {
+      const id = ++itemCount;
+      const list = document.getElementById('intentions-list');
+      const card = document.createElement('div');
+      card.className = 'intention-card';
+      card.id = 'int-' + id;
+      card.innerHTML = `
+        <button class="intention-delete" onclick="removeItem('int-${id}')" title="Remove">×</button>
+        <div class="intention-type">Intention</div>
+        <input type="text" class="intention-input" id="ii-${id}"
+          placeholder="e.g. We choose curiosity over assumption…"
+          value="${val || ''}">
+      `;
+      list.appendChild(card);
+      if (!val) document.getElementById(`ii-${id}`).focus();
+    }
+
+    function addWordPair() {
+      const id = ++itemCount;
+      const list = document.getElementById('word-pairs-list');
+      const row = document.createElement('div');
+      row.className = 'word-pair';
+      row.id = 'wp-' + id;
+      row.innerHTML = `
+        <input type="text" class="word-input" id="wl-${id}" placeholder="Less: e.g. 'You always…'">
+        <span class="word-arrow">→</span>
+        <input type="text" class="word-input" id="wm-${id}" placeholder="More: e.g. 'I notice that…'">
+        <button class="word-delete" onclick="removeItem('wp-${id}')" title="Remove">×</button>
+      `;
+      list.appendChild(row);
+      document.getElementById(`wl-${id}`).focus();
+    }
+
+    function removeItem(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+
+    addIntention(); addIntention();
+    addWordPair();
+
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(44, 74, 90);
+      doc.text('Relation-ship — Intentions & Words', 105, 18, { align: 'center' });
+
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(150, 150, 150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+
+      let y = 35;
+
+      function addBlock(title, body) {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(44, 74, 90);
+        doc.text(title, 20, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(50, 50, 50);
+        const lines = doc.splitTextToSize(body || '(no notes)', 170);
+        doc.text(lines, 20, y);
+        y += lines.length * 5 + 8;
+      }
+
+      const intentions = [...document.querySelectorAll('#intentions-list .intention-input')]
+        .map(i => i.value.trim()).filter(Boolean);
+      addBlock('Our intentions', intentions.join('\n') || '(none)');
+      addBlock('Our shared intention statement', document.getElementById('r-intention').value);
+
+      const pairs = [...document.querySelectorAll('#word-pairs-list .word-pair')].map(row => {
+        const less = row.querySelector('[id^="wl-"]').value.trim();
+        const more = row.querySelector('[id^="wm-"]').value.trim();
+        return less && more ? `${less} → ${more}` : less || more;
+      }).filter(Boolean);
+      addBlock('Word swaps', pairs.join('\n') || '(none)');
+      addBlock('Words to bring in', document.getElementById('r-words').value);
+
+      doc.save('relation-ship-intentions-words.pdf');
+    }
+  </script>
+</body>
+</html>

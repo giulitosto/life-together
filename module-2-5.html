@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversation Cards — You and I, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .card-deck {
+      margin: 1.25rem 0;
+      position: relative;
+    }
+    .conversation-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.12);
+      border-radius: 20px;
+      padding: 2rem 1.75rem 1.5rem;
+      text-align: center;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(44,74,90,0.07);
+      transition: transform 0.15s;
+      cursor: pointer;
+    }
+    .conversation-card:hover { transform: translateY(-2px); }
+    .card-category {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rope);
+      margin-bottom: 1rem;
+    }
+    .card-question {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      color: var(--ocean);
+      line-height: 1.5;
+      font-weight: 400;
+    }
+    .card-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 1rem;
+      font-style: italic;
+    }
+    .card-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.75rem;
+    }
+    .card-nav-btn {
+      background: none;
+      border: 1px solid rgba(44,74,90,0.15);
+      border-radius: 30px;
+      padding: 0.45rem 1rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .card-nav-btn:hover { border-color: var(--seafoam); color: var(--ocean); }
+    .card-counter {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 1.25rem;
+    }
+    .cat-btn {
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(44,74,90,0.15);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cat-btn.active { background: var(--ocean); color: var(--white); border-color: var(--ocean); }
+
+    .trigger-grid { display: grid; gap: 0.75rem; margin: 1rem 0; }
+    .trigger-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+    }
+    .trigger-card-header {
+      display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem;
+    }
+    .trigger-avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 500; color: var(--white); flex-shrink: 0;
+    }
+    .trigger-avatar.a { background: var(--ocean); }
+    .trigger-avatar.b { background: var(--seafoam); }
+    .trigger-person { font-size: 0.78rem; color: var(--ocean); font-weight: 500; }
+    .trigger-row { margin-bottom: 0.6rem; }
+    .trigger-label {
+      font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted); margin-bottom: 0.25rem; display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 2 progress">
+      <div class="progress-step">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">Land work</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Lights & Shadows</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">Intentions</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">Love Languages</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step active">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Conversations</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 2 · Part 5</div>
+    <h1 class="page-title">Conversation Cards</h1>
+    <div class="timing-badge">⏱ ~60 minutes &nbsp;·&nbsp; Together</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>The goal of these cards isn't depth for depth's sake — it's intentional knowing. To understand each other not through assumption and time, but through genuine curiosity and honest conversation.</p>
+      <p>Work through as many cards as feel right. You can save the deck and return to it on a long drive, over dinner, or whenever you want to reconnect deliberately.</p>
+    </div>
+
+    <h2 class="section-heading">Conversation Cards</h2>
+
+    <div class="category-filters" id="category-filters"></div>
+
+    <div class="card-deck">
+      <div class="conversation-card" id="current-card" onclick="nextCard()">
+        <div class="card-category" id="card-cat"></div>
+        <div class="card-question" id="card-question"></div>
+        <div class="card-hint">Tap to draw the next card</div>
+      </div>
+      <div class="card-nav">
+        <button class="card-nav-btn" onclick="prevCard()">← Previous</button>
+        <span class="card-counter" id="card-counter"></span>
+        <button class="card-nav-btn" onclick="nextCard()">Next →</button>
+      </div>
+    </div>
+
+    <div class="reflection-block">
+      <span class="reflection-label">Notes from our conversation</span>
+      <textarea class="reflection-textarea" id="r-cards" placeholder="Capture anything that surprised you, moved you, or that you want to remember…" rows="4"></textarea>
+    </div>
+
+    <h2 class="section-heading">Triggers & Defusing</h2>
+
+    <div class="prose">
+      <p>Every person has triggers — situations that set off a disproportionate reaction, often rooted in something older than the present moment. And every trigger has a defusing mechanism: a way a partner can help, if they know what it is.</p>
+      <p>This isn't about fixing each other. It's about becoming each other's allies when the weather gets rough.</p>
+    </div>
+
+    <div class="trigger-grid" id="trigger-grid"></div>
+
+    <div class="reflection-block">
+      <span class="reflection-label">What we learned about each other's triggers</span>
+      <textarea class="reflection-textarea" id="r-triggers" placeholder="What did you discover? What will you do differently now that you know?…" rows="4"></textarea>
+    </div>
+
+    <div class="info-note" style="margin-top:2rem;">
+      <strong>You've completed Module 2.</strong> You've seen each other's land, celebrated each other's full selves, set intentions, and learned how to love each other better. The next module is where you step back and look at the relationship as its own living thing.
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
+      <a href="index.html" class="btn btn-primary">Back to menu →</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const nameA = sessionStorage.getItem('nameA') || 'Person A';
+    const nameB = sessionStorage.getItem('nameB') || 'Person B';
+
+    const ALL_CARDS = [
+      { cat: 'Knowing each other', q: 'What is something you find stressful that I might not fully realise?' },
+      { cat: 'Knowing each other', q: 'When you\'re having a hard day, what do you most want from me?' },
+      { cat: 'Knowing each other', q: 'What does feeling truly supported look like to you?' },
+      { cat: 'Knowing each other', q: 'What\'s something you\'ve never told me that you think I should know?' },
+      { cat: 'Knowing each other', q: 'When do you feel most like yourself? When do you feel least like yourself?' },
+      { cat: 'Knowing each other', q: 'What\'s one thing you pretend not to mind, but actually do?' },
+      { cat: 'Knowing each other', q: 'What do you need more of from me that you find it hard to ask for?' },
+      { cat: 'Us', q: 'When do you feel closest to me? What are we doing?' },
+      { cat: 'Us', q: 'Is there something we\'ve stopped doing together that you miss?' },
+      { cat: 'Us', q: 'What does a really good day for us look like — the ordinary kind?' },
+      { cat: 'Us', q: 'What\'s the most important thing we\'ve built together so far?' },
+      { cat: 'Us', q: 'What do you think our relationship teaches each of us?' },
+      { cat: 'Us', q: 'If you could change one small thing about how we spend time together, what would it be?' },
+      { cat: 'Growth', q: 'Where do you want to grow in the next year — and how can I support you?' },
+      { cat: 'Growth', q: 'What\'s a fear you\'d like to face? What would help you do that?' },
+      { cat: 'Growth', q: 'What do you think our relationship asks us each to become?' },
+      { cat: 'Growth', q: 'Is there something you\'ve been wanting to say to me that you\'ve been holding back?' },
+      { cat: 'Growth', q: 'What does your ideal version of us look like in five years?' },
+      { cat: 'Appreciation', q: 'What did I do recently that meant a lot to you, that I might not have realised?' },
+      { cat: 'Appreciation', q: 'What\'s something you genuinely admire about how I handle something difficult?' },
+      { cat: 'Appreciation', q: 'What\'s your favourite thing about the way I love you?' },
+      { cat: 'Appreciation', q: 'Is there something you\'ve been wanting to thank me for?' },
+    ];
+
+    const CATEGORIES = ['All', ...new Set(ALL_CARDS.map(c => c.cat))];
+    let activeCategory = 'All';
+    let filteredCards = [...ALL_CARDS];
+    let currentIdx = 0;
+
+    function buildFilters() {
+      const container = document.getElementById('category-filters');
+      CATEGORIES.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'cat-btn' + (cat === 'All' ? ' active' : '');
+        btn.textContent = cat;
+        btn.onclick = () => setCategory(cat);
+        container.appendChild(btn);
+      });
+    }
+
+    function setCategory(cat) {
+      activeCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => {
+        b.classList.toggle('active', b.textContent === cat);
+      });
+      filteredCards = cat === 'All' ? [...ALL_CARDS] : ALL_CARDS.filter(c => c.cat === cat);
+      currentIdx = 0;
+      renderCard();
+    }
+
+    function renderCard() {
+      const card = filteredCards[currentIdx];
+      document.getElementById('card-cat').textContent = card.cat;
+      document.getElementById('card-question').textContent = card.q;
+      document.getElementById('card-counter').textContent = `${currentIdx + 1} of ${filteredCards.length}`;
+    }
+
+    function nextCard() {
+      currentIdx = (currentIdx + 1) % filteredCards.length;
+      renderCard();
+    }
+    function prevCard() {
+      currentIdx = (currentIdx - 1 + filteredCards.length) % filteredCards.length;
+      renderCard();
+    }
+
+    // ── Triggers ──
+    function buildTriggers() {
+      const grid = document.getElementById('trigger-grid');
+      [{ person: nameA, key: 'a' }, { person: nameB, key: 'b' }].forEach(({ person, key }) => {
+        const card = document.createElement('div');
+        card.className = 'trigger-card';
+        card.innerHTML = `
+          <div class="trigger-card-header">
+            <div class="trigger-avatar ${key}">${person.charAt(0).toUpperCase()}</div>
+            <div class="trigger-person">${person}</div>
+          </div>
+          <div class="trigger-row">
+            <span class="trigger-label">What triggers me</span>
+            <textarea class="reflection-textarea" id="trigger-what-${key}"
+              placeholder="Situations, behaviours, or patterns that set me off — even if the reaction feels disproportionate…"
+              rows="2"></textarea>
+          </div>
+          <div class="trigger-row">
+            <span class="trigger-label">What helps — how to defuse it</span>
+            <textarea class="reflection-textarea" id="trigger-how-${key}"
+              placeholder="What I need from my partner in that moment — or what makes it worse…"
+              rows="2"></textarea>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    buildFilters();
+    renderCard();
+    buildTriggers();
+
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(44, 74, 90);
+      doc.text('Relation-ship — Conversation Cards', 105, 18, { align: 'center' });
+
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(150, 150, 150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+
+      let y = 35;
+
+      function addBlock(title, body) {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(44, 74, 90);
+        doc.text(title, 20, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(50, 50, 50);
+        const lines = doc.splitTextToSize(body || '(no notes)', 170);
+        doc.text(lines, 20, y);
+        y += lines.length * 5 + 8;
+      }
+
+      addBlock('Notes from our conversation', document.getElementById('r-cards').value);
+      addBlock(`${nameA} — triggers`, document.getElementById('trigger-what-a').value);
+      addBlock(`${nameA} — how to defuse`, document.getElementById('trigger-how-a').value);
+      addBlock(`${nameB} — triggers`, document.getElementById('trigger-what-b').value);
+      addBlock(`${nameB} — how to defuse`, document.getElementById('trigger-how-b').value);
+      addBlock('What we learned', document.getElementById('r-triggers').value);
+
+      doc.save('relation-ship-conversation-cards.pdf');
+    }
+  </script>
+</body>
+</html>

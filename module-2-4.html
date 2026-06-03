@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Languages Together — You and I, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .ll-compare-grid {
+      display: grid;
+      gap: 0.75rem;
+      margin: 1.25rem 0;
+    }
+    .ll-compare-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+    }
+    .ll-compare-header {
+      display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;
+    }
+    .ll-compare-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .ll-compare-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; color: var(--ocean); font-weight: 500; flex: 1;
+    }
+    .ll-bar-group { display: grid; gap: 0.35rem; }
+    .ll-bar-row { display: flex; align-items: center; gap: 0.6rem; }
+    .ll-bar-label {
+      font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em;
+      text-transform: uppercase; width: 70px; flex-shrink: 0;
+    }
+    .ll-bar-track {
+      flex: 1; height: 6px; background: var(--sand-dark);
+      border-radius: 3px; overflow: hidden;
+    }
+    .ll-bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+    .ll-bar-fill.give { background: var(--ocean); opacity: 0.6; }
+    .ll-bar-fill.receive { background: var(--seafoam); }
+    .ll-bar-val {
+      font-size: 0.72rem; color: var(--muted); width: 16px;
+      text-align: right; flex-shrink: 0;
+    }
+
+    .gap-card {
+      border-radius: 12px; padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .gap-card.aligned {
+      background: rgba(143,188,176,0.1);
+      border: 1px solid rgba(143,188,176,0.25);
+    }
+    .gap-card.gap {
+      background: rgba(196,149,106,0.08);
+      border: 1px solid rgba(196,149,106,0.2);
+    }
+    .gap-card-label {
+      font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 0.3rem;
+    }
+    .gap-card.aligned .gap-card-label { color: var(--seafoam); }
+    .gap-card.gap .gap-card-label { color: var(--rope); }
+    .gap-card-text { font-size: 0.85rem; color: var(--ocean); line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 2 progress">
+      <div class="progress-step">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">Land work</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Lights & Shadows</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">Intentions</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step active">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">Love Languages</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Conversations</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 2 · Part 4</div>
+    <h1 class="page-title">Love Languages Together</h1>
+    <div class="timing-badge">⏱ ~50 minutes &nbsp;·&nbsp; Together</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>In Module 1 you each explored your own love languages — how you naturally give love, and how you most deeply receive it. Now you bring those profiles together.</p>
+      <p>Most misunderstandings in love aren't about intent — they're about translation. You might be expressing love constantly, in the language that comes naturally to you, while your partner is waiting to hear it in a completely different language. This section is about closing that gap.</p>
+    </div>
+
+    <div class="info-note">
+      <strong>Enter your Module 1 scores below</strong> — or re-rate if you'd like a fresh read. Then explore what the comparison reveals together.
+    </div>
+
+    <h2 class="section-heading">Steps</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3 class="step-title">Enter your scores (~10 min)</h3>
+          <div class="step-text">Each person enters their love language ratings from Module 1 Part 4 — how strongly each language resonates for giving and receiving (1 = rarely, 5 = deeply me). The comparison updates live.</div>
+
+          <div class="ll-compare-grid" id="ll-compare-grid"></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3 class="step-title">Read the map (~15 min)</h3>
+          <div class="step-text">Look at the comparison together. The analysis below highlights where you're aligned and where there may be gaps worth exploring.</div>
+
+          <div id="gap-analysis" style="margin:1rem 0;"></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3 class="step-title">The conversation (~25 min)</h3>
+          <div class="step-text">Use what you've found to have an honest, curious conversation about how love moves between you.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>When do you feel most loved by your partner — what are they doing?</li>
+              <li>When do you try to show love but it doesn't seem to land — what might be happening?</li>
+              <li>Is there a language your partner needs that you find harder to give? What would help?</li>
+              <li>What's one thing each of you could do differently this week?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">What we discovered</span>
+            <textarea class="reflection-textarea" id="r-discovery" placeholder="What surprised you? What do you want to try differently?…" rows="4"></textarea>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">Our commitments</span>
+            <textarea class="reflection-textarea" id="r-commitments" placeholder="One small thing each of you will do to speak the other's language better…" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
+      <a href="module-2-5.html" class="btn btn-primary">Continue: Conversation Cards →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const nameA = sessionStorage.getItem('nameA') || 'Person A';
+    const nameB = sessionStorage.getItem('nameB') || 'Person B';
+
+    const LANGUAGES = [
+      { name: 'Words of Affirmation', icon: '💬' },
+      { name: 'Quality Time',         icon: '⏳' },
+      { name: 'Acts of Service',      icon: '🤝' },
+      { name: 'Physical Touch',       icon: '🤲' },
+      { name: 'Receiving Gifts',      icon: '🎁' }
+    ];
+
+    const scores = {};
+    LANGUAGES.forEach(l => {
+      scores[l.name] = { aGive: 3, aReceive: 3, bGive: 3, bReceive: 3 };
+    });
+
+    function buildGrid() {
+      const grid = document.getElementById('ll-compare-grid');
+      LANGUAGES.forEach(lang => {
+        const s = scores[lang.name];
+        const card = document.createElement('div');
+        card.className = 'll-compare-card';
+        card.id = 'llc-' + lang.name.replace(/ /g,'_');
+        card.innerHTML = `
+          <div class="ll-compare-header">
+            <div class="ll-compare-icon">${lang.icon}</div>
+            <div class="ll-compare-name">${lang.name}</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 1.5rem;">
+            <div>
+              <div style="font-size:0.68rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;">${nameA}</div>
+              <div class="ll-bar-group">
+                <div class="ll-bar-row">
+                  <div class="ll-bar-label">Give</div>
+                  <div class="ll-bar-track"><div class="ll-bar-fill give" id="bar-ag-${lang.name.replace(/ /g,'_')}" style="width:${s.aGive*20}%"></div></div>
+                  <div class="ll-bar-val" id="val-ag-${lang.name.replace(/ /g,'_')}">${s.aGive}</div>
+                </div>
+                <div class="ll-bar-row">
+                  <div class="ll-bar-label">Receive</div>
+                  <div class="ll-bar-track"><div class="ll-bar-fill receive" id="bar-ar-${lang.name.replace(/ /g,'_')}" style="width:${s.aReceive*20}%"></div></div>
+                  <div class="ll-bar-val" id="val-ar-${lang.name.replace(/ /g,'_')}">${s.aReceive}</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:0.6rem;">
+                <div>
+                  <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Give</div>
+                  <input type="range" min="1" max="5" step="1" value="${s.aGive}" style="width:100%;accent-color:var(--ocean);"
+                    oninput="updateScore('${lang.name}','aGive',this.value)">
+                </div>
+                <div>
+                  <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Receive</div>
+                  <input type="range" min="1" max="5" step="1" value="${s.aReceive}" style="width:100%;accent-color:var(--seafoam);"
+                    oninput="updateScore('${lang.name}','aReceive',this.value)">
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:0.68rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;">${nameB}</div>
+              <div class="ll-bar-group">
+                <div class="ll-bar-row">
+                  <div class="ll-bar-label">Give</div>
+                  <div class="ll-bar-track"><div class="ll-bar-fill give" id="bar-bg-${lang.name.replace(/ /g,'_')}" style="width:${s.bGive*20}%"></div></div>
+                  <div class="ll-bar-val" id="val-bg-${lang.name.replace(/ /g,'_')}">${s.bGive}</div>
+                </div>
+                <div class="ll-bar-row">
+                  <div class="ll-bar-label">Receive</div>
+                  <div class="ll-bar-track"><div class="ll-bar-fill receive" id="bar-br-${lang.name.replace(/ /g,'_')}" style="width:${s.bReceive*20}%"></div></div>
+                  <div class="ll-bar-val" id="val-br-${lang.name.replace(/ /g,'_')}">${s.bReceive}</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:0.6rem;">
+                <div>
+                  <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Give</div>
+                  <input type="range" min="1" max="5" step="1" value="${s.bGive}" style="width:100%;accent-color:var(--ocean);"
+                    oninput="updateScore('${lang.name}','bGive',this.value)">
+                </div>
+                <div>
+                  <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Receive</div>
+                  <input type="range" min="1" max="5" step="1" value="${s.bReceive}" style="width:100%;accent-color:var(--seafoam);"
+                    oninput="updateScore('${lang.name}','bReceive',this.value)">
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function updateScore(lang, key, val) {
+      scores[lang][key] = parseInt(val);
+      const k = key === 'aGive' ? 'ag' : key === 'aReceive' ? 'ar' : key === 'bGive' ? 'bg' : 'br';
+      const id = lang.replace(/ /g,'_');
+      document.getElementById(`bar-${k}-${id}`).style.width = `${parseInt(val)*20}%`;
+      document.getElementById(`val-${k}-${id}`).textContent = val;
+      updateGapAnalysis();
+    }
+
+    function updateGapAnalysis() {
+      const container = document.getElementById('gap-analysis');
+      container.innerHTML = '';
+
+      LANGUAGES.forEach(lang => {
+        const s = scores[lang.name];
+        const giveA = s.aGive; const receiveA = s.aReceive;
+        const giveB = s.bGive; const receiveB = s.bReceive;
+
+        const gapANeeds = Math.abs(giveB - receiveA);
+        const gapBNeeds = Math.abs(giveA - receiveB);
+
+        if (gapANeeds <= 1 && gapBNeeds <= 1) {
+          const card = document.createElement('div');
+          card.className = 'gap-card aligned';
+          card.innerHTML = `
+            <div class="gap-card-label">Aligned ${lang.icon}</div>
+            <div class="gap-card-text"><strong>${lang.name}</strong> — you're both naturally giving and receiving in this language. A strength to celebrate.</div>
+          `;
+          container.appendChild(card);
+        } else if (gapANeeds >= 2 || gapBNeeds >= 2) {
+          const who = gapANeeds >= gapBNeeds
+            ? `${nameA} needs more ${lang.name.toLowerCase()} than ${nameB} naturally gives`
+            : `${nameB} needs more ${lang.name.toLowerCase()} than ${nameA} naturally gives`;
+          const card = document.createElement('div');
+          card.className = 'gap-card gap';
+          card.innerHTML = `
+            <div class="gap-card-label">Gap to explore ${lang.icon}</div>
+            <div class="gap-card-text"><strong>${lang.name}</strong> — ${who}. Worth a conversation about what this looks like in practice.</div>
+          `;
+          container.appendChild(card);
+        }
+      });
+
+      if (container.children.length === 0) {
+        container.innerHTML = '<p style="font-size:0.85rem;color:var(--muted);font-style:italic;">Adjust the scores above to see your alignment analysis.</p>';
+      }
+    }
+
+    buildGrid();
+    updateGapAnalysis();
+
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(44, 74, 90);
+      doc.text('Relation-ship — Love Languages Together', 105, 18, { align: 'center' });
+
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(150, 150, 150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+
+      let y = 35;
+
+      function addBlock(title, body) {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(44, 74, 90);
+        doc.text(title, 20, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(50, 50, 50);
+        const lines = doc.splitTextToSize(body || '(no notes)', 170);
+        doc.text(lines, 20, y);
+        y += lines.length * 5 + 8;
+      }
+
+      LANGUAGES.forEach(lang => {
+        const s = scores[lang.name];
+        addBlock(lang.name,
+          `${nameA}: give ${s.aGive}/5, receive ${s.aReceive}/5\n${nameB}: give ${s.bGive}/5, receive ${s.bReceive}/5`);
+      });
+
+      addBlock('What we discovered', document.getElementById('r-discovery').value);
+      addBlock('Our commitments', document.getElementById('r-commitments').value);
+
+      doc.save('relation-ship-love-languages-together.pdf');
+    }
+  </script>
+</body>
+</html>
