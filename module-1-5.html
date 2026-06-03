@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why I Am — Life Purpose, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    details.script-toggle { margin: 0.75rem 0 0; }
+    details.script-toggle summary {
+      cursor: pointer;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--seafoam);
+      list-style: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      user-select: none;
+      transition: color 0.2s;
+    }
+    details.script-toggle summary::-webkit-details-marker { display: none; }
+    details.script-toggle summary::before {
+      content: '▶';
+      font-size: 0.55rem;
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    details[open].script-toggle summary::before { transform: rotate(90deg); }
+    details.script-toggle summary:hover { color: var(--ocean); }
+    .script-text {
+      background: rgba(143,188,176,0.1);
+      border-left: 3px solid var(--seafoam);
+      border-radius: 0 12px 12px 0;
+      padding: 1rem 1.25rem;
+      margin-top: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--ocean);
+      font-style: italic;
+      line-height: 1.9;
+    }
+    .script-text p { margin: 0 0 0.9rem; }
+    .script-text p:last-child { margin-bottom: 0; }
+    .script-pause {
+      display: block;
+      text-align: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--seafoam);
+      font-style: normal;
+      margin: 0.75rem 0;
+      opacity: 0.7;
+    }
+
+    .mode-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0;
+    }
+    .mode-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rope);
+      margin-bottom: 0.75rem;
+    }
+    .mode-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+    .mode-btn {
+      padding: 6px 16px;
+      border-radius: 30px;
+      border: 1px solid rgba(44,74,90,0.2);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      transition: all 0.2s;
+    }
+    .mode-btn.active { background: var(--ocean); color: var(--white); border-color: var(--ocean); }
+    .mode-hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .vis-stop {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.08);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .vis-stop-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .vis-stop-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(143,188,176,0.2);
+      color: var(--ocean);
+      font-size: 0.72rem;
+      font-weight: 500;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .vis-stop-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--ocean);
+      font-weight: 500;
+    }
+    .vis-stop-time {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    .closing-card {
+      background: linear-gradient(135deg, rgba(143,188,176,0.12), rgba(196,149,106,0.06));
+      border: 1px solid rgba(143,188,176,0.25);
+      border-radius: 16px;
+      padding: 1.75rem;
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+    .closing-card p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      color: var(--ocean);
+      font-style: italic;
+      line-height: 1.7;
+    }
+    .closing-card .closing-sig {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 1 progress">
+      <div class="progress-step">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">Where I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Who I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">How I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">I am enough</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step active">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Why I am</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 1 · Part 5</div>
+    <h1 class="page-title">Why I Am</h1>
+    <div class="timing-badge">⏱ ~50 minutes &nbsp;·&nbsp; Individual</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>This is the final section of Module 1 — and perhaps the most expansive. We've explored where you are, who you are, how you are, and how you love. Now we ask the deepest question: <em>why are you here?</em></p>
+      <p>This is a guided visualisation. It will take you forward in time, then further still, and bring you back with something to carry. Read it slowly. Let your mind wander where it wants to go. There are no wrong answers — only honest ones.</p>
+    </div>
+
+    <div class="info-note">
+      <strong>Before you begin:</strong> This works best when your body is still and your eyes are closed. Read each section, close your eyes, and let the images come. You can also ask someone you trust — your partner, a friend — to read it to you. That changes the experience in a beautiful way.
+    </div>
+
+    <h2 class="section-heading">Choose your mode</h2>
+
+    <div class="mode-card">
+      <div class="mode-label">How would you like to do this?</div>
+      <div class="mode-btns">
+        <button class="mode-btn active" id="mode-solo" onclick="setMode('solo')">Read alone</button>
+        <button class="mode-btn" id="mode-guided" onclick="setMode('guided')">Have someone read to me</button>
+      </div>
+      <div class="mode-hint" id="mode-hint">Read each section, then close your eyes and sit with it for a few minutes before continuing.</div>
+    </div>
+
+    <h2 class="section-heading">The Visualisation</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3 class="step-title">Opening — settle in (~5 min)</h3>
+          <div class="step-text">Before anything else, arrive fully. Close this tab in your mind and open to where you are right now.</div>
+          <details class="script-toggle">
+            <summary>Read the opening</summary>
+            <div class="script-text">
+              <p>Find a comfortable position. Let your spine be tall, your shoulders soft. If it feels right, close your eyes.</p>
+              <p>Take a slow breath in — let your belly expand, not just your chest. Hold for a moment. And release.</p>
+              <span class="script-pause">— pause —</span>
+              <p>Again. Breathe in through your nose, counting to four. Hold for four. Out through your mouth for six. Let your body get heavier with each exhale.</p>
+              <span class="script-pause">— pause —</span>
+              <p>Notice where you're holding tension — your jaw, your shoulders, the space between your brows. And let it soften. You don't need to hold anything right now.</p>
+              <span class="script-pause">— pause —</span>
+              <p>You have nowhere to be for the next hour. This time belongs entirely to you.</p>
+            </div>
+          </details>
+          <div class="reflection-block" style="margin-top:1rem;">
+            <span class="reflection-label">How are you arriving? (optional)</span>
+            <textarea class="reflection-textarea" id="r-opening" placeholder="What do you notice in your body, your mind, as you begin?…" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h2 class="section-heading">The Journey</h2>
+
+    <div id="vis-stops">
+
+      <div class="vis-stop">
+        <div class="vis-stop-header">
+          <div class="vis-stop-num">I</div>
+          <div class="vis-stop-title">Your life at its best</div>
+          <div class="vis-stop-time">~8 min</div>
+        </div>
+        <div class="step-text">We're going forward in time. Not to a vague future — to a specific day, ten years from now, where you are living a life that is deeply yours.</div>
+        <details class="script-toggle">
+          <summary>Read the visualisation</summary>
+          <div class="script-text">
+            <p>Imagine waking up on an ordinary day, ten years from now. The life you've built is exactly what you hoped it would be — not perfect, but deeply yours.</p>
+            <span class="script-pause">— pause —</span>
+            <p>Where are you? What does the room look like? What can you hear? What's the quality of the light?</p>
+            <span class="script-pause">— pause —</span>
+            <p>You get up and move through your day. Notice who is around you. Notice what you're doing — the work, the rituals, the way you spend your mornings.</p>
+            <span class="script-pause">— pause —</span>
+            <p>This version of you feels settled. Purposeful. At home in their own skin. What does that feel like in your body right now?</p>
+            <span class="script-pause">— pause —</span>
+            <p>What has this person built — in their work, their relationships, themselves? What are they proud of? What do they carry lightly now that once felt heavy?</p>
+            <span class="script-pause">— pause —</span>
+            <p>Stay here for a moment. Let it become real.</p>
+          </div>
+        </details>
+        <div class="reflection-block" style="margin-top:1rem;">
+          <span class="reflection-label">What did you see?</span>
+          <textarea class="reflection-textarea" id="r-best" placeholder="Images, feelings, details that came up — note them before they fade…" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="vis-stop">
+        <div class="vis-stop-header">
+          <div class="vis-stop-num">II</div>
+          <div class="vis-stop-title">Your contribution</div>
+          <div class="vis-stop-time">~8 min</div>
+        </div>
+        <div class="step-text">Now we look at what you've given — to the people around you, to the work you've done, to the world in some small or large way.</div>
+        <details class="script-toggle">
+          <summary>Read the visualisation</summary>
+          <div class="script-text">
+            <p>Still in that future day, still that ten-years-from-now version of you — think about the people whose lives are different because of yours.</p>
+            <span class="script-pause">— pause —</span>
+            <p>Not the grand gestures. The ordinary ones. The times you showed up. The words you said that someone carried with them. The way your presence changed a room.</p>
+            <span class="script-pause">— pause —</span>
+            <p>What have you built that outlasts a single day? A project, a relationship, a community, a practice, a body of work — something that bears your mark.</p>
+            <span class="script-pause">— pause —</span>
+            <p>If the people who love you most were to describe what you contributed to their lives, what would they say?</p>
+            <span class="script-pause">— pause —</span>
+            <p>And what would they not say — the quiet things you gave that you never asked to be acknowledged for?</p>
+            <span class="script-pause">— pause —</span>
+            <p>Notice how it feels to receive that. To let yourself be seen as someone who mattered.</p>
+          </div>
+        </details>
+        <div class="reflection-block" style="margin-top:1rem;">
+          <span class="reflection-label">What did you see?</span>
+          <textarea class="reflection-textarea" id="r-contribution" placeholder="What contribution felt most true? What surprised you?…" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="vis-stop">
+        <div class="vis-stop-header">
+          <div class="vis-stop-num">III</div>
+          <div class="vis-stop-title">Looking back</div>
+          <div class="vis-stop-time">~8 min</div>
+        </div>
+        <div class="step-text">We're going further now. To near the very end of your life — when you have the clarity that only comes with distance, and the honesty that comes with nothing left to lose.</div>
+        <details class="script-toggle">
+          <summary>Read the visualisation</summary>
+          <div class="script-text">
+            <p>You are old now. Your body is tired in the way that a life fully lived makes a body tired.</p>
+            <span class="script-pause">— pause —</span>
+            <p>You're looking back across the whole arc of your life. Not with regret — with seeing. The whole picture, from here.</p>
+            <span class="script-pause">— pause —</span>
+            <p>What are you glad you did? The risks you took, the loves you chose, the version of yourself you decided to become?</p>
+            <span class="script-pause">— pause —</span>
+            <p>What do you wish you'd done sooner? Not with guilt — just as information. A gentle correction from your oldest self to your present one.</p>
+            <span class="script-pause">— pause —</span>
+            <p>What actually mattered? Not what you thought would matter — what actually did, in the end?</p>
+            <span class="script-pause">— pause —</span>
+            <p>And what do you know now, from this vantage point, about why you were here?</p>
+          </div>
+        </details>
+        <div class="reflection-block" style="margin-top:1rem;">
+          <span class="reflection-label">What did you see?</span>
+          <textarea class="reflection-textarea" id="r-lookback" placeholder="What mattered? What do you know from here that you couldn't see before?…" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="vis-stop">
+        <div class="vis-stop-header">
+          <div class="vis-stop-num">IV</div>
+          <div class="vis-stop-title">A message from your future self</div>
+          <div class="vis-stop-time">~8 min</div>
+        </div>
+        <div class="step-text">Your oldest, wisest self has something to say to you — to the you that exists right now, reading this.</div>
+        <details class="script-toggle">
+          <summary>Read the visualisation</summary>
+          <div class="script-text">
+            <p>That older version of you turns and looks directly at you — the you of right now, sitting here, in this moment of your life.</p>
+            <span class="script-pause">— pause —</span>
+            <p>They know everything you've been through. Everything you're carrying right now. Everything you're hoping for.</p>
+            <span class="script-pause">— pause —</span>
+            <p>And they love you. Not despite all of it — because of all of it.</p>
+            <span class="script-pause">— pause —</span>
+            <p>What do they want you to know? What are they trying to tell you about how to live, who to be, what to stop waiting for?</p>
+            <span class="script-pause">— pause —</span>
+            <p>Let them speak. Don't edit. Don't question it. Just receive what comes.</p>
+            <span class="script-pause">— pause —</span>
+            <p>Take your time.</p>
+          </div>
+        </details>
+        <div class="reflection-block" style="margin-top:1rem;">
+          <span class="reflection-label">What did they say?</span>
+          <textarea class="reflection-textarea" id="r-message" placeholder="Write it down before it fades — even fragments, even single words…" rows="4"></textarea>
+        </div>
+      </div>
+
+      <div class="vis-stop">
+        <div class="vis-stop-header">
+          <div class="vis-stop-num">V</div>
+          <div class="vis-stop-title">Return</div>
+          <div class="vis-stop-time">~5 min</div>
+        </div>
+        <div class="step-text">Now come back. Gently, gradually, fully.</div>
+        <details class="script-toggle">
+          <summary>Read the closing</summary>
+          <div class="script-text">
+            <p>Begin to feel the weight of your body where you're sitting. The temperature of the air. The sounds around you.</p>
+            <span class="script-pause">— pause —</span>
+            <p>Take a breath in — long and slow. Hold it for a moment. And let it go completely.</p>
+            <span class="script-pause">— pause —</span>
+            <p>Take whatever you found in that journey and hold it gently. You don't have to understand it all right now. You don't have to do anything with it yet.</p>
+            <span class="script-pause">— pause —</span>
+            <p>Just bring it back with you, like something found on a long walk — something you didn't expect to find, but knew the moment you saw it that it was yours.</p>
+            <span class="script-pause">— pause —</span>
+            <p>When you're ready, open your eyes.</p>
+          </div>
+        </details>
+      </div>
+
+    </div>
+
+    <h2 class="section-heading">After the journey</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3 class="step-title">Sit with it (~5 min)</h3>
+          <div class="step-text">Don't rush to the reflection yet. Sit quietly for a few minutes. Let what came up settle before you try to put it into words. Make yourself a drink if you'd like.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3 class="step-title">What emerged (~10 min)</h3>
+          <div class="step-text">Look back at what you noted during the visualisation. What patterns do you see? What keeps coming back?</div>
+          <div class="prompt-box">
+            <ul>
+              <li>What image or moment from the visualisation felt most true?</li>
+              <li>What surprised you — what did you not expect to find?</li>
+              <li>What feels urgent — something you've been putting off that your future self is asking you to begin?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">What emerged</span>
+            <textarea class="reflection-textarea" id="r-emerged" placeholder="Patterns, surprises, things that felt true…" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3 class="step-title">My Purpose Statement</h3>
+          <div class="step-text">Bring everything together. In one to three sentences, write what you believe to be your purpose — your reason for being here, in the fullest sense you can currently see it. It will change as you do. Write what is true right now.</div>
+          <div class="prompt-box">
+            <p>You might begin with: <em>"I am here to…"</em> or <em>"My purpose is to…"</em> or simply whatever comes.</p>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">My Purpose Statement</span>
+            <textarea class="reflection-textarea" id="r-purpose" placeholder="Write your purpose statement — let it be imperfect, let it be yours…" rows="5"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="closing-card">
+      <p>You've just completed Module 1.<br>You know yourself a little better than you did before.<br>That is no small thing.</p>
+      <div class="closing-sig">— Drew & Giuli</div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download my reflections</button>
+      <a href="index.html" class="btn btn-primary">Back to menu →</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    function setMode(mode) {
+      document.getElementById('mode-solo').classList.toggle('active', mode === 'solo');
+      document.getElementById('mode-guided').classList.toggle('active', mode === 'guided');
+      const hint = document.getElementById('mode-hint');
+      hint.textContent = mode === 'solo'
+        ? 'Read each section, then close your eyes and sit with it for a few minutes before continuing.'
+        : 'Ask someone you trust to read each section aloud to you — slowly, with pauses. Close your eyes and simply receive.';
+    }
+
+    // ── PDF Download ──
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(44, 74, 90);
+      doc.text('Relation-ship — Why I Am', 105, 18, { align: 'center' });
+
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(150, 150, 150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+
+      let y = 35;
+
+      function addBlock(title, body) {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(44, 74, 90);
+        doc.text(title, 20, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(50, 50, 50);
+        const lines = doc.splitTextToSize(body || '(no notes)', 170);
+        doc.text(lines, 20, y);
+        y += lines.length * 5 + 8;
+      }
+
+      addBlock('Arriving', document.getElementById('r-opening').value);
+      addBlock('I. Your life at its best', document.getElementById('r-best').value);
+      addBlock('II. Your contribution', document.getElementById('r-contribution').value);
+      addBlock('III. Looking back', document.getElementById('r-lookback').value);
+      addBlock('IV. Message from your future self', document.getElementById('r-message').value);
+      addBlock('What emerged', document.getElementById('r-emerged').value);
+      addBlock('My Purpose Statement', document.getElementById('r-purpose').value);
+
+      doc.save('relation-ship-why-i-am.pdf');
+    }
+  </script>
+</body>
+</html>
