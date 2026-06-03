@@ -7,7 +7,86 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* ── Name prompt card ── */
+    .module-group {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .module-group-header {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem 1.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .module-group-header:hover { background: rgba(44,74,90,0.02); }
+    .module-group-header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--seafoam);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .module-group-header:hover::before { opacity: 1; }
+
+    .module-group-parts {
+      border-top: 1px solid var(--sand-dark);
+      padding: 0.5rem 0;
+    }
+    .part-link {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.65rem 1.75rem;
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.85rem;
+      transition: background 0.15s;
+    }
+    .part-link:hover { background: rgba(143,188,176,0.07); }
+    .part-num {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--sand-dark);
+      color: var(--muted);
+      font-size: 0.65rem;
+      font-weight: 500;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .part-name { flex: 1; }
+    .part-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+    .part-time {
+      font-size: 0.7rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .module-group.locked { opacity: 0.55; pointer-events: none; }
+    .coming-soon {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--sand-dark);
+      color: var(--muted);
+      border-radius: 20px;
+      padding: 2px 10px;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* Existing name prompt styles */
     .name-prompt {
       background: #f5f8f7;
       border: 1px solid #d9ece8;
@@ -22,15 +101,8 @@
       color: #8FBCB0;
       margin-bottom: 0.9rem;
     }
-    .name-fields {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-    .name-field {
-      flex: 1;
-      min-width: 120px;
-    }
+    .name-fields { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .name-field { flex: 1; min-width: 120px; }
     .name-field label {
       display: block;
       font-size: 0.75rem;
@@ -50,10 +122,7 @@
       box-sizing: border-box;
       transition: border-color 0.2s;
     }
-    .name-field input:focus {
-      outline: none;
-      border-color: #8FBCB0;
-    }
+    .name-field input:focus { outline: none; border-color: #8FBCB0; }
     .name-field input::placeholder { color: #ccc; }
     .name-prompt-hint {
       font-size: 0.75rem;
@@ -90,13 +159,7 @@
       padding: 0;
     }
     .btn-skip-names:hover { color: #999; }
-    .names-saved-msg {
-      display: none;
-      font-size: 0.82rem;
-      color: #8FBCB0;
-    }
-
-    /* ── Welcome greeting (shown after names saved) ── */
+    .names-saved-msg { display: none; font-size: 0.82rem; color: #8FBCB0; }
     .welcome-greeting {
       display: none;
       font-size: 0.88rem;
@@ -120,12 +183,12 @@
     </div>
 
     <p class="prose" style="text-align:center; font-size:0.88rem; color:var(--muted);">
-      A brief, practical programme for couples.<br>Work through each part at your own pace.
+      A programme for couples who want to know themselves and each other more deeply.<br>
+      Module 1 is done individually. Modules 2 and 3 are done together.
     </p>
 
-    <!-- ── Optional name prompt ── -->
     <div class="name-prompt" id="name-prompt">
-      <div class="name-prompt-title">Before you begin, optional</div>
+      <div class="name-prompt-title">For the couple modules — optional</div>
       <div class="name-fields">
         <div class="name-field">
           <label for="input-name-a">Person A's name</label>
@@ -137,61 +200,98 @@
         </div>
       </div>
       <p class="name-prompt-hint">
-        Adding your names lets the programme address you personally throughout. This is completely optional, names are only stored in your browser for this session and never sent to us.
+        Adding your names personalises the couple exercises in Modules 2 and 3. Optional — stored only in your browser for this session.
       </p>
       <div class="name-save-row">
         <button class="btn-save-names" onclick="saveNames()">Save names</button>
         <button class="btn-skip-names" onclick="skipNames()">Skip for now</button>
-        <span class="names-saved-msg" id="names-saved-msg">✓ Names saved for this session</span>
+        <span class="names-saved-msg" id="names-saved-msg">✓ Names saved</span>
       </div>
     </div>
 
-    <!-- Shown after names are entered -->
     <p class="welcome-greeting" id="welcome-greeting"></p>
 
-    <nav class="modules-grid" aria-label="Course modules" style="margin-top:2rem;">
+    <nav aria-label="Course modules" style="margin-top:1.5rem;">
 
-      <a href="introduction.html" class="module-card">
+      <!-- Introduction -->
+      <a href="introduction.html" class="module-card" style="margin-bottom:1rem;">
         <div class="card-icon" aria-hidden="true">✦</div>
         <div class="card-body">
           <div class="card-label">Welcome</div>
           <div class="card-title">Introduction</div>
-          <div class="card-desc">A letter from Drew & Giuli, and how to get the most from this programme.</div>
+          <div class="card-desc">A letter from Drew & Giuli, and how to use this programme.</div>
         </div>
         <div class="card-arrow">→</div>
       </a>
 
-      <a href="module-1.html" class="module-card">
-        <div class="card-icon" aria-hidden="true">◎</div>
-        <div class="card-body">
-          <div class="card-label">Part 1 · 50 min</div>
-          <div class="card-title">Relationship Snapshot</div>
-          <div class="card-desc">Visualise where you are individually in life right now and where you overlap as a couple.</div>
+      <!-- Module 1: Me -->
+      <div class="module-group">
+        <a href="module-1.html" class="module-group-header">
+          <div class="card-icon" aria-hidden="true">◎</div>
+          <div class="card-body">
+            <div class="card-label">Module 1 · Individual · ~3.5 hours</div>
+            <div class="card-title">Me</div>
+            <div class="card-desc">A solo journey of self-discovery. Each partner does this separately, at their own pace, before the couple work begins.</div>
+          </div>
+          <div class="card-arrow">→</div>
+        </a>
+        <div class="module-group-parts">
+          <a href="module-1.html" class="part-link">
+            <div class="part-num">1</div>
+            <div class="part-name">Where I am <span class="part-sub">— Wheel of Life</span></div>
+            <div class="part-time">~50 min</div>
+          </a>
+          <a href="module-1-2.html" class="part-link">
+            <div class="part-num">2</div>
+            <div class="part-name">Who I am <span class="part-sub">— Origin Story & Values</span></div>
+            <div class="part-time">~50 min</div>
+          </a>
+          <a href="module-1-3.html" class="part-link">
+            <div class="part-num">3</div>
+            <div class="part-name">How I am <span class="part-sub">— Lights & Shadows</span></div>
+            <div class="part-time">~40 min</div>
+          </a>
+          <a href="module-1-4.html" class="part-link">
+            <div class="part-num">4</div>
+            <div class="part-name">I am enough <span class="part-sub">— Self-Love & Love Languages</span></div>
+            <div class="part-time">~40 min</div>
+          </a>
+          <a href="module-1-5.html" class="part-link">
+            <div class="part-num">5</div>
+            <div class="part-name">Why I am <span class="part-sub">— Life Purpose</span></div>
+            <div class="part-time">~50 min</div>
+          </a>
         </div>
-        <div class="card-arrow">→</div>
-      </a>
+      </div>
 
-      <a href="module-2.html" class="module-card">
-        <div class="card-icon" aria-hidden="true">⚓</div>
-        <div class="card-body">
-          <div class="card-label">Part 2 · 30–60 min</div>
-          <div class="card-title">Relationship Alliance</div>
-          <div class="card-desc">Define how your relationship works, your shared principles and culture.</div>
+      <!-- Module 2: You and I — coming soon -->
+      <div class="module-group locked">
+        <div class="module-group-header">
+          <div class="card-icon" aria-hidden="true">⚓</div>
+          <div class="card-body">
+            <div class="card-label">Module 2 · Together</div>
+            <div class="card-title">You and I</div>
+            <div class="card-desc">See each other clearly — your land, your lights and shadows together, how you love and how you conflict.</div>
+          </div>
+          <span class="coming-soon">Coming soon</span>
         </div>
-        <div class="card-arrow">→</div>
-      </a>
+      </div>
 
-      <a href="module-3.html" class="module-card">
-        <div class="card-icon" aria-hidden="true">☽</div>
-        <div class="card-body">
-          <div class="card-label">Part 3 · 1–2 hours</div>
-          <div class="card-title">Co-Dreaming</div>
-          <div class="card-desc">Explore your future hopes and build a shared vision together.</div>
+      <!-- Module 3: Relationship — coming soon -->
+      <div class="module-group locked">
+        <div class="module-group-header">
+          <div class="card-icon" aria-hidden="true">☽</div>
+          <div class="card-body">
+            <div class="card-label">Module 3 · Together</div>
+            <div class="card-title">Relationship</div>
+            <div class="card-desc">Design your relationship as a third entity — your alliance, your shared life, your future.</div>
+          </div>
+          <span class="coming-soon">Coming soon</span>
         </div>
-        <div class="card-arrow">→</div>
-      </a>
+      </div>
 
-      <a href="feedback.html" class="module-card">
+      <!-- Feedback -->
+      <a href="feedback.html" class="module-card" style="margin-top:0.5rem;">
         <div class="card-icon" aria-hidden="true">◇</div>
         <div class="card-body">
           <div class="card-label">Feedback</div>
@@ -212,10 +312,8 @@
     function saveNames() {
       const a = document.getElementById('input-name-a').value.trim();
       const b = document.getElementById('input-name-b').value.trim();
-
       if (a) sessionStorage.setItem('nameA', a);
       if (b) sessionStorage.setItem('nameB', b);
-
       if (a || b) {
         document.getElementById('names-saved-msg').style.display = 'inline';
         showGreeting(a, b);
@@ -233,14 +331,12 @@
       greet.style.display = 'block';
     }
 
-    // Allow Enter key to save names
     ['input-name-a', 'input-name-b'].forEach(id => {
       document.getElementById(id).addEventListener('keydown', e => {
         if (e.key === 'Enter') saveNames();
       });
     });
 
-    // Restore saved names on return — hide prompt and show greeting
     const storedA = sessionStorage.getItem('nameA') || '';
     const storedB = sessionStorage.getItem('nameB') || '';
     if (storedA || storedB) {
