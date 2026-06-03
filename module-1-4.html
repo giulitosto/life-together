@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I Am Enough — Self-Love & Love Languages, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .love-lang-grid {
+      display: grid;
+      gap: 0.75rem;
+      margin: 1.25rem 0;
+    }
+    .love-lang-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+    }
+    .love-lang-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .love-lang-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .love-lang-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--ocean);
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .love-lang-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      line-height: 1.5;
+    }
+    .love-lang-sliders {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem 1.25rem;
+    }
+    @media (max-width: 440px) {
+      .love-lang-sliders { grid-template-columns: 1fr; }
+    }
+    .ll-slider-row label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3px;
+    }
+    .ll-slider-row label .ll-val {
+      font-weight: 500;
+      color: var(--rope);
+      letter-spacing: 0;
+      text-transform: none;
+      font-size: 0.78rem;
+    }
+    .ll-slider-row input[type=range] {
+      width: 100%;
+      accent-color: var(--seafoam);
+    }
+
+    .ll-results {
+      background: rgba(143,188,176,0.1);
+      border: 1px solid rgba(143,188,176,0.25);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0 0;
+      display: none;
+    }
+    .ll-results-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--seafoam);
+      margin-bottom: 0.5rem;
+    }
+    .ll-results-row {
+      font-size: 0.85rem;
+      color: var(--ocean);
+      margin-bottom: 0.2rem;
+    }
+    .ll-results-row strong { font-weight: 500; }
+
+    .compassion-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 16px;
+      padding: 1.5rem 1.75rem;
+      margin: 1rem 0;
+      position: relative;
+    }
+    .compassion-card::before {
+      content: '♡';
+      font-size: 4rem;
+      color: rgba(196,149,106,0.12);
+      position: absolute;
+      top: 0.5rem;
+      right: 1.25rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 1 progress">
+      <div class="progress-step">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">Where I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Who I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">How I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step active">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">I am enough</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Why I am</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 1 · Part 4</div>
+    <h1 class="page-title">I Am Enough</h1>
+    <div class="timing-badge">⏱ ~40 minutes &nbsp;·&nbsp; Individual</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>The capacity to truly love another person begins with the capacity to love yourself — not perfectly, not without doubt, but honestly. This section has two parts: a self-compassion reflection, and an exploration of how you give and receive love.</p>
+      <p>Both are acts of self-knowledge. Both matter for what comes next.</p>
+    </div>
+
+    <h2 class="section-heading">Steps</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3 class="step-title">Set up your space</h3>
+          <div class="step-text">This section benefits from stillness. Find a quiet spot, settle in, and take three slow breaths before you begin. (~3 min)</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3 class="step-title">A letter to yourself (~15 min)</h3>
+          <div class="step-text">Think of someone you love deeply — a close friend, a sibling, your partner. Now imagine they came to you carrying the same doubts, the same self-criticism, the same tender wounds that you carry. What would you say to them?</div>
+          <div class="info-note" style="font-size:0.82rem;">
+            Now write that — to yourself. Not to be read by anyone else. Not to be perfect. Just honest and kind.
+          </div>
+
+          <div class="compassion-card">
+            <div class="prompt-box" style="margin-bottom:1rem;">
+              <ul>
+                <li>What do you love about yourself — even if it's hard to say out loud?</li>
+                <li>What have you been through that deserves more credit than you give it?</li>
+                <li>Where do you need more gentleness from yourself?</li>
+                <li>What would it mean to be truly on your own side?</li>
+              </ul>
+            </div>
+            <div class="reflection-block" style="margin-top:0;">
+              <span class="reflection-label">Dear me,</span>
+              <textarea class="reflection-textarea" id="r-letter" placeholder="Write freely. No one else will read this unless you choose to share it…" rows="10"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3 class="step-title">How you love — Love Languages (~15 min)</h3>
+          <div class="step-text">Gary Chapman's five love languages describe the ways people most naturally give and receive love. Most of us have a primary way of expressing love and a primary way of feeling it — and they're not always the same.</div>
+          <div class="step-text" style="margin-top:0.5rem;">Rate how strongly each language resonates for you — both as a giver and as a receiver. 1 = rarely, 5 = this is deeply me.</div>
+
+          <div class="love-lang-grid" id="love-lang-grid"></div>
+
+          <div class="ll-results" id="ll-results">
+            <div class="ll-results-title">Your love language profile</div>
+            <div class="ll-results-row">How you give: <strong id="ll-top-give">—</strong></div>
+            <div class="ll-results-row">How you receive: <strong id="ll-top-receive">—</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3 class="step-title">My ways of loving (~10 min)</h3>
+          <div class="step-text">Bring together what you've noticed — your letter to yourself and your love language profile. Write a short reflection: how do you love, and how do you need to be loved?</div>
+          <div class="prompt-box">
+            <ul>
+              <li>How does the way you give love show up in your relationship?</li>
+              <li>Do you feel truly seen and loved in the way you need to be?</li>
+              <li>What might your partner not know about how you receive love best?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">My ways of loving</span>
+            <textarea class="reflection-textarea" id="r-loving" placeholder="How do you love, and how do you need to be loved?…" rows="5"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download my reflections</button>
+      <a href="module-1-5.html" class="btn btn-primary">Continue: Why I am →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const LANGUAGES = [
+      {
+        name: 'Words of Affirmation',
+        icon: '💬',
+        desc: 'Verbal expressions of love, appreciation, and encouragement — hearing "I love you", receiving compliments, being told you matter.'
+      },
+      {
+        name: 'Quality Time',
+        icon: '⏳',
+        desc: 'Undivided attention and presence — being truly listened to, spending meaningful time together without distractions.'
+      },
+      {
+        name: 'Acts of Service',
+        icon: '🤝',
+        desc: 'Actions that make life easier — someone cooking for you, handling something without being asked, thoughtful gestures that say "I see what you need."'
+      },
+      {
+        name: 'Physical Touch',
+        icon: '🤲',
+        desc: 'Connection through touch — hugs, holding hands, a hand on the shoulder, physical closeness and presence.'
+      },
+      {
+        name: 'Receiving Gifts',
+        icon: '🎁',
+        desc: 'Thoughtful tokens of love — not about the value, but the thought and intention behind a gift that says "I was thinking of you."'
+      }
+    ];
+
+    const scores = {};
+    LANGUAGES.forEach(l => { scores[l.name] = { give: 3, receive: 3 }; });
+
+    function buildGrid() {
+      const grid = document.getElementById('love-lang-grid');
+      LANGUAGES.forEach(lang => {
+        const card = document.createElement('div');
+        card.className = 'love-lang-card';
+        card.innerHTML = `
+          <div class="love-lang-header">
+            <div class="love-lang-icon">${lang.icon}</div>
+            <div>
+              <div class="love-lang-name">${lang.name}</div>
+              <div class="love-lang-desc">${lang.desc}</div>
+            </div>
+          </div>
+          <div class="love-lang-sliders">
+            <div class="ll-slider-row">
+              <label>How I give <span class="ll-val" id="give-val-${lang.name.replace(/ /g,'_')}">3</span></label>
+              <input type="range" min="1" max="5" step="1" value="3"
+                oninput="updateScore('${lang.name}','give',this.value)">
+            </div>
+            <div class="ll-slider-row">
+              <label>How I receive <span class="ll-val" id="receive-val-${lang.name.replace(/ /g,'_')}">3</span></label>
+              <input type="range" min="1" max="5" step="1" value="3"
+                oninput="updateScore('${lang.name}','receive',this.value)">
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function updateScore(name, type, val) {
+      scores[name][type] = parseInt(val);
+      document.getElementById(`${type}-val-${name.replace(/ /g,'_')}`).textContent = val;
+      updateResults();
+    }
+
+    function updateResults() {
+      const topGive = LANGUAGES.reduce((a, b) => scores[a.name].give >= scores[b.name].give ? a : b);
+      const topReceive = LANGUAGES.reduce((a, b) => scores[a.name].receive >= scores[b.name].receive ? a : b);
+      document.getElementById('ll-top-give').textContent = topGive.name;
+      document.getElementById('ll-top-receive').textContent = topReceive.name;
+      document.getElementById('ll-results').style.display = 'block';
+    }
+
+    buildGrid();
+    updateResults();
+
+    // ── PDF Download ──
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(44, 74, 90);
+      doc.text('Relation-ship — I Am Enough', 105, 18, { align: 'center' });
+
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(150, 150, 150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+
+      let y = 35;
+
+      function addBlock(title, body) {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(44, 74, 90);
+        doc.text(title, 20, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(50, 50, 50);
+        const lines = doc.splitTextToSize(body || '(no notes)', 170);
+        doc.text(lines, 20, y);
+        y += lines.length * 5 + 8;
+      }
+
+      addBlock('Letter to myself', document.getElementById('r-letter').value);
+
+      if (y > 250) { doc.addPage(); y = 20; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.setTextColor(44, 74, 90);
+      doc.text('Love Languages', 20, y);
+      y += 8;
+
+      LANGUAGES.forEach(lang => {
+        const g = scores[lang.name].give;
+        const r = scores[lang.name].receive;
+        addBlock(lang.name, `Give: ${g}/5   ·   Receive: ${r}/5`);
+      });
+
+      const topGive = LANGUAGES.reduce((a, b) => scores[a.name].give >= scores[b.name].give ? a : b);
+      const topReceive = LANGUAGES.reduce((a, b) => scores[a.name].receive >= scores[b.name].receive ? a : b);
+      addBlock('Primary: how I give love', topGive.name);
+      addBlock('Primary: how I receive love', topReceive.name);
+
+      addBlock('My ways of loving', document.getElementById('r-loving').value);
+
+      doc.save('relation-ship-i-am-enough.pdf');
+    }
+  </script>
+</body>
+</html>
