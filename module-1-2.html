@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Who I Am — Origin Story & Values, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .values-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 1.25rem 0;
+    }
+    .value-tag {
+      padding: 6px 14px;
+      border-radius: 30px;
+      border: 1px solid rgba(44,74,90,0.2);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .value-tag:hover { border-color: var(--seafoam); color: var(--ocean); }
+    .value-tag.selected { background: var(--ocean); color: var(--white); border-color: var(--ocean); }
+    .value-tag.top5 { background: var(--rope); color: var(--white); border-color: var(--rope); }
+
+    .values-counter {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .values-counter strong { color: var(--rope); }
+    .values-hint {
+      font-size: 0.78rem;
+      color: var(--seafoam);
+      font-style: italic;
+      margin-top: 0.5rem;
+      min-height: 1.2em;
+    }
+
+    .top5-section { margin-top: 1.75rem; }
+    .top5-item {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .top5-item-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+    .top5-rank {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--rope);
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 500;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .top5-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--ocean);
+      font-weight: 400;
+    }
+
+    .chapters-list { margin: 1rem 0; }
+    .chapter-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+    .chapter-title-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--sand-dark);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--ocean);
+      padding: 0 2rem 0.3rem 0;
+      margin-bottom: 0.75rem;
+      font-weight: 400;
+      transition: border-bottom-color 0.2s;
+    }
+    .chapter-title-input:focus { outline: none; border-bottom-color: var(--seafoam); }
+    .chapter-title-input::placeholder { color: var(--muted); opacity: 0.5; font-style: italic; }
+    .chapter-delete {
+      position: absolute;
+      top: 0.9rem; right: 1rem;
+      background: none; border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: 0;
+      transition: color 0.2s;
+    }
+    .chapter-delete:hover { color: var(--rope); }
+    .add-chapter-btn {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      background: none;
+      border: 1px dashed rgba(44,74,90,0.2);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .add-chapter-btn:hover {
+      border-color: var(--seafoam);
+      color: var(--ocean);
+      background: rgba(143,188,176,0.06);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 1 progress">
+      <div class="progress-step">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">Where I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step active">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Who I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">How I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">I am enough</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Why I am</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 1 · Part 2</div>
+    <h1 class="page-title">Who I Am</h1>
+    <div class="timing-badge">⏱ ~50 minutes &nbsp;·&nbsp; Individual</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>Before we can truly know another person, we need to know ourselves — not as a fixed thing, but as a story still being written. This section invites you to explore where you've come from, what experiences shaped you, and what you value most deeply. These are the roots your relationship grows from.</p>
+      <p>Do this alone, at your own pace. There are no right answers.</p>
+    </div>
+
+    <div class="info-note">
+      <strong>This is your space.</strong> You don't need to share anything here with your partner unless you choose to. The goal is honest self-knowledge — a foundation for everything that follows.
+    </div>
+
+    <h2 class="section-heading">Steps</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3 class="step-title">Set up your space</h3>
+          <div class="step-text">Find somewhere quiet and comfortable. Put your phone on Do Not Disturb. Make yourself a drink. This is time for you. (~5 min)</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3 class="step-title">Your story so far — life chapters (~20 min)</h3>
+          <div class="step-text">Think of your life as a book with distinct chapters — periods defined by a place, a relationship, a role, or a turning point. Add as many chapters as feel right and reflect on each one.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>What defined this chapter — what was happening around you?</li>
+              <li>What did you learn about yourself during this time?</li>
+              <li>What did it leave behind — a strength, a wound, a belief about the world?</li>
+            </ul>
+          </div>
+          <div class="chapters-list" id="chapters-list"></div>
+          <button class="add-chapter-btn" onclick="addChapter()">+ Add a chapter</button>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3 class="step-title">What matters most — values (~20 min)</h3>
+          <div class="step-text">Below is a list of values. Start by clicking everything that resonates, even slightly. Then, from your selections, click again to mark your top 5 — the ones that feel most essentially <em>you</em>.</div>
+
+          <div class="info-note" style="font-size:0.82rem; margin-bottom:0.75rem;">
+            <strong>How it works:</strong> First click = resonates (dark). Second click = top 5 (warm). Third click = remove. Select as many as you like, but only 5 top values.
+          </div>
+
+          <div class="values-counter" id="values-counter"><strong>0</strong> top values chosen &nbsp;·&nbsp; max 5</div>
+          <div class="values-grid" id="values-grid"></div>
+          <div class="values-hint" id="values-hint"></div>
+
+          <div class="top5-section" id="top5-section" style="display:none;">
+            <h3 class="step-title" style="margin-bottom:0.4rem;">Your top 5</h3>
+            <div class="step-text" style="margin-bottom:1rem;">For each value, write a sentence or two: why does this matter to you? Where in your life have you felt it most — or most missed it?</div>
+            <div id="top5-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3 class="step-title">Patterns and threads (~10 min)</h3>
+          <div class="step-text">Look back at your chapters and your values together. What connections do you see?</div>
+          <div class="prompt-box">
+            <ul>
+              <li>Which values run through multiple chapters of your life?</li>
+              <li>Are there values you hold deeply that haven't had room to breathe?</li>
+              <li>What beliefs about yourself did you pick up along the way — and do they still serve you?</li>
+              <li>How do your values show up — or get challenged — in your relationship?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">Your reflections</span>
+            <textarea class="reflection-textarea" id="r-patterns" placeholder="What patterns or insights are emerging?…" rows="5"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3 class="step-title">My Values Statement (~10 min)</h3>
+          <div class="step-text">Bring it all together. In your own words, write a short paragraph that captures who you are at your core — your story, your values, what drives you. Think of it as a personal compass: something to return to when you feel lost or face a difficult decision.</div>
+          <div class="prompt-box">
+            <p>You might begin with: <em>"I am someone who…"</em> or <em>"At my core, I am…"</em></p>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">My Values Statement</span>
+            <textarea class="reflection-textarea" id="r-statement" placeholder="Write your values statement here — there is no wrong way to do this…" rows="7"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download my reflections</button>
+      <a href="module-1-3.html" class="btn btn-primary">Continue: How I am →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // ── Life Chapters ──
+    let chapterCount = 0;
+
+    function addChapter(title, reflection) {
+      const id = ++chapterCount;
+      const list = document.getElementById('chapters-list');
+      const card = document.createElement('div');
+      card.className = 'chapter-card';
+      card.id = 'chapter-' + id;
+      card.innerHTML = `
+        <button class="chapter-delete" onclick="removeChapter(${id})" title="Remove">×</button>
+        <input type="text" class="chapter-title-input" id="ct-${id}"
+          placeholder="Chapter title (e.g. 'My twenties in London', 'The year everything changed')"
+          value="${title || ''}">
+        <textarea class="reflection-textarea" id="cr-${id}"
+          placeholder="What defined this chapter? What did you learn about yourself? What did it leave behind?"
+          rows="3">${reflection || ''}</textarea>
+      `;
+      list.appendChild(card);
+    }
+
+    function removeChapter(id) {
+      const el = document.getElementById('chapter-' + id);
+      if (el) el.remove();
+    }
+
+    addChapter();
+
+    // ── Values ──
+    const ALL_VALUES = [
+      'Adventure','Authenticity','Balance','Belonging','Calm',
+      'Commitment','Compassion','Connection','Courage','Creativity',
+      'Curiosity','Depth','Family','Freedom','Fun',
+      'Growth','Harmony','Honesty','Humour','Independence',
+      'Integrity','Joy','Kindness','Laughter','Love',
+      'Loyalty','Mindfulness','Nature','Openness','Passion',
+      'Partnership','Peace','Purpose','Resilience','Security',
+      'Service','Simplicity','Spirituality','Spontaneity','Stability',
+      'Trust','Vulnerability','Wisdom'
+    ];
+
+    const valueState = {};
+    ALL_VALUES.forEach(v => valueState[v] = 0);
+
+    const top5Reflections = {};
+
+    function getTop5() {
+      return ALL_VALUES.filter(v => valueState[v] === 2);
+    }
+
+    function renderValues() {
+      const grid = document.getElementById('values-grid');
+      grid.innerHTML = '';
+      ALL_VALUES.forEach(v => {
+        const btn = document.createElement('button');
+        const s = valueState[v];
+        btn.className = 'value-tag' + (s === 1 ? ' selected' : s === 2 ? ' top5' : '');
+        btn.textContent = v;
+        btn.onclick = () => cycleValue(v);
+        grid.appendChild(btn);
+      });
+
+      const top5 = getTop5();
+      document.getElementById('values-counter').innerHTML =
+        `<strong>${top5.length}</strong> top value${top5.length !== 1 ? 's' : ''} chosen &nbsp;·&nbsp; max 5`;
+
+      const hint = document.getElementById('values-hint');
+      if (top5.length === 0) {
+        hint.textContent = '';
+      } else if (top5.length < 5) {
+        hint.textContent = `${5 - top5.length} more to go — click a highlighted value to add it to your top 5`;
+      } else {
+        hint.textContent = 'Perfect. Scroll down to reflect on each one.';
+      }
+    }
+
+    function cycleValue(v) {
+      const top5Count = getTop5().length;
+      if (valueState[v] === 0) {
+        valueState[v] = 1;
+      } else if (valueState[v] === 1) {
+        if (top5Count >= 5) {
+          document.getElementById('values-hint').textContent =
+            'You already have 5 top values — deselect one to swap it.';
+          return;
+        }
+        valueState[v] = 2;
+      } else {
+        valueState[v] = 0;
+      }
+      renderValues();
+      renderTop5();
+    }
+
+    function renderTop5() {
+      const top5 = getTop5();
+      const section = document.getElementById('top5-section');
+      const list = document.getElementById('top5-list');
+
+      list.querySelectorAll('[data-value]').forEach(el => {
+        top5Reflections[el.dataset.value] = el.querySelector('textarea').value;
+      });
+
+      if (top5.length === 0) {
+        section.style.display = 'none';
+        return;
+      }
+
+      section.style.display = 'block';
+      list.innerHTML = '';
+      top5.forEach((v, i) => {
+        const item = document.createElement('div');
+        item.className = 'top5-item';
+        item.dataset.value = v;
+        item.innerHTML = `
+          <div class="top5-item-header">
+            <div class="top5-rank">${i + 1}</div>
+            <div class="top5-name">${v}</div>
+          </div>
+          <textarea class="reflection-textarea"
+            placeholder="Why does ${v.toLowerCase()} matter to you? Where in your life have you felt it most — or most missed it?"
+            rows="2">${top5Reflections[v] || ''}</textarea>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    renderValues();
+
+    // ── PDF Download ──
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(44, 74, 90);
+      doc.text('Relation-ship — Who I Am', 105, 18, { align: 'center' });
+
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(150, 150, 150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+
+      let y = 35;
+
+      function addBlock(title, body) {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(44, 74, 90);
+        doc.text(title, 20, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(50, 50, 50);
+        const lines = doc.splitTextToSize(body || '(no notes)', 170);
+        doc.text(lines, 20, y);
+        y += lines.length * 5 + 8;
+      }
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.setTextColor(44, 74, 90);
+      doc.text('My Life Chapters', 20, y);
+      y += 8;
+
+      document.querySelectorAll('.chapter-card').forEach((card, i) => {
+        const title = card.querySelector('input').value.trim() || `Chapter ${i + 1}`;
+        const text = card.querySelector('textarea').value;
+        addBlock(title, text);
+      });
+
+      if (y > 250) { doc.addPage(); y = 20; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.setTextColor(44, 74, 90);
+      doc.text('My Top 5 Values', 20, y);
+      y += 8;
+
+      document.querySelectorAll('#top5-list [data-value]').forEach(el => {
+        top5Reflections[el.dataset.value] = el.querySelector('textarea').value;
+      });
+
+      const top5 = getTop5();
+      if (top5.length === 0) {
+        addBlock('Values', '(no top values selected yet)');
+      } else {
+        top5.forEach((v, i) => addBlock(`${i + 1}. ${v}`, top5Reflections[v] || ''));
+      }
+
+      addBlock('Patterns & threads', document.getElementById('r-patterns').value);
+      addBlock('My Values Statement', document.getElementById('r-statement').value);
+
+      doc.save('relation-ship-who-i-am.pdf');
+    }
+  </script>
+</body>
+</html>
