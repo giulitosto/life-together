@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Land Work — You and I, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .land-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+    @media (max-width: 520px) { .land-grid { grid-template-columns: 1fr; } }
+
+    .land-card {
+      border-radius: 16px;
+      padding: 1.25rem;
+    }
+    .land-card.my-land {
+      background: rgba(44,74,90,0.05);
+      border: 1px solid rgba(44,74,90,0.15);
+    }
+    .land-card.your-land {
+      background: rgba(143,188,176,0.1);
+      border: 1px solid rgba(143,188,176,0.25);
+    }
+    .land-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--ocean);
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+    .land-card-name {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .boundary-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(44,74,90,0.07);
+    }
+    .boundary-item:last-child { border-bottom: none; }
+    .boundary-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .my-land .boundary-dot { background: var(--ocean); opacity: 0.4; }
+    .your-land .boundary-dot { background: var(--seafoam); }
+    .boundary-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.85rem;
+      color: var(--ink);
+      font-weight: 300;
+      line-height: 1.5;
+      padding: 0;
+    }
+    .boundary-input:focus { outline: none; }
+    .boundary-input::placeholder { color: var(--muted); opacity: 0.45; font-style: italic; }
+
+    .add-boundary-btn {
+      display: flex; align-items: center; gap: 0.4rem;
+      background: none; border: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0.4rem 0;
+      transition: color 0.2s;
+      margin-top: 0.25rem;
+    }
+    .add-boundary-btn:hover { color: var(--ocean); }
+
+    .overlap-zone {
+      background: linear-gradient(135deg, rgba(44,74,90,0.05), rgba(143,188,176,0.1));
+      border: 1px dashed rgba(143,188,176,0.4);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+    }
+    .overlap-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--ocean);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    details.script-toggle { margin: 0.75rem 0 0; }
+    details.script-toggle summary {
+      cursor: pointer;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--seafoam);
+      list-style: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      user-select: none;
+      transition: color 0.2s;
+    }
+    details.script-toggle summary::-webkit-details-marker { display: none; }
+    details.script-toggle summary::before {
+      content: '▶';
+      font-size: 0.55rem;
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    details[open].script-toggle summary::before { transform: rotate(90deg); }
+    details.script-toggle summary:hover { color: var(--ocean); }
+    .script-text {
+      background: rgba(143,188,176,0.1);
+      border-left: 3px solid var(--seafoam);
+      border-radius: 0 12px 12px 0;
+      padding: 1rem 1.25rem;
+      margin-top: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--ocean);
+      line-height: 1.8;
+    }
+    .script-text p { margin: 0 0 0.75rem; }
+    .script-text p:last-child { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 2 progress">
+      <div class="progress-step active">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">Land work</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Lights & Shadows</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">Intentions</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">Love Languages</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Conversations</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 2 · Part 1</div>
+    <h1 class="page-title">Land Work</h1>
+    <div class="timing-badge">⏱ ~60 minutes &nbsp;·&nbsp; Together</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>Welcome to Module 2. You've each spent time getting to know yourself — your story, your values, your lights and shadows. Now you bring that self into contact with another.</p>
+      <p>Land work comes from the ORSC coaching tradition. The idea is simple: each person has their own inner world — their <em>land</em> — with its own landscape, rules, and tender spots. Before you can truly meet each other, you need to understand the territory you're each standing on.</p>
+    </div>
+
+    <details class="script-toggle">
+      <summary>Read the theory</summary>
+      <div class="script-text">
+        <p>Imagine your inner world as a piece of land — a landscape that is entirely your own. It has areas of beauty and ease, places that are still being tended, and edges where you post quiet signs that say <em>handle with care</em>.</p>
+        <p>Your partner has their own land. It looks different from yours. It has its own history, its own weather, its own sacred spots. Neither land is better or worse — they are simply different.</p>
+        <p>Most conflict in relationships happens when one person crosses into the other's land without realising it, or assumes the other's land looks just like theirs. Land work is about understanding each other's territory — so you can move between them with care and curiosity rather than collision.</p>
+        <p>Today you'll each map your own land and share it with each other. You'll also identify the shared territory between you — the space you're building together.</p>
+      </div>
+    </details>
+
+    <div class="info-note" style="margin-top:1.5rem;">
+      <strong>Do this together.</strong> Sit side by side or face to face. Each person fills in their own side. When you're both done, share — not to debate or fix, but to understand.
+    </div>
+
+    <h2 class="section-heading">Steps</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3 class="step-title">Set up your space</h3>
+          <div class="step-text">You're doing this together, so create a space that's comfortable for both of you. Phones away, drinks made, comfortable. Give yourselves permission to take your time. (~5 min)</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3 class="step-title">Map your land — individually (~20 min)</h3>
+          <div class="step-text">Each person fills in their own column below. Think about what defines your inner world — your needs, your non-negotiables, the things that make you feel safe and the things that make you feel invaded. Be honest. This is your land to describe.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>What do you need to feel safe and settled in yourself?</li>
+              <li>What are your non-negotiables — things you protect fiercely?</li>
+              <li>Where are your tender spots — places where you're easily hurt or overwhelmed?</li>
+              <li>What does someone need to know to move through your land well?</li>
+            </ul>
+          </div>
+
+          <div class="land-grid">
+            <div class="land-card my-land">
+              <div class="land-card-title">My land</div>
+              <div class="land-card-name" id="name-a-label">Person A</div>
+              <div id="my-land-entries"></div>
+              <button class="add-boundary-btn" onclick="addLandEntry('my')">+ Add</button>
+            </div>
+            <div class="land-card your-land">
+              <div class="land-card-title">Your land</div>
+              <div class="land-card-name" id="name-b-label">Person B</div>
+              <div id="your-land-entries"></div>
+              <button class="add-boundary-btn" onclick="addLandEntry('your')">+ Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3 class="step-title">Share your maps (~20 min)</h3>
+          <div class="step-text">Take turns — 10 minutes each — walking the other person through your land. The listener's only job is to understand, not to respond or fix. Listen as if you're visiting somewhere you've never been.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>What surprised you about your partner's land?</li>
+              <li>Where do your lands feel similar? Where do they feel very different?</li>
+              <li>Is there anything in their land that helps explain something you've noticed before?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">What you heard</span>
+            <textarea class="reflection-textarea" id="r-share" placeholder="What struck you about your partner's land? What do you want to remember?…" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3 class="step-title">The space between — your shared land (~15 min)</h3>
+          <div class="step-text">Beyond your individual lands, there is a third space — the land you share and are building together. What are the qualities you want that shared space to have?</div>
+          <div class="prompt-box">
+            <ul>
+              <li>What do you both need to feel at home in your shared space?</li>
+              <li>What rules or agreements would help you each feel safe there?</li>
+              <li>What kind of land are you building together?</li>
+            </ul>
+          </div>
+
+          <div class="overlap-zone">
+            <div class="overlap-title">Our shared land</div>
+            <div id="shared-land-entries"></div>
+            <button class="add-boundary-btn" style="width:100%; justify-content:center;" onclick="addLandEntry('shared')">+ Add something</button>
+          </div>
+
+          <div class="reflection-block">
+            <span class="reflection-label">What we want for our shared land</span>
+            <textarea class="reflection-textarea" id="r-shared" placeholder="How do you want to feel in the space you share? What does good stewardship of each other's land look like?…" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
+      <a href="module-2-2.html" class="btn btn-primary">Continue: Lights & Shadows together →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const nameA = sessionStorage.getItem('nameA') || 'Person A';
+    const nameB = sessionStorage.getItem('nameB') || 'Person B';
+    document.getElementById('name-a-label').textContent = nameA;
+    document.getElementById('name-b-label').textContent = nameB;
+
+    let entryCount = 0;
+
+    function addLandEntry(side) {
+      const id = ++entryCount;
+      const listId = side === 'my' ? 'my-land-entries'
+                   : side === 'your' ? 'your-land-entries'
+                   : 'shared-land-entries';
+      const list = document.getElementById(listId);
+      const item = document.createElement('div');
+      item.className = 'boundary-item';
+      item.id = 'lentry-' + id;
+      const placeholders = {
+        my: 'e.g. I need time alone to recharge…',
+        your: 'e.g. I need to feel heard before moving on…',
+        shared: 'e.g. We always talk through conflict before sleeping…'
+      };
+      item.innerHTML = `
+        <div class="boundary-dot"></div>
+        <input type="text" class="boundary-input" id="li-${id}"
+          placeholder="${placeholders[side]}">
+        <button class="chapter-delete" onclick="removeLandEntry(${id})" title="Remove"
+          style="position:static; margin-left:0.25rem; font-size:0.9rem;">×</button>
+      `;
+      list.appendChild(item);
+      document.getElementById(`li-${id}`).focus();
+    }
+
+    function removeLandEntry(id) {
+      const el = document.getElementById('lentry-' + id);
+      if (el) el.remove();
+    }
+
+    // Seed with starter entries
+    addLandEntry('my'); addLandEntry('my');
+    addLandEntry('your'); addLandEntry('your');
+
+    // ── PDF ──
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(44, 74, 90);
+      doc.text('Relation-ship — Land Work', 105, 18, { align: 'center' });
+
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(150, 150, 150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+
+      let y = 35;
+
+      function addBlock(title, body) {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(44, 74, 90);
+        doc.text(title, 20, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(50, 50, 50);
+        const lines = doc.splitTextToSize(body || '(no notes)', 170);
+        doc.text(lines, 20, y);
+        y += lines.length * 5 + 8;
+      }
+
+      const myEntries = [...document.querySelectorAll('#my-land-entries .boundary-input')]
+        .map(i => i.value.trim()).filter(Boolean);
+      const yourEntries = [...document.querySelectorAll('#your-land-entries .boundary-input')]
+        .map(i => i.value.trim()).filter(Boolean);
+      const sharedEntries = [...document.querySelectorAll('#shared-land-entries .boundary-input')]
+        .map(i => i.value.trim()).filter(Boolean);
+
+      addBlock(`${nameA}'s land`, myEntries.join('\n') || '(no entries)');
+      addBlock(`${nameB}'s land`, yourEntries.join('\n') || '(no entries)');
+      addBlock('What we heard in each other\'s land', document.getElementById('r-share').value);
+      addBlock('Our shared land', sharedEntries.join('\n') || '(no entries)');
+      addBlock('What we want for our shared land', document.getElementById('r-shared').value);
+
+      doc.save('relation-ship-land-work.pdf');
+    }
+  </script>
+</body>
+</html>
