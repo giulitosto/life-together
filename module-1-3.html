@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How I Am — Lights & Shadows, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .ls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+    @media (max-width: 520px) {
+      .ls-grid { grid-template-columns: 1fr; }
+    }
+
+    .ls-column {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 16px;
+      padding: 1.25rem;
+    }
+    .ls-column-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .ls-column-icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .ls-column-icon.light { background: rgba(143,188,176,0.2); }
+    .ls-column-icon.shadow { background: rgba(196,149,106,0.2); }
+    .ls-column-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      color: var(--ocean);
+      font-weight: 500;
+    }
+    .ls-column-subtitle {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      margin-top: 0.1rem;
+    }
+
+    .ls-entries { margin-bottom: 0.75rem; }
+    .ls-entry {
+      border-radius: 10px;
+      padding: 0.7rem 0.85rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+    .ls-entry.light-entry {
+      background: rgba(143,188,176,0.1);
+      border: 1px solid rgba(143,188,176,0.25);
+    }
+    .ls-entry.shadow-entry {
+      background: rgba(196,149,106,0.08);
+      border: 1px solid rgba(196,149,106,0.2);
+    }
+    .ls-entry-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.85rem;
+      color: var(--ink);
+      font-weight: 400;
+      padding: 0 1.5rem 0 0;
+      line-height: 1.5;
+    }
+    .ls-entry-input:focus { outline: none; }
+    .ls-entry-input::placeholder { color: var(--muted); opacity: 0.5; font-style: italic; }
+    .ls-entry-delete {
+      position: absolute;
+      top: 0.6rem; right: 0.6rem;
+      background: none; border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.95rem;
+      line-height: 1;
+      padding: 0;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+    .ls-entry-delete:hover { opacity: 1; }
+
+    .add-ls-btn {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.4rem;
+      width: 100%;
+      background: none;
+      border: 1px dashed rgba(44,74,90,0.15);
+      border-radius: 10px;
+      padding: 0.55rem 0.75rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .add-ls-btn:hover {
+      color: var(--ocean);
+      background: rgba(143,188,176,0.06);
+    }
+    .add-ls-btn.shadow-btn:hover {
+      background: rgba(196,149,106,0.06);
+    }
+
+    .integration-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .integration-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--ocean);
+      margin-bottom: 0.4rem;
+    }
+    .integration-subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 1 progress">
+      <div class="progress-step">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">Where I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Who I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step active">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">How I am</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">I am enough</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Why I am</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 1 · Part 3</div>
+    <h1 class="page-title">How I Am</h1>
+    <div class="timing-badge">⏱ ~40 minutes &nbsp;·&nbsp; Individual</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>We all carry two sides. The parts of ourselves we show freely — our warmth, our wit, our resilience — and the parts we've learned to manage, hide, or haven't yet fully made peace with. Carl Jung called this second side the <em>shadow</em>: not the bad in us, but the unintegrated parts.</p>
+      <p>Knowing both your lights and your shadows is an act of courage and kindness — toward yourself, and toward the people you love. The goal here isn't to fix anything. It's simply to see yourself more clearly.</p>
+    </div>
+
+    <div class="info-note">
+      <strong>A note on shadows:</strong> Shadows aren't flaws to be ashamed of. They're often the flip side of a strength — your passion can become intensity, your care can become control, your independence can become distance. Naming them with compassion is the first step to working with them.
+    </div>
+
+    <h2 class="section-heading">Steps</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3 class="step-title">Set up your space</h3>
+          <div class="step-text">Find somewhere quiet. This section asks for honesty that can feel vulnerable — give yourself the conditions for it. (~5 min)</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3 class="step-title">Map your lights and shadows (~25 min)</h3>
+          <div class="step-text">Add the qualities, strengths, and tendencies that feel true to you. Be generous with your lights — name what you genuinely bring. Be honest with your shadows — these aren't confessions, they're observations.</div>
+
+          <div class="prompt-box" style="margin-bottom:1.25rem;">
+            <ul>
+              <li>What qualities do people who love you see in you?</li>
+              <li>What patterns do you notice in yourself under stress or conflict?</li>
+              <li>What do you wish you could change — and what might it be protecting?</li>
+            </ul>
+          </div>
+
+          <div class="ls-grid">
+            <div class="ls-column">
+              <div class="ls-column-header">
+                <div class="ls-column-icon light">☀</div>
+                <div>
+                  <div class="ls-column-title">Lights</div>
+                  <div class="ls-column-subtitle">Strengths &amp; gifts</div>
+                </div>
+              </div>
+              <div class="ls-entries" id="lights-list"></div>
+              <button class="add-ls-btn" onclick="addEntry('light')">+ Add a light</button>
+            </div>
+
+            <div class="ls-column">
+              <div class="ls-column-header">
+                <div class="ls-column-icon shadow">◑</div>
+                <div>
+                  <div class="ls-column-title">Shadows</div>
+                  <div class="ls-column-subtitle">Patterns &amp; tendencies</div>
+                </div>
+              </div>
+              <div class="ls-entries" id="shadows-list"></div>
+              <button class="add-ls-btn shadow-btn" onclick="addEntry('shadow')">+ Add a shadow</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3 class="step-title">Look for the connections (~10 min)</h3>
+          <div class="step-text">Often a light and a shadow are two sides of the same coin. Look at your lists together.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>Can you pair any lights with shadows? (e.g. <em>passionate</em> ↔ <em>intense</em>)</li>
+              <li>Which shadow do you find hardest to accept — and why?</li>
+              <li>Which of your lights has served you most in life?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">Your reflections</span>
+            <textarea class="reflection-textarea" id="r-connections" placeholder="What connections or patterns do you notice?…" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3 class="step-title">Bring it into your relationship (~5 min)</h3>
+          <div class="step-text">Now look at your lights and shadows through the lens of your relationship.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>Which of your lights does your partner most benefit from?</li>
+              <li>Which of your shadows shows up most in your relationship?</li>
+              <li>What would it mean for your partner to truly understand both sides of you?</li>
+            </ul>
+          </div>
+          <div class="reflection-block">
+            <span class="reflection-label">In my relationship</span>
+            <textarea class="reflection-textarea" id="r-relationship" placeholder="How do your lights and shadows show up with your partner?…" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download my reflections</button>
+      <a href="module-1-4.html" class="btn btn-primary">Continue: I am enough →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    let entryCount = 0;
+
+    function addEntry(type) {
+      const id = ++entryCount;
+      const listId = type === 'light' ? 'lights-list' : 'shadows-list';
+      const list = document.getElementById(listId);
+      const el = document.createElement('div');
+      el.className = `ls-entry ${type}-entry`;
+      el.id = `entry-${id}`;
+      el.innerHTML = `
+        <button class="ls-entry-delete" onclick="removeEntry(${id})" title="Remove">×</button>
+        <input type="text" class="ls-entry-input" id="ei-${id}"
+          placeholder="${type === 'light' ? 'e.g. Warmth, Curiosity, Resilience…' : 'e.g. Withdraw when hurt, Need to be right…'}">
+      `;
+      list.appendChild(el);
+      document.getElementById(`ei-${id}`).focus();
+    }
+
+    function removeEntry(id) {
+      const el = document.getElementById('entry-' + id);
+      if (el) el.remove();
+    }
+
+    // Seed with a couple of empty entries to invite engagement
+    addEntry('light');
+    addEntry('light');
+    addEntry('shadow');
+    addEntry('shadow');
+
+    // ── PDF Download ──
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(44, 74, 90);
+      doc.text('Relation-ship — How I Am', 105, 18, { align: 'center' });
+
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(150, 150, 150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+
+      let y = 35;
+
+      function addBlock(title, body) {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(44, 74, 90);
+        doc.text(title, 20, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(50, 50, 50);
+        const lines = doc.splitTextToSize(body || '(no notes)', 170);
+        doc.text(lines, 20, y);
+        y += lines.length * 5 + 8;
+      }
+
+      // Lights
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.setTextColor(44, 74, 90);
+      doc.text('My Lights', 20, y);
+      y += 8;
+
+      const lights = [...document.querySelectorAll('#lights-list .ls-entry-input')]
+        .map(i => i.value.trim()).filter(Boolean);
+      addBlock('Strengths & gifts', lights.length ? lights.join(', ') : '(none added)');
+
+      // Shadows
+      if (y > 250) { doc.addPage(); y = 20; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.setTextColor(44, 74, 90);
+      doc.text('My Shadows', 20, y);
+      y += 8;
+
+      const shadows = [...document.querySelectorAll('#shadows-list .ls-entry-input')]
+        .map(i => i.value.trim()).filter(Boolean);
+      addBlock('Patterns & tendencies', shadows.length ? shadows.join(', ') : '(none added)');
+
+      addBlock('Connections & patterns', document.getElementById('r-connections').value);
+      addBlock('In my relationship', document.getElementById('r-relationship').value);
+
+      doc.save('relation-ship-how-i-am.pdf');
+    }
+  </script>
+</body>
+</html>
