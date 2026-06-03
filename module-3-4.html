@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Co-living — Relationship, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .practice-grid { display: grid; gap: 0.65rem; margin: 1rem 0; }
+    .practice-item {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.08);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .practice-item.checked {
+      background: rgba(143,188,176,0.1);
+      border-color: rgba(143,188,176,0.3);
+    }
+    .practice-check {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(44,74,90,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      font-size: 0.7rem;
+      color: transparent;
+    }
+    .practice-item.checked .practice-check {
+      background: var(--seafoam);
+      border-color: var(--seafoam);
+      color: var(--white);
+    }
+    .practice-text { font-size: 0.85rem; color: var(--ink); flex: 1; line-height: 1.4; }
+    .practice-item.checked .practice-text { color: var(--muted); }
+    .add-practice-row {
+      display: flex; gap: 8px; margin-top: 0.5rem;
+    }
+    .add-practice-input {
+      flex: 1;
+      background: var(--white);
+      border: 1px dashed rgba(44,74,90,0.2);
+      border-radius: 10px;
+      padding: 0.55rem 0.85rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      color: var(--ink);
+      transition: border-color 0.2s;
+    }
+    .add-practice-input:focus { outline: none; border-color: var(--seafoam); }
+    .add-practice-input::placeholder { color: var(--muted); opacity: 0.45; font-style: italic; }
+    .add-practice-btn {
+      background: var(--ocean); color: var(--white); border: none;
+      border-radius: 10px; padding: 0.55rem 1rem;
+      font-family: 'Jost', sans-serif; font-size: 0.8rem;
+      cursor: pointer; transition: background 0.2s; white-space: nowrap;
+    }
+    .add-practice-btn:hover { background: var(--ocean-light); }
+
+    .space-item {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .space-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+    .space-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.85rem;
+      color: var(--ink);
+      font-weight: 300;
+    }
+    .space-input:focus { outline: none; }
+    .space-input::placeholder { color: var(--muted); opacity: 0.45; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 3 progress">
+      <div class="progress-step">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">1+1=3</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Our Wheel</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">Alliance</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step active">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">Co-living</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Co-Dreaming</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 3 · Part 4</div>
+    <h1 class="page-title">Co-living</h1>
+    <div class="timing-badge">⏱ ~60 minutes &nbsp;·&nbsp; Together</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>A relationship doesn't just happen in the big moments — the trips, the milestones, the crises. It lives in the ordinary. The morning routine. The way you greet each other at the end of the day. Who makes the coffee. Whether you eat together. The small rituals that, accumulated over time, become the texture of a shared life.</p>
+      <p>This section is about designing that texture — deliberately and with care — across three dimensions: daily practices, shared space, and the cultivation of adventure.</p>
+    </div>
+
+    <h2 class="section-heading">Part 1 — Daily Practices</h2>
+
+    <div class="prose">
+      <p>Small, consistent rituals carry enormous relational weight. A 30-second hug has measurable effects on stress and bonding. Saying goodbye with a real kiss changes the morning. A "how are you, really?" at the end of the day opens a different kind of conversation than silence.</p>
+    </div>
+
+    <div class="step-text" style="margin-bottom:0.75rem;">Tick the practices you want to bring into your daily life. Add your own at the bottom.</div>
+
+    <div class="practice-grid" id="practices-grid"></div>
+
+    <div class="add-practice-row">
+      <input type="text" class="add-practice-input" id="practice-input" placeholder="Add your own practice…">
+      <button class="add-practice-btn" onclick="addCustomPractice()">+ Add</button>
+    </div>
+
+    <div class="reflection-block" style="margin-top:1.5rem;">
+      <span class="reflection-label">Our daily practices — what we're committing to</span>
+      <textarea class="reflection-textarea" id="r-practices" placeholder="Which practices feel most important to you, and why?…" rows="3"></textarea>
+    </div>
+
+    <h2 class="section-heading">Part 2 — Shared Space</h2>
+
+    <div class="prose">
+      <p>The spaces we inhabit shape how we feel and how we relate. A home that's been thought about — that reflects both of you, that has places for quiet and for togetherness — holds the relationship differently than one that just accumulated.</p>
+    </div>
+
+    <div class="prompt-box">
+      <ul>
+        <li>Is there a space in your home that feels truly <em>ours</em>? What makes it feel that way?</li>
+        <li>Is there a space that feels neglected — that could become a place of connection?</li>
+        <li>Are there things in your shared space that don't belong to either of you — clutter, objects from a different chapter — that it might be time to release?</li>
+      </ul>
+    </div>
+
+    <div class="step-text" style="margin:0.75rem 0;">Name some intentions for your shared space below:</div>
+    <div id="space-intentions">
+      <div class="space-item">
+        <div class="space-icon">🕯</div>
+        <input type="text" class="space-input" placeholder="e.g. Create a cosy corner that is just for us…">
+      </div>
+      <div class="space-item">
+        <div class="space-icon">🌿</div>
+        <input type="text" class="space-input" placeholder="e.g. Clear and refresh the dining table so we eat together…">
+      </div>
+      <div class="space-item">
+        <div class="space-icon">✦</div>
+        <input type="text" class="space-input" placeholder="e.g. Add something that represents us — our story — to the room…">
+      </div>
+    </div>
+
+    <div class="reflection-block">
+      <span class="reflection-label">What our shared space needs</span>
+      <textarea class="reflection-textarea" id="r-space" placeholder="How do you want your home to feel? What's one change you could make this week?…" rows="3"></textarea>
+    </div>
+
+    <h2 class="section-heading">Part 3 — Adventure & Newness</h2>
+
+    <div class="prose">
+      <p>Novelty is one of the most powerful forces in a long-term relationship. Couples who regularly do new things together — not necessarily dramatic things, just <em>new</em> things — report higher connection and satisfaction. Routine is necessary. But routine without newness slowly narrows the world.</p>
+    </div>
+
+    <div class="prompt-box">
+      <ul>
+        <li>When did you last do something together for the first time? How did it feel?</li>
+        <li>What's something you've each been wanting to try but haven't suggested yet?</li>
+        <li>What does adventure mean to each of you — it might be different?</li>
+      </ul>
+    </div>
+
+    <div class="step-text" style="margin:0.75rem 0 0.5rem;">Build your adventure list together — things to try, places to go, experiences to create:</div>
+
+    <div class="practice-grid" id="adventure-grid"></div>
+    <div class="add-practice-row" style="margin-top:0.5rem;">
+      <input type="text" class="add-practice-input" id="adventure-input" placeholder="Add an adventure…">
+      <button class="add-practice-btn" onclick="addAdventure()">+ Add</button>
+    </div>
+
+    <div class="reflection-block" style="margin-top:1.5rem;">
+      <span class="reflection-label">What we want to explore together</span>
+      <textarea class="reflection-textarea" id="r-adventure" placeholder="What's the first adventure you'll commit to?…" rows="3"></textarea>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
+      <a href="module-3-5.html" class="btn btn-primary">Continue: Co-Dreaming →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const DAILY_PRACTICES = [
+      'Kiss goodbye every morning, even when you\'re in a rush',
+      'Hug for at least 30 seconds — long enough for your nervous systems to sync',
+      'Ask "how are you, really?" at the end of the day — and actually listen',
+      'Eat at least one meal together without screens',
+      'Say thank you for something specific each day',
+      'Have a weekly check-in — 20 minutes to catch up on how you\'re both doing',
+      'Share what you\'re grateful for at the end of the day',
+      'Leave a note or message for no reason — just to say you\'re thinking of them',
+      'Go to bed at the same time at least a few nights a week',
+      'Take a walk together, even a short one',
+    ];
+
+    const practiceState = {};
+    DAILY_PRACTICES.forEach(p => practiceState[p] = false);
+
+    function buildPractices() {
+      const grid = document.getElementById('practices-grid');
+      grid.innerHTML = '';
+      DAILY_PRACTICES.forEach(p => renderPracticeItem(p, grid));
+    }
+
+    function renderPracticeItem(text, container) {
+      const item = document.createElement('div');
+      item.className = 'practice-item' + (practiceState[text] ? ' checked' : '');
+      item.onclick = () => togglePractice(text);
+      item.innerHTML = `
+        <div class="practice-check">${practiceState[text] ? '✓' : ''}</div>
+        <div class="practice-text">${text}</div>
+      `;
+      container.appendChild(item);
+    }
+
+    function togglePractice(text) {
+      practiceState[text] = !practiceState[text];
+      buildPractices();
+    }
+
+    function addCustomPractice() {
+      const input = document.getElementById('practice-input');
+      const val = input.value.trim();
+      if (!val) return;
+      practiceState[val] = true;
+      DAILY_PRACTICES.push(val);
+      buildPractices();
+      input.value = '';
+      input.focus();
+    }
+
+    document.getElementById('practice-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') addCustomPractice();
+    });
+
+    // Adventures
+    const adventures = [];
+
+    function buildAdventures() {
+      const grid = document.getElementById('adventure-grid');
+      grid.innerHTML = '';
+      adventures.forEach((a, i) => {
+        const item = document.createElement('div');
+        item.className = 'practice-item' + (a.done ? ' checked' : '');
+        item.onclick = () => { adventures[i].done = !adventures[i].done; buildAdventures(); };
+        item.innerHTML = `
+          <div class="practice-check">${a.done ? '✓' : ''}</div>
+          <div class="practice-text">${a.text}</div>
+        `;
+        grid.appendChild(item);
+      });
+    }
+
+    function addAdventure() {
+      const input = document.getElementById('adventure-input');
+      const val = input.value.trim();
+      if (!val) return;
+      adventures.push({ text: val, done: false });
+      buildAdventures();
+      input.value = '';
+      input.focus();
+    }
+
+    document.getElementById('adventure-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') addAdventure();
+    });
+
+    buildPractices();
+
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(16); doc.setTextColor(44,74,90);
+      doc.text('Relation-ship — Co-living', 105, 18, { align: 'center' });
+      doc.setFontSize(8); doc.setFont('helvetica', 'normal'); doc.setTextColor(150,150,150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+
+      let y = 35;
+      function addBlock(title, body) {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(44,74,90);
+        doc.text(title, 20, y); y += 6;
+        doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(50,50,50);
+        const lines = doc.splitTextToSize(body || '(no notes)', 170);
+        doc.text(lines, 20, y); y += lines.length * 5 + 8;
+      }
+
+      const chosen = DAILY_PRACTICES.filter(p => practiceState[p]);
+      addBlock('Our daily practices', chosen.join('\n') || '(none selected)');
+      addBlock('Why these matter to us', document.getElementById('r-practices').value);
+
+      const spaceInputs = [...document.querySelectorAll('#space-intentions .space-input')]
+        .map(i => i.value.trim()).filter(Boolean);
+      addBlock('Intentions for our shared space', spaceInputs.join('\n') || '(none)');
+      addBlock('What our shared space needs', document.getElementById('r-space').value);
+
+      addBlock('Our adventure list', adventures.map(a => (a.done ? '✓ ' : '• ') + a.text).join('\n') || '(none)');
+      addBlock('What we want to explore together', document.getElementById('r-adventure').value);
+
+      doc.save('relation-ship-co-living.pdf');
+    }
+  </script>
+</body>
+</html>

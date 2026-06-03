@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Third Entity — Relationship, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .entity-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    .entity-circle {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      flex-shrink: 0;
+    }
+    .entity-circle.a {
+      background: rgba(44,74,90,0.12);
+      border: 2px solid rgba(44,74,90,0.25);
+      color: var(--ocean);
+      position: relative; z-index: 1;
+    }
+    .entity-circle.b {
+      background: rgba(143,188,176,0.2);
+      border: 2px solid rgba(143,188,176,0.4);
+      color: var(--ocean);
+      margin-left: -32px;
+      position: relative; z-index: 1;
+    }
+    .entity-circle.third {
+      background: linear-gradient(135deg, rgba(196,149,106,0.15), rgba(143,188,176,0.15));
+      border: 2px dashed rgba(196,149,106,0.4);
+      color: var(--rope);
+      margin-left: 1.5rem;
+      font-size: 0.88rem;
+      text-align: center;
+      padding: 0 0.75rem;
+    }
+    .entity-plus {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--muted);
+      margin: 0 0.5rem;
+    }
+    .entity-equals {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--muted);
+      margin: 0 0.5rem;
+    }
+
+    .principle-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.1);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .principle-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: rgba(143,188,176,0.5);
+      font-weight: 300;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+    .principle-body {}
+    .principle-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--ocean);
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    .principle-text {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 3 progress">
+      <div class="progress-step active">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">1+1=3</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Our Wheel</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">Alliance</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">Co-living</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Co-Dreaming</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 3 · Part 1</div>
+    <h1 class="page-title">1 + 1 = 3</h1>
+    <div class="timing-badge">⏱ ~30 minutes &nbsp;·&nbsp; Together</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>Welcome to Module 3 — the final movement of the programme, and perhaps the most expansive. You've done the work of knowing yourself and seeing each other. Now you turn toward the relationship itself.</p>
+      <p>Here is the central idea of this module: when two people come together, something new is created. Not just a couple — a third entity. A living system with its own character, needs, and potential.</p>
+    </div>
+
+    <div class="entity-visual">
+      <div class="entity-circle a" id="circle-a">You</div>
+      <div class="entity-plus">+</div>
+      <div class="entity-circle b" id="circle-b">You</div>
+      <div class="entity-equals">=</div>
+      <div class="entity-circle third">Your<br>Relationship</div>
+    </div>
+
+    <div class="prose">
+      <p>Most people think of a relationship as the sum of two people. But a relationship is its own thing — distinct from either of you individually. It has its own rhythm, its own culture, its own health. It can thrive or struggle independently of whether either person is "doing well."</p>
+      <p>This is both a responsibility and a freedom. The relationship needs tending — just as you would tend to a garden, or a living thing in your care. And it can grow in ways that neither of you could grow alone.</p>
+    </div>
+
+    <h2 class="section-heading">What this means in practice</h2>
+
+    <div class="principle-card">
+      <div class="principle-num">1</div>
+      <div class="principle-body">
+        <div class="principle-title">The relationship has its own needs</div>
+        <div class="principle-text">Just as you each have personal needs — for space, connection, growth — your relationship has needs too. For attention, for shared meaning, for repair when it's been hurt. When those needs go unmet, the relationship suffers even if both individuals seem fine.</div>
+      </div>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-num">2</div>
+      <div class="principle-body">
+        <div class="principle-title">It can be addressed directly</div>
+        <div class="principle-text">You can speak to the relationship as if it's in the room. <em>"What does our relationship need right now?"</em> is a different question — and often a more useful one — than <em>"What do I need?"</em> or <em>"What do you need?"</em> It shifts the frame from competition to collaboration.</div>
+      </div>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-num">3</div>
+      <div class="principle-body">
+        <div class="principle-title">You are both its stewards</div>
+        <div class="principle-text">Neither of you owns the relationship. You are both responsible for it. This means when it's struggling, the question isn't <em>"whose fault is it?"</em> but <em>"what does it need from both of us?"</em></div>
+      </div>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-num">4</div>
+      <div class="principle-body">
+        <div class="principle-title">It has a life of its own</div>
+        <div class="principle-text">Your relationship will go through seasons — periods of closeness and distance, growth and rest, ease and difficulty. These aren't failures. They're the natural rhythm of a living thing. The goal isn't to keep it at peak summer forever. It's to tend it through all its seasons.</div>
+      </div>
+    </div>
+
+    <h2 class="section-heading">A conversation to open with</h2>
+
+    <div class="prompt-box">
+      <ul>
+        <li>If your relationship were a living thing, what kind of creature would it be right now?</li>
+        <li>What does it need that it isn't currently getting?</li>
+        <li>What is it good at — what is its greatest strength?</li>
+        <li>If it could speak, what would it ask of each of you?</li>
+      </ul>
+    </div>
+
+    <div class="reflection-block">
+      <span class="reflection-label">What your relationship says</span>
+      <textarea class="reflection-textarea" id="r-entity" placeholder="What came up as you imagined your relationship as a living thing?…" rows="5"></textarea>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
+      <a href="module-3-2.html" class="btn btn-primary">Continue: Our Wheel →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const nameA = sessionStorage.getItem('nameA') || 'You';
+    const nameB = sessionStorage.getItem('nameB') || 'You';
+    document.getElementById('circle-a').textContent = nameA;
+    document.getElementById('circle-b').textContent = nameB;
+
+    function downloadReflections() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(16); doc.setTextColor(44,74,90);
+      doc.text('Relation-ship — 1 + 1 = 3', 105, 18, { align: 'center' });
+      doc.setFontSize(8); doc.setFont('helvetica', 'normal'); doc.setTextColor(150,150,150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+      let y = 35;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(44,74,90);
+      doc.text('What our relationship says', 20, y); y += 6;
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(50,50,50);
+      const val = document.getElementById('r-entity').value || '(no notes)';
+      const lines = doc.splitTextToSize(val, 170);
+      doc.text(lines, 20, y);
+      doc.save('relation-ship-third-entity.pdf');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relationship Alliance — Relationship, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .dta-container { margin: 1.5rem 0; }
+    .dta-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    @media(max-width:560px){ .dta-cols { grid-template-columns: 1fr; } }
+    .dta-col { background: var(--white); border: 1px solid rgba(44,74,90,0.1); border-radius: 14px; padding: 1rem; display: flex; flex-direction: column; gap: 8px; }
+    .dta-col-header { font-family: 'Cormorant Garamond',serif; font-size: 1rem; color: var(--ocean); font-weight: 500; margin-bottom: 4px; line-height: 1.3; min-height: 2.5rem; }
+    .dta-col-sub { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 6px; }
+    .sticky-notes { display: flex; flex-direction: column; gap: 6px; min-height: 80px; }
+    .sticky { background: #FFF9E6; border: 1px solid rgba(196,149,106,0.25); border-radius: 8px; padding: 6px 8px; font-size: 0.82rem; color: var(--ink); position: relative; display: flex; align-items: flex-start; gap: 4px; animation: popIn 0.15s ease; }
+    .sticky.seafoam { background: #EAF6F3; border-color: rgba(143,188,176,0.3); }
+    .sticky.sand { background: #F5F0E8; border-color: rgba(44,74,90,0.15); }
+    @keyframes popIn { from{transform:scale(0.92);opacity:0} to{transform:scale(1);opacity:1} }
+    .sticky-text { flex:1; min-width:0; word-break:break-word; }
+    .sticky-del { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.85rem; line-height:1; padding:0 2px; opacity:0.5; transition:opacity 0.15s; flex-shrink:0; }
+    .sticky-del:hover { opacity:1; color: #c0392b; }
+    .add-sticky { display: flex; gap: 6px; margin-top: 2px; }
+    .sticky-input { flex:1; border: 1px solid rgba(44,74,90,0.15); border-radius: 8px; padding: 5px 8px; font-family:'Jost',sans-serif; font-size:0.82rem; color:var(--ink); background:var(--sand); min-width:0; }
+    .sticky-input:focus { outline:none; border-color:var(--seafoam); background:var(--white); }
+    .sticky-add-btn { background:var(--ocean); color:var(--white); border:none; border-radius:8px; padding:5px 10px; font-size:0.8rem; cursor:pointer; flex-shrink:0; transition:background 0.2s; }
+    .sticky-add-btn:hover { background:var(--ocean-light); }
+    .dta-note { font-size:0.78rem; color:var(--muted); font-style:italic; margin-top:4px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <div class="progress-indicator" aria-label="Module 3 progress">
+      <div class="progress-step">
+        <div class="progress-step-dot">1</div>
+        <div class="progress-step-label">1+1=3</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">2</div>
+        <div class="progress-step-label">Our Wheel</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step active">
+        <div class="progress-step-dot">3</div>
+        <div class="progress-step-label">Alliance</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">4</div>
+        <div class="progress-step-label">Co-living</div>
+      </div>
+      <div class="progress-line" aria-hidden="true"></div>
+      <div class="progress-step">
+        <div class="progress-step-dot">5</div>
+        <div class="progress-step-label">Co-Dreaming</div>
+      </div>
+    </div>
+
+    <div class="page-subtitle">Module 3 · Part 3</div>
+    <h1 class="page-title">Relationship Alliance</h1>
+    <div class="timing-badge">⏱ 30–60 minutes &nbsp;·&nbsp; Together</div>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>The Design Relationship Alliance draws on the ORSC™ Design Team Alliance tool. It is a foundational agreement — a living document for your relationship as a third entity. It defines the culture you want together, how you navigate difficulty, and what each of you is responsible for in keeping the relationship healthy.</p>
+      <p>It isn't a rulebook. It's a compass. Return to it whenever life asks you to recalibrate.</p>
+    </div>
+
+    <div class="info-note">
+      <strong>Before you start:</strong> Read all the steps together. You can brainstorm individually first and then share, or work through it together from the start. Choose what feels right for you.
+    </div>
+
+    <h2 class="section-heading">Steps</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3 class="step-title">Read the three questions</h3>
+          <div class="step-text">The three columns represent the three pillars of your alliance. Read them together before you begin — make sure you both understand what each one is asking.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3 class="step-title">Brainstorm individually</h3>
+          <div class="step-text">Spend a few minutes alone adding your ideas to each column. No wrong answers — words, phrases, whatever comes.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3 class="step-title">Your Relationship Alliance board</h3>
+          <div class="step-text" id="color-tip">Use the colour tabs to mark who added each note. Tap <strong>+ Add</strong> to place your ideas.</div>
+
+          <div class="dta-container">
+            <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap;">
+              <span style="font-size:0.75rem;color:var(--muted);">Note colour:</span>
+              <button id="colorA" onclick="setColor('A')" style="padding:4px 12px;font-size:0.72rem;border-radius:20px;border:1px solid rgba(44,74,90,0.3);background:var(--white);color:var(--ocean);cursor:pointer;">◉ <span id="label-a">Person A</span></button>
+              <button id="colorB" onclick="setColor('B')" style="padding:4px 12px;font-size:0.72rem;border-radius:20px;border:1px solid rgba(143,188,176,0.4);background:var(--white);color:var(--muted);cursor:pointer;">◉ <span id="label-b">Person B</span></button>
+              <button id="colorBoth" onclick="setColor('Both')" style="padding:4px 12px;font-size:0.72rem;border-radius:20px;border:1px solid rgba(44,74,90,0.15);background:var(--white);color:var(--muted);cursor:pointer;">◉ Together</button>
+            </div>
+            <div class="dta-cols">
+              <div class="dta-col">
+                <div class="dta-col-header">What atmosphere or culture do we want to have together?</div>
+                <div class="dta-col-sub">Part A: our shared culture</div>
+                <div class="sticky-notes" id="notes-0"></div>
+                <div class="add-sticky">
+                  <input class="sticky-input" id="inp-0" placeholder="Add an idea…" onkeydown="if(event.key==='Enter')addNote(0)">
+                  <button class="sticky-add-btn" onclick="addNote(0)">+ Add</button>
+                </div>
+                <div class="dta-note">e.g. warmth, honesty, adventure, safety…</div>
+              </div>
+              <div class="dta-col">
+                <div class="dta-col-header">How do we want to be together when things are difficult?</div>
+                <div class="dta-col-sub">Part A: navigating difficulty</div>
+                <div class="sticky-notes" id="notes-1"></div>
+                <div class="add-sticky">
+                  <input class="sticky-input" id="inp-1" placeholder="Add an idea…" onkeydown="if(event.key==='Enter')addNote(1)">
+                  <button class="sticky-add-btn" onclick="addNote(1)">+ Add</button>
+                </div>
+                <div class="dta-note">e.g. pause before reacting, stay curious, ask not assume…</div>
+              </div>
+              <div class="dta-col">
+                <div class="dta-col-header">What else would help our relationship to thrive?</div>
+                <div class="dta-col-sub">Part B: shared responsibility</div>
+                <div class="sticky-notes" id="notes-2"></div>
+                <div class="add-sticky">
+                  <input class="sticky-input" id="inp-2" placeholder="Add an idea…" onkeydown="if(event.key==='Enter')addNote(2)">
+                  <button class="sticky-add-btn" onclick="addNote(2)">+ Add</button>
+                </div>
+                <div class="dta-note">e.g. weekly check-ins, shared rituals, saying thank you…</div>
+              </div>
+            </div>
+            <div class="btn-group" style="margin-top:1rem;">
+              <button class="btn btn-outline" onclick="exportDTAPDF()" style="font-size:0.75rem;">Download Alliance as PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3 class="step-title">Discuss and refine together</h3>
+          <div class="step-text">Go through each column together. Clarify, question, rephrase until every note feels truly shared.</div>
+          <div class="prompt-box">
+            <ul>
+              <li>What does this mean to you specifically?</li>
+              <li>How will we each hold ourselves accountable to this?</li>
+              <li>Is there anything that needs rephrasing to feel truly ours?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3 class="step-title">Filter and finalise</h3>
+          <div class="step-text">Remove what doesn't feel essential (tap × to remove). What remains is your Relationship Alliance — a living document to return to.</div>
+          <div class="reflection-block">
+            <span class="reflection-label">Reflections on this exercise</span>
+            <textarea class="reflection-textarea" id="r-dta" placeholder="What did you discover? What felt important? Any surprises?…" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
+      <a href="module-3-4.html" class="btn btn-primary">Continue: Co-living →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="index.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Made with love by Drew & Giuli &nbsp;·&nbsp; Life Together Programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const nameA = sessionStorage.getItem('nameA') || 'Person A';
+    const nameB = sessionStorage.getItem('nameB') || 'Person B';
+    document.getElementById('label-a').textContent = nameA;
+    document.getElementById('label-b').textContent = nameB;
+    if (sessionStorage.getItem('nameA') || sessionStorage.getItem('nameB')) {
+      document.getElementById('color-tip').innerHTML =
+        `Use the colour tabs to mark who added each note (${nameA} = ocean, ${nameB} = seafoam, Together = sand). Tap <strong>+ Add</strong> to place your ideas.`;
+    }
+
+    let activeColor = 'A';
+    const notes = [[],[],[]];
+    const colorMap = {
+      A: {bg:'#FFF9E6',border:'rgba(196,149,106,0.3)',cls:''},
+      B: {bg:'#EAF6F3',border:'rgba(143,188,176,0.4)',cls:'seafoam'},
+      Both: {bg:'#F5F0E8',border:'rgba(44,74,90,0.15)',cls:'sand'}
+    };
+
+    function setColor(c) {
+      activeColor = c;
+      ['A','B','Both'].forEach(x=>{
+        const btn = document.getElementById('color'+x);
+        btn.style.fontWeight = x===c?'500':'300';
+        btn.style.borderWidth = x===c?'2px':'1px';
+      });
+    }
+
+    function addNote(col) {
+      const inp = document.getElementById('inp-'+col);
+      const text = inp.value.trim();
+      if(!text) return;
+      notes[col].push({text, color: activeColor, id: Date.now()});
+      renderNotes(col);
+      inp.value = ''; inp.focus();
+    }
+
+    function deleteNote(col, id) {
+      notes[col] = notes[col].filter(n=>n.id!==id);
+      renderNotes(col);
+    }
+
+    function renderNotes(col) {
+      const container = document.getElementById('notes-'+col);
+      container.innerHTML = '';
+      notes[col].forEach(n=>{
+        const c = colorMap[n.color];
+        const div = document.createElement('div');
+        div.className = 'sticky '+c.cls;
+        div.style.background = c.bg; div.style.borderColor = c.border;
+        div.innerHTML = `<span class="sticky-text">${n.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>
+          <button class="sticky-del" onclick="deleteNote(${col},${n.id})" title="Remove">×</button>`;
+        container.appendChild(div);
+      });
+    }
+
+    setColor('A');
+
+    const colHeaders = [
+      'What atmosphere or culture do we want\nto have together?',
+      'How do we want to be together\nwhen things are difficult?',
+      'What else would help our\nrelationship to thrive?'
+    ];
+
+    function exportDTAPDF() {
+      const {jsPDF}=window.jspdf;
+      const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+      const pw=297,ph=210,margin=15,colW=(pw-margin*2-20)/3;
+      doc.setFont('helvetica','bold');doc.setFontSize(14);doc.setTextColor(44,74,90);
+      doc.text('Relation-ship — Relationship Alliance',pw/2,14,{align:'center'});
+      doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(150,150,150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`,pw/2,20,{align:'center'});
+      const colColors=[[255,249,230],[234,246,243],[245,240,232]];
+      notes.forEach((colNotes,i)=>{
+        const x=margin+i*(colW+10);
+        doc.setFillColor(...colColors[i]);doc.roundedRect(x,26,colW,ph-margin-26,4,4,'F');
+        doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(44,74,90);
+        const hLines=doc.splitTextToSize(colHeaders[i],colW-8);
+        doc.text(hLines,x+4,33);let y=33+hLines.length*5+4;
+        doc.setFont('helvetica','normal');doc.setFontSize(8);
+        colNotes.forEach(n=>{
+          const[r,g,b]=n.color==='A'?[255,249,230]:n.color==='B'?[234,246,243]:[245,240,232];
+          doc.setFillColor(r,g,b);
+          const lines=doc.splitTextToSize('• '+n.text,colW-10);
+          const h=lines.length*4.5+6;
+          doc.roundedRect(x+3,y-3,colW-6,h,2,2,'F');
+          doc.setTextColor(50,50,50);doc.text(lines,x+6,y+1);
+          const ownerLabel=n.color==='A'?nameA:n.color==='B'?nameB:nameA+'+'+nameB;
+          doc.setTextColor(150,150,150);doc.setFontSize(6);doc.text(ownerLabel,x+colW-8,y+1);
+          doc.setFontSize(8);y+=h+4;
+          if(y>ph-margin-10){y=33+hLines.length*5+4;}
+        });
+        if(colNotes.length===0){doc.setTextColor(180,180,180);doc.setFontSize(8);doc.text('(no notes added)',x+4,y);}
+      });
+      doc.save('relation-ship-alliance.pdf');
+    }
+
+    function downloadReflections() {
+      const{jsPDF}=window.jspdf;
+      const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+      doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(44,74,90);
+      doc.text('Relation-ship — Relationship Alliance',105,18,{align:'center'});
+      doc.setFontSize(8);doc.setFont('helvetica','normal');doc.setTextColor(150,150,150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`,105,25,{align:'center'});
+      let y=35;
+      doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(44,74,90);
+      doc.text('Reflections on this exercise',20,y);y+=6;
+      const val=document.getElementById('r-dta').value||'(no notes)';
+      doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(50,50,50);
+      const lines=doc.splitTextToSize(val,170);
+      doc.text(lines,20,y);
+      doc.save('relation-ship-alliance-reflections.pdf');
+    }
+  </script>
+</body>
+</html>
