@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relation-ship — Navigating the waves of life together</title>
+  <meta name="description" content="A self-guided couples course for partners navigating life's big transitions. 3 modules, 15 sessions, at your own pace. £297 per couple.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sand: #F5F0E8;
+      --sand-dark: #EAE3D2;
+      --ocean: #2C4A5A;
+      --ocean-light: #3D6475;
+      --ocean-deep: #1A2E3B;
+      --seafoam: #8FBCB0;
+      --seafoam-light: #B8D8D2;
+      --rope: #C4956A;
+      --rope-light: #DDB896;
+      --ink: #1E2D35;
+      --muted: #7A8D8A;
+      --white: #FDFAF5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--sand);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Keyframes ── */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade-in {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes wave-sway {
+      0%, 100% { transform: translateX(0); }
+      50%       { transform: translateX(4%); }
+    }
+    @keyframes scroll-drip {
+      0%, 100% { opacity: 0.35; transform: scaleY(1) translateY(0); }
+      50%       { opacity: 1;    transform: scaleY(0.65) translateY(-4px); transform-origin: top; }
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.10s; }
+    .reveal-d2 { transition-delay: 0.20s; }
+    .reveal-d3 { transition-delay: 0.30s; }
+    .reveal-d4 { transition-delay: 0.40s; }
+    .reveal-d5 { transition-delay: 0.50s; }
+
+    /* ── Layout ── */
+    .lp-wrap { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ════════════════════════════════════════
+       NAV
+    ════════════════════════════════════════ */
+    .lp-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 1.35rem 0;
+      transition: background 0.35s, box-shadow 0.35s, padding 0.35s;
+    }
+    .lp-nav.scrolled {
+      background: rgba(253,250,245,0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(44,74,90,0.07);
+      padding: 0.9rem 0;
+    }
+    .lp-nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .lp-nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem; font-weight: 300;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      transition: color 0.35s;
+    }
+    .lp-nav.scrolled .lp-nav-logo { color: var(--ocean); }
+    .lp-nav-logo em { font-style: italic; }
+    .lp-nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .lp-nav-link {
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .lp-nav.scrolled .lp-nav-link { color: var(--muted); }
+    .lp-nav-link:hover { color: var(--white); }
+    .lp-nav.scrolled .lp-nav-link:hover { color: var(--ocean); }
+    .lp-nav-cta {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.55rem 1.25rem; border-radius: 30px;
+      font-family: 'Jost', sans-serif; font-size: 0.78rem;
+      font-weight: 400; letter-spacing: 0.1em; text-decoration: none;
+      background: rgba(255,255,255,0.15); color: var(--white);
+      border: 1px solid rgba(255,255,255,0.25);
+      transition: all 0.25s; backdrop-filter: blur(8px);
+    }
+    .lp-nav.scrolled .lp-nav-cta {
+      background: var(--ocean); color: var(--white); border-color: var(--ocean);
+    }
+    .lp-nav-cta:hover { opacity: 0.85; }
+
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
+    .lp-hero {
+      min-height: 100vh;
+      background: linear-gradient(152deg, var(--ocean-deep) 0%, var(--ocean) 52%, var(--ocean-light) 100%);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center;
+      padding: 9rem 0 8rem;
+    }
+
+    /* Subtle grain */
+    .lp-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.035; pointer-events: none;
+    }
+
+    /* Seafoam glow */
+    .hero-glow {
+      position: absolute; top: -15%; right: -8%;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(143,188,176,0.11) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-glow-2 {
+      position: absolute; bottom: 10%; left: -5%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(196,149,106,0.07) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    /* Animated waves */
+    .hero-waves {
+      position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 120px; overflow: hidden;
+    }
+    .hero-wave { position: absolute; bottom: 0; left: -50%; width: 200%; }
+    .hero-wave svg { width: 100%; }
+    .hero-wave:nth-child(1) svg path { animation: wave-sway 9s ease-in-out infinite; }
+    .hero-wave:nth-child(2) svg path { animation: wave-sway 11s ease-in-out infinite; animation-delay: -3s; }
+    .hero-wave:nth-child(3) svg path { animation: wave-sway 7s  ease-in-out infinite; animation-delay: -6s; }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 780px;
+    }
+    .hero-eyebrow {
+      font-size: 0.7rem; font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--seafoam); margin-bottom: 1.5rem;
+      opacity: 0; animation: fade-up 0.9s ease forwards 0.25s;
+    }
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7.5vw, 5.8rem);
+      font-weight: 300; color: var(--white); line-height: 1.08;
+      margin-bottom: 1.75rem;
+      opacity: 0; animation: fade-up 0.9s ease forwards 0.45s;
+    }
+    .hero-headline em { font-style: italic; color: var(--seafoam-light); }
+    .hero-sub {
+      font-size: 1.05rem; font-weight: 300; color: rgba(255,255,255,0.68);
+      line-height: 1.85; max-width: 520px; margin-bottom: 2.75rem;
+      opacity: 0; animation: fade-up 0.9s ease forwards 0.65s;
+    }
+    .hero-actions {
+      display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+      opacity: 0; animation: fade-up 0.9s ease forwards 0.85s;
+    }
+    .btn-hero {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 1rem 2.25rem; border-radius: 40px;
+      font-family: 'Jost', sans-serif; font-size: 0.88rem;
+      font-weight: 400; letter-spacing: 0.08em; text-decoration: none;
+      background: var(--white); color: var(--ocean);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .btn-hero:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 36px rgba(0,0,0,0.25);
+    }
+    .btn-hero-ghost {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem; font-weight: 300; letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.55); text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-hero-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.5); }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3.5rem;
+      opacity: 0; animation: fade-up 0.9s ease forwards 1.05s;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .hero-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300; color: var(--white); line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .hero-stat-label {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute; bottom: 2.75rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.45rem;
+      opacity: 0; animation: fade-in 1.2s ease forwards 1.6s; z-index: 2;
+    }
+    .scroll-hint span {
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+    }
+    .scroll-hint-line {
+      width: 1px; height: 38px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+      animation: scroll-drip 2.2s ease infinite;
+    }
+
+    /* ════════════════════════════════════════
+       SECTIONS
+    ════════════════════════════════════════ */
+    .lp-section { padding: 5.5rem 0; }
+    .lp-section.bg-white { background: var(--white); }
+    .lp-section.bg-dark {
+      background: linear-gradient(152deg, var(--ocean-deep) 0%, var(--ocean) 100%);
+    }
+
+    .section-eyebrow {
+      font-size: 0.68rem; font-weight: 400; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--rope); margin-bottom: 0.85rem;
+    }
+    .section-eyebrow.light { color: var(--seafoam); }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 300; color: var(--ocean); line-height: 1.15; margin-bottom: 1rem;
+    }
+    .section-title.light { color: var(--white); }
+    .section-title em { font-style: italic; }
+    .section-body {
+      font-size: 0.95rem; color: var(--muted); line-height: 1.85; max-width: 540px;
+    }
+    .section-body.light { color: rgba(255,255,255,0.6); }
+
+    /* wave divider between sections */
+    .wave-sep {
+      display: block; width: 100%; line-height: 0; overflow: hidden;
+    }
+    .wave-sep svg { display: block; width: 100%; }
+
+    /* ════════════════════════════════════════
+       IS THIS FOR YOU — personas
+    ════════════════════════════════════════ */
+    .personas-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem; margin-top: 3rem;
+    }
+    .persona-card {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.07);
+      border-radius: 22px; padding: 2.25rem 1.85rem;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .persona-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 52px rgba(44,74,90,0.1);
+    }
+    .persona-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .persona-bar.teal { background: var(--seafoam); }
+    .persona-bar.rope { background: var(--rope); }
+    .persona-bar.ocean { background: var(--ocean); }
+    .persona-icon { font-size: 1.8rem; margin-bottom: 1.1rem; display: block; line-height: 1; }
+    .persona-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 400; color: var(--ocean);
+      line-height: 1.2; margin-bottom: 0.85rem;
+    }
+    .persona-list { list-style: none; padding: 0; margin: 0 0 1rem; }
+    .persona-list li {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.6;
+      padding: 0.35rem 0; border-bottom: 1px solid var(--sand-dark);
+      display: flex; align-items: flex-start; gap: 0.55rem;
+    }
+    .persona-list li:last-child { border-bottom: none; }
+    .persona-list li::before { content: '—'; color: var(--seafoam); flex-shrink: 0; font-size: 0.9rem; }
+    .persona-quote {
+      font-size: 0.83rem; font-style: italic; color: var(--ocean-light);
+      opacity: 0.75; line-height: 1.65; margin-top: 0.85rem;
+    }
+    .persona-quote::before { content: '"'; margin-right: 1px; }
+    .persona-quote::after  { content: '"'; margin-left: 1px; }
+
+    /* ════════════════════════════════════════
+       WHAT'S INSIDE — modules
+    ════════════════════════════════════════ */
+    .modules-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .module-card {
+      border-radius: 22px; overflow: hidden;
+      border: 1px solid rgba(44,74,90,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .module-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 48px rgba(44,74,90,0.12);
+    }
+    .module-card-head {
+      padding: 2.25rem 1.85rem 1.75rem;
+    }
+    .module-card:nth-child(1) .module-card-head { background: #24404F; }
+    .module-card:nth-child(2) .module-card-head { background: var(--ocean); }
+    .module-card:nth-child(3) .module-card-head { background: var(--ocean-light); }
+    .module-num {
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--seafoam-light); margin-bottom: 0.55rem;
+    }
+    .module-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300; color: var(--white); line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+    .module-timing {
+      font-size: 0.72rem; color: rgba(255,255,255,0.45); letter-spacing: 0.04em;
+    }
+    .module-card-body { background: var(--white); padding: 1.65rem 1.85rem; }
+    .module-parts { list-style: none; padding: 0; margin: 0; }
+    .module-parts li {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.5;
+      padding: 0.45rem 0; border-bottom: 1px solid var(--sand-dark);
+      display: flex; align-items: flex-start; gap: 0.6rem;
+    }
+    .module-parts li:last-child { border-bottom: none; }
+    .part-pip {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--seafoam); flex-shrink: 0; margin-top: 6px;
+    }
+    .module-parts li strong { font-weight: 400; color: var(--ink); }
+
+    /* ════════════════════════════════════════
+       HOW IT WORKS — journey
+    ════════════════════════════════════════ */
+    .journey-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; margin-top: 3.5rem; position: relative;
+    }
+    .journey-connector {
+      position: absolute; top: 27px; left: 13%; right: 13%;
+      height: 1px; background: var(--seafoam-light); z-index: 0;
+    }
+    .journey-step {
+      text-align: center; padding: 0 0.75rem; position: relative; z-index: 1;
+    }
+    .journey-num {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: var(--sand); border: 1.5px solid var(--seafoam-light);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.35rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem; font-weight: 300; color: var(--ocean);
+      transition: all 0.3s;
+    }
+    .journey-step:hover .journey-num {
+      background: var(--ocean); border-color: var(--ocean); color: var(--white);
+    }
+    .journey-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 400; color: var(--ocean);
+      margin-bottom: 0.4rem;
+    }
+    .journey-desc {
+      font-size: 0.79rem; color: var(--muted); line-height: 1.6;
+    }
+
+    /* ════════════════════════════════════════
+       TESTIMONIALS
+    ════════════════════════════════════════ */
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem; margin-top: 3rem;
+    }
+    .testimonial {
+      background: var(--sand); border-radius: 22px;
+      padding: 2rem 1.85rem; position: relative;
+      transition: transform 0.25s;
+    }
+    .testimonial:hover { transform: translateY(-3px); }
+    .testimonial-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem; line-height: 1; color: var(--seafoam-light);
+      margin-bottom: 0.35rem; display: block;
+    }
+    .testimonial-text {
+      font-size: 0.9rem; font-style: italic; color: var(--ink);
+      line-height: 1.8; margin-bottom: 1.35rem;
+    }
+    .testimonial-name {
+      font-size: 0.73rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .testimonial-tag {
+      display: block; margin-top: 0.35rem;
+      font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--rope);
+    }
+
+    /* ════════════════════════════════════════
+       ABOUT
+    ════════════════════════════════════════ */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center; margin-top: 3rem;
+    }
+    .about-img {
+      aspect-ratio: 4/5; border-radius: 24px;
+      background: var(--sand-dark);
+      position: relative; overflow: hidden;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .about-img::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(155deg, rgba(143,188,176,0.2) 0%, rgba(196,149,106,0.12) 100%);
+    }
+    .about-img-label {
+      position: relative; z-index: 1;
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); opacity: 0.6; margin-bottom: 1.5rem;
+    }
+    .about-text .section-title { margin-bottom: 1.35rem; }
+    .about-para {
+      font-size: 0.93rem; color: var(--muted); line-height: 1.85; margin-bottom: 1rem;
+    }
+    .about-sig {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-style: italic; color: var(--rope);
+      margin-top: 1.75rem;
+    }
+
+    /* ════════════════════════════════════════
+       PRICING
+    ════════════════════════════════════════ */
+    .pricing-wrap {
+      max-width: 560px; margin: 3.5rem auto 0;
+      background: var(--ocean);
+      border-radius: 28px; overflow: hidden;
+      box-shadow: 0 28px 72px rgba(26,46,59,0.28);
+    }
+    .pricing-head {
+      padding: 2.75rem 2.75rem 2.25rem;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+    }
+    .pricing-eyebrow {
+      font-size: 0.66rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--seafoam-light); margin-bottom: 0.85rem;
+    }
+    .pricing-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem; font-weight: 300; color: var(--white);
+      margin-bottom: 1.5rem; line-height: 1.15;
+    }
+    .pricing-amount {
+      display: flex; align-items: baseline; gap: 0.25rem; margin-bottom: 0.3rem;
+    }
+    .pricing-currency {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.65rem; font-weight: 300; color: rgba(255,255,255,0.7);
+      line-height: 1;
+    }
+    .pricing-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4.5rem; font-weight: 300; color: var(--white);
+      line-height: 1;
+    }
+    .pricing-per {
+      font-size: 0.78rem; color: rgba(255,255,255,0.45);
+      letter-spacing: 0.04em; margin-top: 0.25rem;
+    }
+    .pricing-body { padding: 2.25rem 2.75rem 2.75rem; }
+    .pricing-list { list-style: none; padding: 0; margin: 0 0 2.25rem; }
+    .pricing-list li {
+      display: flex; align-items: flex-start; gap: 0.8rem;
+      padding: 0.65rem 0; font-size: 0.88rem; color: rgba(255,255,255,0.78);
+      border-bottom: 1px solid rgba(255,255,255,0.07); line-height: 1.5;
+    }
+    .pricing-list li:last-child { border-bottom: none; }
+    .price-check {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: rgba(143,188,176,0.2); flex-shrink: 0; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--seafoam-light); font-size: 0.65rem;
+    }
+    .btn-join {
+      width: 100%; display: flex; align-items: center; justify-content: center;
+      gap: 0.5rem; padding: 1.05rem; border-radius: 40px;
+      font-family: 'Jost', sans-serif; font-size: 0.88rem;
+      font-weight: 400; letter-spacing: 0.08em;
+      text-decoration: none; background: var(--white); color: var(--ocean);
+      border: none; cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-join:hover {
+      background: var(--seafoam-light);
+      transform: translateY(-1px);
+    }
+    .pricing-note {
+      text-align: center; margin-top: 1rem;
+      font-size: 0.72rem; color: rgba(255,255,255,0.32); letter-spacing: 0.04em;
+    }
+
+    /* ════════════════════════════════════════
+       FAQ
+    ════════════════════════════════════════ */
+    .faq-wrap { max-width: 700px; margin: 3.5rem auto 0; }
+    .faq-item { border-bottom: 1px solid var(--sand-dark); }
+    .faq-q {
+      width: 100%; display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem;
+      padding: 1.3rem 0; background: none; border: none; cursor: pointer;
+      text-align: left;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; color: var(--ocean); font-weight: 400;
+      transition: color 0.2s;
+    }
+    .faq-q:hover { color: var(--ocean-light); }
+    .faq-chevron {
+      flex-shrink: 0; color: var(--seafoam);
+      transition: transform 0.35s; font-size: 0.85rem;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a {
+      font-size: 0.9rem; color: var(--muted); line-height: 1.85;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.42s ease, padding 0.3s;
+    }
+    .faq-item.open .faq-a { max-height: 360px; padding-bottom: 1.35rem; }
+
+    /* ════════════════════════════════════════
+       FINAL CTA
+    ════════════════════════════════════════ */
+    .lp-final {
+      background: linear-gradient(152deg, var(--ocean-deep) 0%, var(--ocean) 100%);
+      padding: 7rem 0; text-align: center; position: relative; overflow: hidden;
+    }
+    .lp-final::before {
+      content: '';
+      position: absolute; top: -25%; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(143,188,176,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .final-inner { position: relative; z-index: 1; }
+    .final-eyebrow {
+      font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--seafoam); margin-bottom: 1.35rem;
+    }
+    .final-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      font-weight: 300; color: var(--white); line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+    .final-headline em { font-style: italic; color: var(--seafoam-light); }
+    .final-sub {
+      font-size: 0.95rem; color: rgba(255,255,255,0.58); line-height: 1.85;
+      max-width: 420px; margin: 0 auto 2.75rem;
+    }
+
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
+    .lp-footer {
+      background: var(--ink); padding: 2.75rem 0; text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 300;
+      color: rgba(255,255,255,0.55); margin-bottom: 0.6rem;
+    }
+    .footer-logo em { font-style: italic; }
+    .lp-footer p {
+      font-size: 0.72rem; color: rgba(255,255,255,0.28);
+      letter-spacing: 0.07em; line-height: 1.9;
+    }
+    .lp-footer a { color: rgba(255,255,255,0.38); text-decoration: none; transition: color 0.2s; }
+    .lp-footer a:hover { color: rgba(255,255,255,0.65); }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+    @media (max-width: 960px) {
+      .personas-grid,
+      .modules-grid,
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .journey-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+      .journey-connector { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-img { aspect-ratio: 16/9; max-height: 280px; }
+    }
+    @media (max-width: 640px) {
+      .lp-section { padding: 4rem 0; }
+      .lp-hero { padding: 7.5rem 0 5rem; min-height: auto; }
+      .lp-wrap { padding: 0 1.25rem; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .hero-stats { gap: 1.75rem; flex-wrap: wrap; }
+      .journey-grid { grid-template-columns: 1fr; }
+      .pricing-head, .pricing-body { padding-left: 1.75rem; padding-right: 1.75rem; }
+      .lp-nav-link { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav class="lp-nav" id="lp-nav" aria-label="Site navigation">
+    <div class="lp-nav-inner">
+      <a href="#" class="lp-nav-logo"><em>Relation</em>-ship</a>
+      <div class="lp-nav-right">
+        <a href="#programme" class="lp-nav-link">Programme</a>
+        <a href="#about" class="lp-nav-link">About us</a>
+        <a href="#join" class="lp-nav-cta">Join the programme →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="lp-hero" aria-labelledby="hero-heading">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-glow-2" aria-hidden="true"></div>
+    <div class="lp-wrap">
+      <div class="hero-content">
+        <p class="hero-eyebrow">A couples programme by Giuli & Drew</p>
+        <h1 class="hero-headline" id="hero-heading">
+          Navigate life's<br>
+          waves <em>together</em>
+        </h1>
+        <p class="hero-sub">
+          A self-guided programme for couples who want to know themselves and each other more deeply — before the waves hit, not after.
+        </p>
+        <div class="hero-actions">
+          <a href="#join" class="btn-hero">Begin the journey →</a>
+          <a href="#programme" class="btn-hero-ghost">See what's inside</a>
+        </div>
+        <div class="hero-stats" aria-label="Programme at a glance">
+          <div>
+            <div class="hero-stat-num">3</div>
+            <div class="hero-stat-label">Modules</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">15</div>
+            <div class="hero-stat-label">Sessions</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">~12h</div>
+            <div class="hero-stat-label">Of depth</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">£297</div>
+            <div class="hero-stat-label">Per couple</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animated wave edge -->
+    <div class="hero-waves" aria-hidden="true">
+      <div class="hero-wave">
+        <svg viewBox="0 0 1440 100" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 60 Q180 20 360 60 Q540 100 720 60 Q900 20 1080 60 Q1260 100 1440 60 L1440 100 L0 100 Z" fill="#F5F0E8" opacity="0.35"/>
+        </svg>
+      </div>
+      <div class="hero-wave">
+        <svg viewBox="0 0 1440 100" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 70 Q200 30 400 70 Q600 110 800 70 Q1000 30 1200 70 Q1320 95 1440 70 L1440 100 L0 100 Z" fill="#F5F0E8" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="hero-wave">
+        <svg viewBox="0 0 1440 100" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 80 Q240 50 480 80 Q720 110 960 80 Q1200 50 1440 80 L1440 100 L0 100 Z" fill="#F5F0E8"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-hint-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══ IS THIS FOR YOU ═══ -->
+  <section class="lp-section" id="is-this-for-you" aria-labelledby="personas-heading">
+    <div class="lp-wrap">
+      <div class="reveal">
+        <p class="section-eyebrow">Is this for you?</p>
+        <h2 class="section-title" id="personas-heading">
+          For couples at a<br><em>turning point</em>
+        </h2>
+        <p class="section-body">
+          You don't need to be in crisis. Relation-ship is for partners who are proactive — who want to face life's transitions as a team, with clarity and intention.
+        </p>
+      </div>
+      <div class="personas-grid">
+        <div class="persona-card reveal reveal-d1">
+          <div class="persona-bar teal"></div>
+          <span class="persona-icon">⚓</span>
+          <div class="persona-title">A new chapter together</div>
+          <ul class="persona-list">
+            <li>Moving in or relocating</li>
+            <li>Expecting or just had a baby</li>
+            <li>Getting married or engaged</li>
+            <li>Retiring or changing pace</li>
+          </ul>
+          <p class="persona-quote">We want to step into this next phase as a team, not just hope for the best.</p>
+        </div>
+        <div class="persona-card reveal reveal-d2">
+          <div class="persona-bar rope"></div>
+          <span class="persona-icon">◎</span>
+          <div class="persona-title">One of you is changing</div>
+          <ul class="persona-list">
+            <li>Career shift or redundancy</li>
+            <li>Loss, grief, or health change</li>
+            <li>A faith or values shift</li>
+            <li>Feeling like a different person</li>
+          </ul>
+          <p class="persona-quote">I'm not who I was two years ago. I want us to really know each other again.</p>
+        </div>
+        <div class="persona-card reveal reveal-d3">
+          <div class="persona-bar ocean"></div>
+          <span class="persona-icon">☽</span>
+          <div class="persona-title">Rebuilding your nest</div>
+          <ul class="persona-list">
+            <li>Children leaving home</li>
+            <li>Finding time for each other again</li>
+            <li>Rediscovering who you are as a couple</li>
+            <li>Wanting more depth, not just routine</li>
+          </ul>
+          <p class="persona-quote">It's just the two of us again. Who are we now?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHAT'S INSIDE ═══ -->
+  <section class="lp-section bg-white" id="programme" aria-labelledby="programme-heading">
+    <div class="lp-wrap">
+      <div class="reveal">
+        <p class="section-eyebrow">The programme</p>
+        <h2 class="section-title" id="programme-heading">
+          Three modules.<br><em>One complete journey.</em>
+        </h2>
+        <p class="section-body">
+          Start with yourself. Then meet each other fully. Then build the relationship you actually want. Each module contains five sessions — do them at your own pace, in your own home.
+        </p>
+      </div>
+      <div class="modules-grid">
+        <div class="module-card reveal reveal-d1">
+          <div class="module-card-head">
+            <div class="module-num">Module 1 · Individual · ~3.5 hours</div>
+            <div class="module-name">Me</div>
+            <div class="module-timing">Do this solo, at your own pace</div>
+          </div>
+          <div class="module-card-body">
+            <ul class="module-parts">
+              <li><div class="part-pip"></div><strong>Where I am</strong> — Wheel of Life</li>
+              <li><div class="part-pip"></div><strong>Who I am</strong> — Origin Story & Values</li>
+              <li><div class="part-pip"></div><strong>How I am</strong> — Lights & Shadows</li>
+              <li><div class="part-pip"></div><strong>I am enough</strong> — Self-Love & Love Languages</li>
+              <li><div class="part-pip"></div><strong>Why I am</strong> — Life Purpose</li>
+            </ul>
+          </div>
+        </div>
+        <div class="module-card reveal reveal-d2">
+          <div class="module-card-head">
+            <div class="module-num">Module 2 · Together · ~4 hours</div>
+            <div class="module-name">You and I</div>
+            <div class="module-timing">Come together and really see each other</div>
+          </div>
+          <div class="module-card-body">
+            <ul class="module-parts">
+              <li><div class="part-pip"></div><strong>Land work</strong> — My land, your land</li>
+              <li><div class="part-pip"></div><strong>Seeing each other</strong> — Lights & Shadows together</li>
+              <li><div class="part-pip"></div><strong>Intentions & Words</strong> — The language of your relationship</li>
+              <li><div class="part-pip"></div><strong>Love Languages together</strong> — Closing the gap</li>
+              <li><div class="part-pip"></div><strong>Conversation Cards</strong> — Knowing each other intentionally</li>
+            </ul>
+          </div>
+        </div>
+        <div class="module-card reveal reveal-d3">
+          <div class="module-card-head">
+            <div class="module-num">Module 3 · Together · ~4.5 hours</div>
+            <div class="module-name">Relationship</div>
+            <div class="module-timing">Build the relationship you want to live in</div>
+          </div>
+          <div class="module-card-body">
+            <ul class="module-parts">
+              <li><div class="part-pip"></div><strong>1 + 1 = 3</strong> — Enter the third entity</li>
+              <li><div class="part-pip"></div><strong>Our Wheel</strong> — The relationship wheel of life</li>
+              <li><div class="part-pip"></div><strong>Relationship Alliance</strong> — Your shared compass</li>
+              <li><div class="part-pip"></div><strong>Co-living</strong> — Daily practices, shared space, adventure</li>
+              <li><div class="part-pip"></div><strong>Co-Dreaming</strong> — Your shared future</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ HOW IT WORKS ═══ -->
+  <section class="lp-section" aria-labelledby="how-heading">
+    <div class="lp-wrap">
+      <div class="reveal" style="text-align:center;">
+        <p class="section-eyebrow">How it works</p>
+        <h2 class="section-title" id="how-heading">Simple. <em>Intentional.</em> Yours.</h2>
+      </div>
+      <div class="journey-grid reveal">
+        <div class="journey-connector" aria-hidden="true"></div>
+        <div class="journey-step">
+          <div class="journey-num">1</div>
+          <div class="journey-label">Join</div>
+          <p class="journey-desc">Purchase once and get lifetime access. No subscription, no expiry.</p>
+        </div>
+        <div class="journey-step">
+          <div class="journey-num">2</div>
+          <div class="journey-label">Go solo</div>
+          <p class="journey-desc">Each partner works through Module 1 independently — on your own time, in your own way.</p>
+        </div>
+        <div class="journey-step">
+          <div class="journey-num">3</div>
+          <div class="journey-label">Come together</div>
+          <p class="journey-desc">Modules 2 & 3 are done as a couple. Block two evenings and go deep.</p>
+        </div>
+        <div class="journey-step">
+          <div class="journey-num">4</div>
+          <div class="journey-label">Return anytime</div>
+          <p class="journey-desc">Revisit sessions whenever life shifts. The programme grows with you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section class="lp-section bg-white" id="about" aria-labelledby="about-heading">
+    <div class="lp-wrap">
+      <div class="about-grid">
+        <div class="about-img reveal">
+          <span class="about-img-label">Photo of Giuli & Drew</span>
+        </div>
+        <div class="about-text reveal reveal-d2">
+          <p class="section-eyebrow">Who we are</p>
+          <h2 class="section-title" id="about-heading">
+            Made by a couple,<br>
+            <em>for couples</em>
+          </h2>
+          <p class="about-para">
+            We're Giuliano and Drew — partners in life and in this work. We built Relation-ship because we wanted something that didn't exist: a couples programme for people who are already okay, but want to be extraordinary together.
+          </p>
+          <p class="about-para">
+            Every exercise, every prompt, every session in this programme is something we have done ourselves. This isn't theory — it's practice. We've been in the waves. We know how to navigate them.
+          </p>
+          <p class="about-para">
+            We are trained coaches based in London. Relation-ship is the programme we wish existed when we needed it most.
+          </p>
+          <p class="about-sig">— Giuli & Drew</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TESTIMONIALS ═══ -->
+  <section class="lp-section" aria-labelledby="testimonials-heading">
+    <div class="lp-wrap">
+      <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+        <p class="section-eyebrow">What couples say</p>
+        <h2 class="section-title" id="testimonials-heading">
+          <em>Real words</em> from real partners
+        </h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial reveal reveal-d1">
+          <span class="testimonial-mark" aria-hidden="true">"</span>
+          <p class="testimonial-text">We'd been together eight years and thought we knew each other completely. Module 1 alone gave us things to talk about for weeks.</p>
+          <div class="testimonial-name">Sarah & Tom</div>
+          <span class="testimonial-tag">New chapter — expecting their first child</span>
+        </div>
+        <div class="testimonial reveal reveal-d2">
+          <span class="testimonial-mark" aria-hidden="true">"</span>
+          <p class="testimonial-text">The Co-Dreaming session was unlike anything we've done. We sat together for two hours and actually planned a life we both want. Properly planned it.</p>
+          <div class="testimonial-name">Marcus & Priya</div>
+          <span class="testimonial-tag">Identity shift — career change</span>
+        </div>
+        <div class="testimonial reveal reveal-d3">
+          <span class="testimonial-mark" aria-hidden="true">"</span>
+          <p class="testimonial-text">We were nervous it would feel like therapy. It didn't at all. It felt like the best date nights we've ever had — but with structure and a purpose.</p>
+          <div class="testimonial-name">Anna & James</div>
+          <span class="testimonial-tag">Nest transition — children have left home</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRICING ═══ -->
+  <section class="lp-section bg-white" id="join" aria-labelledby="pricing-heading">
+    <div class="lp-wrap">
+      <div class="reveal" style="text-align:center; max-width:560px; margin:0 auto;">
+        <p class="section-eyebrow">Join the programme</p>
+        <h2 class="section-title" id="pricing-heading">One investment.<br><em>Lifetime of depth.</em></h2>
+        <p class="section-body" style="margin:0 auto; text-align:center;">
+          One payment per couple. Unlimited access. No subscriptions, no upsells.
+        </p>
+      </div>
+      <div class="pricing-wrap reveal">
+        <div class="pricing-head">
+          <p class="pricing-eyebrow">Relation-ship Self-Paced Programme</p>
+          <h3 class="pricing-name">The complete journey —<br>at your own pace</h3>
+          <div class="pricing-amount">
+            <span class="pricing-currency">£</span>
+            <span class="pricing-num">297</span>
+          </div>
+          <p class="pricing-per">per couple · one-time payment · lifetime access</p>
+        </div>
+        <div class="pricing-body">
+          <ul class="pricing-list">
+            <li>
+              <span class="price-check" aria-hidden="true">✓</span>
+              3 modules, 15 sessions (~12 hours of guided exercises)
+            </li>
+            <li>
+              <span class="price-check" aria-hidden="true">✓</span>
+              Module 1: complete solo journey of self-discovery for each partner
+            </li>
+            <li>
+              <span class="price-check" aria-hidden="true">✓</span>
+              Modules 2 & 3: couple sessions with interactive tools and reflection prompts
+            </li>
+            <li>
+              <span class="price-check" aria-hidden="true">✓</span>
+              Co-Dreaming audio guided session (created by Giuli & Drew)
+            </li>
+            <li>
+              <span class="price-check" aria-hidden="true">✓</span>
+              Works on any device — no app, no account needed
+            </li>
+            <li>
+              <span class="price-check" aria-hidden="true">✓</span>
+              Lifetime access — revisit whenever life shifts
+            </li>
+          </ul>
+          <!-- Replace href with your Hotmart checkout URL -->
+          <a href="#" class="btn-join">Join Relation-ship — £297 →</a>
+          <p class="pricing-note">Secure checkout · 14-day satisfaction guarantee · questions? hello@relation-ship.co</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FAQ ═══ -->
+  <section class="lp-section" aria-labelledby="faq-heading">
+    <div class="lp-wrap">
+      <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+        <p class="section-eyebrow">Questions</p>
+        <h2 class="section-title" id="faq-heading">Frequently asked</h2>
+      </div>
+      <div class="faq-wrap">
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Do we need to be going through a hard time to do this?
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 6 L8 11 L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="faq-a" role="region">
+            Absolutely not. Relation-ship is specifically designed for couples who are already doing well and want to invest proactively in their relationship. Think of it the way you would think about physical health — you don't wait until you're ill to exercise.
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            How long does each session take?
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 6 L8 11 L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="faq-a" role="region">
+            Sessions range from about 30 to 60 minutes, with the exception of Co-Dreaming which is designed as a longer, immersive experience (~2 hours). There's no time pressure — you decide the pace. Most couples spread it over a few weeks.
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Can we do the programme if we don't live together?
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 6 L8 11 L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="faq-a" role="region">
+            Yes. Module 1 is done independently so distance doesn't matter. For Modules 2 & 3, the exercises work well over video call — many couples have done them this way. A stable connection and a quiet hour or two is all you need.
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            What if we want support beyond the programme?
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 6 L8 11 L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="faq-a" role="region">
+            We also offer group cohorts and bespoke 2-on-2 coaching sessions with Giuli & Drew directly. If you'd like to explore those, reach out to us at hello@relation-ship.co and we'll tell you what's available.
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Is there a refund policy?
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 6 L8 11 L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="faq-a" role="region">
+            Yes. If you complete the programme and feel it wasn't worth the investment, contact us within 14 days of purchase and we'll refund you in full. No questions asked. We're confident in the work — but we want you to feel safe trying it.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FINAL CTA ═══ -->
+  <section class="lp-final" aria-labelledby="final-heading">
+    <!-- Wave top -->
+    <div style="position:absolute; top:0; left:0; right:0; line-height:0; transform:scaleY(-1);" aria-hidden="true">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block; width:100%;">
+        <path d="M0 30 Q360 0 720 30 Q1080 60 1440 30 L1440 60 L0 60 Z" fill="#F5F0E8"/>
+      </svg>
+    </div>
+    <div class="lp-wrap final-inner reveal">
+      <p class="final-eyebrow">The programme is waiting</p>
+      <h2 class="final-headline" id="final-heading">
+        The waves will come.<br>
+        <em>Navigate them together.</em>
+      </h2>
+      <p class="final-sub">
+        One programme. Fifteen sessions. A lifetime of tools for navigating whatever comes next — as a team.
+      </p>
+      <a href="#join" class="btn-hero">Begin the journey — £297 →</a>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="lp-footer">
+    <div class="lp-wrap">
+      <div class="footer-logo"><em>Relation</em>-ship</div>
+      <p>
+        Navigating the waves of life together<br>
+        Made with love by Giuli & Drew &nbsp;·&nbsp; London, UK<br>
+        <a href="mailto:hello@relation-ship.co">hello@relation-ship.co</a>
+        &nbsp;·&nbsp;
+        <a href="terms.html">Terms & Refund Policy</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Nav on scroll ──
+    const nav = document.getElementById('lp-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ── Scroll reveal ──
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── FAQ accordion ──
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        // close all
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        // open clicked if was closed
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
