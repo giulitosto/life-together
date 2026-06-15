@@ -540,6 +540,24 @@ body::before {
   margin-bottom: 1.1rem;
 }
 
+/* Land module labels */
+.module-land-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--seafoam);
+  margin-bottom: 0.1rem;
+  letter-spacing: 0.03em;
+}
+
+.card-land {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--seafoam);
+  margin-bottom: 0.25rem;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
   .container { padding: 1.5rem 1rem 3rem; }
