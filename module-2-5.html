@@ -6,6 +6,8 @@
   <title>Conversation Cards — You and I, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .card-deck {
       margin: 1.25rem 0;
@@ -361,6 +363,12 @@
 
       doc.save('relation-ship-conversation-cards.pdf');
     }
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('module-2-5');
+    initAutoSave('module-2-5');
+  })();
   </script>
 </body>
 </html>

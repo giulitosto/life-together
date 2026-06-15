@@ -6,6 +6,8 @@
   <title>The Third Entity — Relationship, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .entity-visual {
       display: flex;
@@ -243,6 +245,12 @@
       doc.text(lines, 20, y);
       doc.save('relation-ship-third-entity.pdf');
     }
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('module-3-1');
+    initAutoSave('module-3-1');
+  })();
   </script>
 </body>
 </html>

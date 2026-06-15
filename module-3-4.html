@@ -6,6 +6,8 @@
   <title>Co-living — Relationship, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .practice-grid { display: grid; gap: 0.65rem; margin: 1rem 0; }
     .practice-item {
@@ -356,6 +358,12 @@
 
       doc.save('relation-ship-co-living.pdf');
     }
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('module-3-4');
+    initAutoSave('module-3-4');
+  })();
   </script>
 </body>
 </html>

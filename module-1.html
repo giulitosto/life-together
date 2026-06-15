@@ -6,6 +6,8 @@
   <title>Part 1: Relationship Snapshot, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .wheel-container { background: var(--white); border: 1px solid rgba(44,74,90,0.1); border-radius: 16px; padding: 1.5rem; margin: 1.5rem 0; }
     .mode-toggle, .person-tabs { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
@@ -439,6 +441,12 @@
 
     renderSliders(); draw();
     window.addEventListener('resize', draw);
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('module-1');
+    initAutoSave('module-1');
+  })();
   </script>
 </body>
 </html>

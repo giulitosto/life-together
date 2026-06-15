@@ -6,6 +6,8 @@
   <title>Relationship Alliance — Relationship, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .dta-container { margin: 1.5rem 0; }
     .dta-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -311,6 +313,12 @@
       doc.text(lines,20,y);
       doc.save('relation-ship-alliance-reflections.pdf');
     }
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('module-3-3');
+    initAutoSave('module-3-3');
+  })();
   </script>
 </body>
 </html>

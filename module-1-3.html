@@ -6,6 +6,8 @@
   <title>How I Am — Lights & Shadows, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .ls-grid {
       display: grid;
@@ -388,6 +390,12 @@
 
       doc.save('relation-ship-how-i-am.pdf');
     }
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('module-1-3');
+    initAutoSave('module-1-3');
+  })();
   </script>
 </body>
 </html>

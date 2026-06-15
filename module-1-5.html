@@ -6,6 +6,8 @@
   <title>Why I Am — Life Purpose, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     details.script-toggle { margin: 0.75rem 0 0; }
     details.script-toggle summary {
@@ -511,6 +513,12 @@
 
       doc.save('relation-ship-why-i-am.pdf');
     }
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('module-1-5');
+    initAutoSave('module-1-5');
+  })();
   </script>
 </body>
 </html>

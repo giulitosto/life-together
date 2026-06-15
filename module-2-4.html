@@ -6,6 +6,8 @@
   <title>Love Languages Together — You and I, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .ll-compare-grid {
       display: grid;
@@ -367,6 +369,12 @@
 
       doc.save('relation-ship-love-languages-together.pdf');
     }
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('module-2-4');
+    initAutoSave('module-2-4');
+  })();
   </script>
 </body>
 </html>

@@ -6,6 +6,8 @@
   <title>Introduction, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .part-label {
       font-size: 0.72rem;
@@ -239,6 +241,12 @@
       const header = document.querySelector('.part-label');
       if (header) header.textContent = 'Welcome, ' + names;
     }
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('introduction');
+    initAutoSave('introduction');
+  })();
   </script>
 </body>
 </html>

@@ -6,6 +6,8 @@
   <title>Who I Am — Origin Story & Values, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .values-grid {
       display: flex;
@@ -487,6 +489,12 @@
 
       doc.save('relation-ship-who-i-am.pdf');
     }
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('module-1-2');
+    initAutoSave('module-1-2');
+  })();
   </script>
 </body>
 </html>

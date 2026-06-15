@@ -6,6 +6,8 @@
   <title>Relation-ship, Navigating the waves of life together</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .module-group {
       background: var(--white);
@@ -160,6 +162,65 @@
     }
     .btn-skip-names:hover { color: #999; }
     .names-saved-msg { display: none; font-size: 0.82rem; color: #8FBCB0; }
+
+    /* ── Save progress prompt ── */
+    .save-prompt {
+      background: #f5f8f7;
+      border: 1px solid #d9ece8;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 0.75rem 0 2rem;
+    }
+    .save-prompt-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #8FBCB0;
+      margin-bottom: 0.5rem;
+    }
+    .save-prompt-hint {
+      font-size: 0.78rem;
+      color: #aaa;
+      margin-bottom: 0.85rem;
+      line-height: 1.5;
+    }
+    .save-email-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .save-email-row input[type=email] {
+      flex: 1;
+      min-width: 160px;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      color: #333;
+      background: #fff;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+    .save-email-row input[type=email]:focus { outline: none; border-color: #8FBCB0; }
+    .save-prompt-msg {
+      font-size: 0.78rem;
+      color: #8FBCB0;
+      margin-top: 0.6rem;
+      min-height: 1.1em;
+    }
+    .save-status {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+      color: #8FBCB0;
+      background: #f5f8f7;
+      border: 1px solid #d9ece8;
+      border-radius: 12px;
+      padding: 0.75rem 1.25rem;
+      margin: 0.75rem 0 2rem;
+    }
     .welcome-greeting {
       display: none;
       font-size: 0.88rem;
@@ -350,6 +411,23 @@
         <button class="btn-skip-names" onclick="skipNames()">Skip for now</button>
         <span class="names-saved-msg" id="names-saved-msg">✓ Names saved</span>
       </div>
+    </div>
+
+    <!-- Save progress prompt (shown when not signed in) -->
+    <div class="save-prompt" id="save-prompt">
+      <div class="save-prompt-title">💾 Save your progress</div>
+      <p class="save-prompt-hint">Enter your email to save reflections and return anytime. One account per couple.</p>
+      <div class="save-email-row">
+        <input type="email" id="auth-email" placeholder="your@email.com" autocomplete="email">
+        <button class="btn-save-names" onclick="sendMagicLink()">Send link →</button>
+      </div>
+      <p class="save-prompt-msg" id="save-prompt-msg"></p>
+    </div>
+
+    <!-- Signed-in status -->
+    <div class="save-status" id="save-status" style="display:none;">
+      <span id="save-status-email" style="flex:1;"></span>
+      <button class="btn-skip-names" onclick="doSignOut()">Sign out</button>
     </div>
 
     <p class="welcome-greeting" id="welcome-greeting"></p>
@@ -580,6 +658,39 @@
       document.getElementById('name-prompt').style.display = 'none';
       showGreeting(storedA, storedB);
     }
+
+    // ── Auth ──────────────────────────────────────────────────────────────────
+    async function sendMagicLink() {
+      const email = document.getElementById('auth-email').value.trim();
+      const msg   = document.getElementById('save-prompt-msg');
+      if (!email) { msg.textContent = 'Please enter your email.'; return; }
+      msg.textContent = 'Sending…';
+      const { error } = await _sb.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.origin + '/index.html' }
+      });
+      msg.textContent = error ? error.message : 'Check your email for a magic link.';
+    }
+
+    document.getElementById('auth-email').addEventListener('keydown', e => {
+      if (e.key === 'Enter') sendMagicLink();
+    });
+
+    async function doSignOut() {
+      await _sb.auth.signOut();
+      document.getElementById('save-status').style.display  = 'none';
+      document.getElementById('save-prompt').style.display  = 'block';
+    }
+
+    // Show signed-in state or prompt on load
+    (async () => {
+      const user = await getUser();
+      if (user) {
+        document.getElementById('save-prompt').style.display  = 'none';
+        document.getElementById('save-status').style.display  = 'flex';
+        document.getElementById('save-status-email').textContent = '✓ Progress saving · ' + user.email;
+      }
+    })();
   </script>
 </body>
 </html>

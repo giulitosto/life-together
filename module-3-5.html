@@ -6,6 +6,8 @@
   <title>Co-Dreaming — Relationship, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .audio-card { background: var(--white); border: 1px solid rgba(44,74,90,0.1); border-radius: 16px; padding: 1.5rem; margin: 1.5rem 0; text-align: center; }
     .audio-card-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rope); margin-bottom: 0.75rem; }
@@ -392,6 +394,12 @@
       });
       doc.save('relation-ship-co-dreaming.pdf');
     }
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('module-3-5');
+    initAutoSave('module-3-5');
+  })();
   </script>
 </body>
 </html>

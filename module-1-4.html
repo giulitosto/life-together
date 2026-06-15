@@ -6,6 +6,8 @@
   <title>I Am Enough — Self-Love & Love Languages, Relation-ship</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     .love-lang-grid {
       display: grid;
@@ -390,6 +392,12 @@
 
       doc.save('relation-ship-i-am-enough.pdf');
     }
+  </script>
+  <script>
+  (async () => {
+    await loadProgress('module-1-4');
+    initAutoSave('module-1-4');
+  })();
   </script>
 </body>
 </html>
