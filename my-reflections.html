@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Reflections, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="js/export.js"></script>
+  <style>
+    .refl-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .refl-select-all {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .refl-select-all input { accent-color: var(--seafoam); width: 16px; height: 16px; }
+    .refl-list { display: flex; flex-direction: column; }
+    .refl-row {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--sand-dark);
+    }
+    .refl-row:last-child { border-bottom: none; }
+    .refl-row input[type="checkbox"] { accent-color: var(--seafoam); width: 17px; height: 17px; flex-shrink: 0; }
+    .refl-title {
+      flex: 1;
+      color: var(--ocean);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+    .refl-title:hover { text-decoration: underline; }
+    .refl-status {
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .refl-status.complete { color: var(--seafoam); }
+    .refl-empty { text-align: center; color: var(--muted); font-size: 0.88rem; padding: 2rem 0; }
+    .refl-msg { font-size: 0.8rem; color: var(--muted); margin-top: 0.75rem; min-height: 1.2em; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <a href="index.html" class="back-link">Back to menu</a>
+
+    <h1 class="page-title">My Reflections</h1>
+    <p class="page-subtitle">Saved across every module</p>
+
+    <div id="refl-signed-out" class="info-note" style="display:none;">
+      Sign in from the home page to see your saved reflections.
+    </div>
+
+    <div id="refl-app" style="display:none;">
+      <div class="refl-toolbar">
+        <label class="refl-select-all">
+          <input type="checkbox" id="refl-select-all" onchange="toggleSelectAll(this)">
+          Select all
+        </label>
+        <div class="btn-group" style="margin:0;">
+          <button class="btn btn-primary" onclick="downloadSelected()">Download selected</button>
+          <button class="btn btn-outline" onclick="deleteSelected()">Delete selected</button>
+        </div>
+      </div>
+
+      <div class="refl-list" id="refl-list"></div>
+      <p class="refl-msg" id="refl-msg"></p>
+    </div>
+
+    <div class="page-footer">
+      <p>Relation-ship · Navigating the waves of life together</p>
+    </div>
+  </div>
+
+  <script>
+    let PROGRESS = {};
+
+    function rowsHtml(pages) {
+      return pages.map(page => {
+        const entry = PROGRESS[page];
+        const statusClass = entry.completed ? 'complete' : '';
+        const statusText = entry.completed ? '✓ Completed' : 'In progress';
+        return `
+          <div class="refl-row">
+            <input type="checkbox" class="refl-check" data-page="${page}">
+            <a href="${page}.html" class="refl-title">${PAGE_TITLES[page] || page}</a>
+            <span class="refl-status ${statusClass}">${statusText}</span>
+          </div>`;
+      }).join('');
+    }
+
+    function pagesWithSavedContent() {
+      return Object.keys(PAGE_TITLES).filter(page => {
+        const entry = PROGRESS[page];
+        if (!entry) return false;
+        const hasData = entry.data && Object.keys(entry.data).length > 0;
+        return entry.completed || hasData;
+      });
+    }
+
+    async function renderDashboard() {
+      PROGRESS = await getAllProgress();
+      const pages = pagesWithSavedContent();
+      const list = document.getElementById('refl-list');
+      if (!pages.length) {
+        list.innerHTML = '<p class="refl-empty">No saved reflections yet. Complete a section to see it here.</p>';
+        document.getElementById('refl-select-all').checked = false;
+        return;
+      }
+      list.innerHTML = rowsHtml(pages);
+    }
+
+    function toggleSelectAll(checkbox) {
+      document.querySelectorAll('.refl-check').forEach(cb => { cb.checked = checkbox.checked; });
+    }
+
+    function selectedPages() {
+      return [...document.querySelectorAll('.refl-check:checked')].map(cb => cb.dataset.page);
+    }
+
+    async function downloadSelected() {
+      const pages = selectedPages();
+      const msg = document.getElementById('refl-msg');
+      if (!pages.length) { msg.textContent = 'Select at least one section to download.'; return; }
+      msg.textContent = 'Building PDF…';
+      const order = Object.keys(PAGE_TITLES).filter(p => pages.includes(p));
+      const sections = order.map(page => ({ page, blocks: renderSectionBlocks((PROGRESS[page] || {}).data) }));
+      const doc = buildReflectionsPdf(sections);
+      doc.save(`relation-ship-reflections-${new Date().toISOString().slice(0, 10)}.pdf`);
+      msg.textContent = '';
+    }
+
+    async function deleteSelected() {
+      const pages = selectedPages();
+      const msg = document.getElementById('refl-msg');
+      if (!pages.length) { msg.textContent = 'Select at least one section to delete.'; return; }
+      if (!confirm(`Delete saved reflections for ${pages.length} section(s)? This can't be undone.`)) return;
+      const user = await getUser();
+      if (!user) return;
+      msg.textContent = 'Deleting…';
+      await _sb.from('progress').delete().eq('user_id', user.id).in('page', pages);
+      document.getElementById('refl-select-all').checked = false;
+      await renderDashboard();
+      msg.textContent = 'Deleted.';
+    }
+
+    (async () => {
+      const user = await getUser();
+      if (!user) {
+        document.getElementById('refl-signed-out').style.display = 'block';
+        return;
+      }
+      document.getElementById('refl-app').style.display = 'block';
+      await renderDashboard();
+    })();
+  </script>
+</body>
+</html>
