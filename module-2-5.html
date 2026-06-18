@@ -128,25 +128,25 @@
     <a href="index.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 2 progress">
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-1.html" onclick="event.preventDefault(); flushAndGo('module-2-1.html');">
         <div class="progress-step-dot">1</div>
         <div class="progress-step-label">Land work</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-2.html" onclick="event.preventDefault(); flushAndGo('module-2-2.html');">
         <div class="progress-step-dot">2</div>
         <div class="progress-step-label">Lights & Shadows</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-3.html" onclick="event.preventDefault(); flushAndGo('module-2-3.html');">
         <div class="progress-step-dot">3</div>
         <div class="progress-step-label">Intentions</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-4.html" onclick="event.preventDefault(); flushAndGo('module-2-4.html');">
         <div class="progress-step-dot">4</div>
         <div class="progress-step-label">Love Languages</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
       <div class="progress-step active">
         <div class="progress-step-dot">5</div>
@@ -172,6 +172,7 @@
     <h2 class="section-heading">Conversation Cards</h2>
 
     <div class="category-filters" id="category-filters"></div>
+    <input type="hidden" id="card-state">
 
     <div class="card-deck">
       <div class="conversation-card" id="current-card" onclick="nextCard()">
@@ -208,6 +209,11 @@
     <div class="info-note" style="margin-top:2rem;">
       <strong>You've completed Module 2.</strong> You've seen each other's land, celebrated each other's full selves, set intentions, and learned how to love each other better. The next module is where you step back and look at the relationship as its own living thing.
     </div>
+
+    <label class="complete-toggle">
+      <input type="checkbox" id="complete-check" onclick="setCompleted('module-2-5', this.checked)">
+      Mark this section complete
+    </label>
 
     <div class="btn-group">
       <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
@@ -273,6 +279,8 @@
       filteredCards = cat === 'All' ? [...ALL_CARDS] : ALL_CARDS.filter(c => c.cat === cat);
       currentIdx = 0;
       renderCard();
+      syncCardState();
+      scheduleSave('module-2-5');
     }
 
     function renderCard() {
@@ -282,13 +290,21 @@
       document.getElementById('card-counter').textContent = `${currentIdx + 1} of ${filteredCards.length}`;
     }
 
+    function syncCardState() {
+      document.getElementById('card-state').value = JSON.stringify({ activeCategory, currentIdx });
+    }
+
     function nextCard() {
       currentIdx = (currentIdx + 1) % filteredCards.length;
       renderCard();
+      syncCardState();
+      scheduleSave('module-2-5');
     }
     function prevCard() {
       currentIdx = (currentIdx - 1 + filteredCards.length) % filteredCards.length;
       renderCard();
+      syncCardState();
+      scheduleSave('module-2-5');
     }
 
     // ── Triggers ──
@@ -366,7 +382,22 @@
   </script>
   <script>
   (async () => {
-    await loadProgress('module-2-5');
+    const data = await loadProgress('module-2-5');
+    document.getElementById('complete-check').checked = await getCompleted('module-2-5');
+    if (data && data['card-state']) {
+      const saved = JSON.parse(data['card-state']);
+      if (saved.activeCategory && saved.activeCategory !== 'All') {
+        activeCategory = saved.activeCategory;
+        document.querySelectorAll('.cat-btn').forEach(b => {
+          b.classList.toggle('active', b.textContent === activeCategory);
+        });
+        filteredCards = ALL_CARDS.filter(c => c.cat === activeCategory);
+      }
+      if (saved.currentIdx !== undefined && saved.currentIdx < filteredCards.length) {
+        currentIdx = saved.currentIdx;
+      }
+      renderCard();
+    }
     initAutoSave('module-2-5');
   })();
   </script>

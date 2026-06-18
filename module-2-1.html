@@ -155,25 +155,25 @@
         <div class="progress-step-label">Land work</div>
       </div>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-2.html" onclick="event.preventDefault(); flushAndGo('module-2-2.html');">
         <div class="progress-step-dot">2</div>
         <div class="progress-step-label">Lights & Shadows</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-3.html" onclick="event.preventDefault(); flushAndGo('module-2-3.html');">
         <div class="progress-step-dot">3</div>
         <div class="progress-step-label">Intentions</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-4.html" onclick="event.preventDefault(); flushAndGo('module-2-4.html');">
         <div class="progress-step-dot">4</div>
         <div class="progress-step-label">Love Languages</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-5.html" onclick="event.preventDefault(); flushAndGo('module-2-5.html');">
         <div class="progress-step-dot">5</div>
         <div class="progress-step-label">Conversations</div>
-      </div>
+      </a>
     </div>
 
     <div class="module-land-label">Your Land</div>
@@ -286,6 +286,7 @@
             <div id="shared-land-entries"></div>
             <button class="add-boundary-btn" style="width:100%; justify-content:center;" onclick="addLandEntry('shared')">+ Add something</button>
           </div>
+          <input type="hidden" id="land-state">
 
           <div class="reflection-block">
             <span class="reflection-label">What we want for our shared land</span>
@@ -295,6 +296,11 @@
       </div>
 
     </div>
+
+    <label class="complete-toggle">
+      <input type="checkbox" id="complete-check" onclick="setCompleted('module-2-1', this.checked)">
+      Mark this section complete
+    </label>
 
     <div class="btn-group">
       <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
@@ -318,7 +324,7 @@
 
     let entryCount = 0;
 
-    function addLandEntry(side) {
+    function addLandEntry(side, value, skipFocus) {
       const id = ++entryCount;
       const listId = side === 'my' ? 'my-land-entries'
                    : side === 'your' ? 'your-land-entries'
@@ -334,23 +340,36 @@
       };
       item.innerHTML = `
         <div class="boundary-dot"></div>
-        <input type="text" class="boundary-input" id="li-${id}"
-          placeholder="${placeholders[side]}">
+        <input type="text" class="boundary-input"
+          placeholder="${placeholders[side]}" value="${value || ''}">
         <button class="chapter-delete" onclick="removeLandEntry(${id})" title="Remove"
           style="position:static; margin-left:0.25rem; font-size:0.9rem;">×</button>
       `;
       list.appendChild(item);
-      document.getElementById(`li-${id}`).focus();
+      const input = item.querySelector('input');
+      input.addEventListener('input', () => { syncLandState(); scheduleSave('module-2-1'); });
+      if (!skipFocus) input.focus();
     }
 
     function removeLandEntry(id) {
       const el = document.getElementById('lentry-' + id);
       if (el) el.remove();
+      syncLandState();
+      scheduleSave('module-2-1');
+    }
+
+    function syncLandState() {
+      const grab = sel => [...document.querySelectorAll(sel)].map(i => i.value);
+      document.getElementById('land-state').value = JSON.stringify({
+        my: grab('#my-land-entries .boundary-input'),
+        your: grab('#your-land-entries .boundary-input'),
+        shared: grab('#shared-land-entries .boundary-input')
+      });
     }
 
     // Seed with starter entries
-    addLandEntry('my'); addLandEntry('my');
-    addLandEntry('your'); addLandEntry('your');
+    addLandEntry('my', '', true); addLandEntry('my', '', true);
+    addLandEntry('your', '', true); addLandEntry('your', '', true);
 
     // ── PDF ──
     function downloadReflections() {
@@ -402,7 +421,17 @@
   </script>
   <script>
   (async () => {
-    await loadProgress('module-2-1');
+    const data = await loadProgress('module-2-1');
+    document.getElementById('complete-check').checked = await getCompleted('module-2-1');
+    if (data && data['land-state']) {
+      const ls = JSON.parse(data['land-state']);
+      document.getElementById('my-land-entries').innerHTML = '';
+      document.getElementById('your-land-entries').innerHTML = '';
+      document.getElementById('shared-land-entries').innerHTML = '';
+      (ls.my || []).forEach(v => addLandEntry('my', v, true));
+      (ls.your || []).forEach(v => addLandEntry('your', v, true));
+      (ls.shared || []).forEach(v => addLandEntry('shared', v, true));
+    }
     initAutoSave('module-2-1');
   })();
   </script>

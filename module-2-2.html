@@ -100,30 +100,30 @@
     <a href="index.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 2 progress">
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-1.html" onclick="event.preventDefault(); flushAndGo('module-2-1.html');">
         <div class="progress-step-dot">1</div>
         <div class="progress-step-label">Land work</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
       <div class="progress-step active">
         <div class="progress-step-dot">2</div>
         <div class="progress-step-label">Lights & Shadows</div>
       </div>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-3.html" onclick="event.preventDefault(); flushAndGo('module-2-3.html');">
         <div class="progress-step-dot">3</div>
         <div class="progress-step-label">Intentions</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-4.html" onclick="event.preventDefault(); flushAndGo('module-2-4.html');">
         <div class="progress-step-dot">4</div>
         <div class="progress-step-label">Love Languages</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-5.html" onclick="event.preventDefault(); flushAndGo('module-2-5.html');">
         <div class="progress-step-dot">5</div>
         <div class="progress-step-label">Conversations</div>
-      </div>
+      </a>
     </div>
 
     <div class="page-subtitle">Module 2 · Part 2</div>
@@ -204,6 +204,7 @@
               </div>
             </div>
           </div>
+          <input type="hidden" id="tags-state">
         </div>
       </div>
 
@@ -254,6 +255,11 @@
 
     </div>
 
+    <label class="complete-toggle">
+      <input type="checkbox" id="complete-check" onclick="setCompleted('module-2-2', this.checked)">
+      Mark this section complete
+    </label>
+
     <div class="btn-group">
       <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
       <a href="module-2-3.html" class="btn btn-primary">Continue: Intentions & Words →</a>
@@ -289,11 +295,19 @@
       renderTags(person, type);
       input.value = '';
       input.focus();
+      syncTagsState();
+      scheduleSave('module-2-2');
     }
 
     function removeTag(person, type, idx) {
       tags[person][type].splice(idx, 1);
       renderTags(person, type);
+      syncTagsState();
+      scheduleSave('module-2-2');
+    }
+
+    function syncTagsState() {
+      document.getElementById('tags-state').value = JSON.stringify(tags);
     }
 
     function renderTags(person, type) {
@@ -362,7 +376,17 @@
   </script>
   <script>
   (async () => {
-    await loadProgress('module-2-2');
+    const data = await loadProgress('module-2-2');
+    document.getElementById('complete-check').checked = await getCompleted('module-2-2');
+    if (data && data['tags-state']) {
+      const saved = JSON.parse(data['tags-state']);
+      ['a', 'b'].forEach(p => {
+        ['light', 'shadow'].forEach(t => {
+          tags[p][t] = (saved[p] && saved[p][t]) || [];
+          renderTags(p, t);
+        });
+      });
+    }
     initAutoSave('module-2-2');
   })();
   </script>

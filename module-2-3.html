@@ -112,30 +112,30 @@
     <a href="index.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 2 progress">
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-1.html" onclick="event.preventDefault(); flushAndGo('module-2-1.html');">
         <div class="progress-step-dot">1</div>
         <div class="progress-step-label">Land work</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-2.html" onclick="event.preventDefault(); flushAndGo('module-2-2.html');">
         <div class="progress-step-dot">2</div>
         <div class="progress-step-label">Lights & Shadows</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
       <div class="progress-step active">
         <div class="progress-step-dot">3</div>
         <div class="progress-step-label">Intentions</div>
       </div>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-4.html" onclick="event.preventDefault(); flushAndGo('module-2-4.html');">
         <div class="progress-step-dot">4</div>
         <div class="progress-step-label">Love Languages</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-5.html" onclick="event.preventDefault(); flushAndGo('module-2-5.html');">
         <div class="progress-step-dot">5</div>
         <div class="progress-step-label">Conversations</div>
-      </div>
+      </a>
     </div>
 
     <div class="page-subtitle">Module 2 · Part 3</div>
@@ -181,6 +181,7 @@
 
           <div id="intentions-list"></div>
           <button class="add-intention-btn" onclick="addIntention()">+ Add an intention</button>
+          <input type="hidden" id="intentions-state">
 
           <div class="reflection-block">
             <span class="reflection-label">Our shared intention for this relationship</span>
@@ -218,6 +219,11 @@
 
     </div>
 
+    <label class="complete-toggle">
+      <input type="checkbox" id="complete-check" onclick="setCompleted('module-2-3', this.checked)">
+      Mark this section complete
+    </label>
+
     <div class="btn-group">
       <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
       <a href="module-2-4.html" class="btn btn-primary">Continue: Love Languages together →</a>
@@ -235,7 +241,7 @@
   <script>
     let itemCount = 0;
 
-    function addIntention(val) {
+    function addIntention(val, skipFocus) {
       const id = ++itemCount;
       const list = document.getElementById('intentions-list');
       const card = document.createElement('div');
@@ -244,37 +250,53 @@
       card.innerHTML = `
         <button class="intention-delete" onclick="removeItem('int-${id}')" title="Remove">×</button>
         <div class="intention-type">Intention</div>
-        <input type="text" class="intention-input" id="ii-${id}"
+        <input type="text" class="intention-input"
           placeholder="e.g. We choose curiosity over assumption…"
           value="${val || ''}">
       `;
       list.appendChild(card);
-      if (!val) document.getElementById(`ii-${id}`).focus();
+      const input = card.querySelector('input');
+      input.addEventListener('input', () => { syncIntentionsState(); scheduleSave('module-2-3'); });
+      if (!val && !skipFocus) input.focus();
     }
 
-    function addWordPair() {
+    function addWordPair(less, more, skipFocus) {
       const id = ++itemCount;
       const list = document.getElementById('word-pairs-list');
       const row = document.createElement('div');
       row.className = 'word-pair';
       row.id = 'wp-' + id;
       row.innerHTML = `
-        <input type="text" class="word-input" id="wl-${id}" placeholder="Less: e.g. 'You always…'">
+        <input type="text" class="word-input less-input" placeholder="Less: e.g. 'You always…'" value="${less || ''}">
         <span class="word-arrow">→</span>
-        <input type="text" class="word-input" id="wm-${id}" placeholder="More: e.g. 'I notice that…'">
+        <input type="text" class="word-input more-input" placeholder="More: e.g. 'I notice that…'" value="${more || ''}">
         <button class="word-delete" onclick="removeItem('wp-${id}')" title="Remove">×</button>
       `;
       list.appendChild(row);
-      document.getElementById(`wl-${id}`).focus();
+      row.querySelectorAll('input').forEach(el => {
+        el.addEventListener('input', () => { syncIntentionsState(); scheduleSave('module-2-3'); });
+      });
+      if (!skipFocus) row.querySelector('input').focus();
     }
 
     function removeItem(id) {
       const el = document.getElementById(id);
       if (el) el.remove();
+      syncIntentionsState();
+      scheduleSave('module-2-3');
     }
 
-    addIntention(); addIntention();
-    addWordPair();
+    function syncIntentionsState() {
+      const intentions = [...document.querySelectorAll('#intentions-list .intention-input')].map(i => i.value);
+      const wordPairs = [...document.querySelectorAll('#word-pairs-list .word-pair')].map(row => ({
+        less: row.querySelector('.less-input').value,
+        more: row.querySelector('.more-input').value
+      }));
+      document.getElementById('intentions-state').value = JSON.stringify({ intentions, wordPairs });
+    }
+
+    addIntention(null, true); addIntention(null, true);
+    addWordPair(null, null, true);
 
     function downloadReflections() {
       const { jsPDF } = window.jspdf;
@@ -313,8 +335,8 @@
       addBlock('Our shared intention statement', document.getElementById('r-intention').value);
 
       const pairs = [...document.querySelectorAll('#word-pairs-list .word-pair')].map(row => {
-        const less = row.querySelector('[id^="wl-"]').value.trim();
-        const more = row.querySelector('[id^="wm-"]').value.trim();
+        const less = row.querySelector('.less-input').value.trim();
+        const more = row.querySelector('.more-input').value.trim();
         return less && more ? `${less} → ${more}` : less || more;
       }).filter(Boolean);
       addBlock('Word swaps', pairs.join('\n') || '(none)');
@@ -325,7 +347,15 @@
   </script>
   <script>
   (async () => {
-    await loadProgress('module-2-3');
+    const data = await loadProgress('module-2-3');
+    document.getElementById('complete-check').checked = await getCompleted('module-2-3');
+    if (data && data['intentions-state']) {
+      const saved = JSON.parse(data['intentions-state']);
+      document.getElementById('intentions-list').innerHTML = '';
+      document.getElementById('word-pairs-list').innerHTML = '';
+      (saved.intentions || []).forEach(v => addIntention(v, true));
+      (saved.wordPairs || []).forEach(p => addWordPair(p.less, p.more, true));
+    }
     initAutoSave('module-2-3');
   })();
   </script>

@@ -41,30 +41,30 @@
     <a href="index.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 3 progress">
-      <div class="progress-step">
+      <a class="progress-step" href="module-3-1.html" onclick="event.preventDefault(); flushAndGo('module-3-1.html');">
         <div class="progress-step-dot">1</div>
         <div class="progress-step-label">1+1=3</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-3-2.html" onclick="event.preventDefault(); flushAndGo('module-3-2.html');">
         <div class="progress-step-dot">2</div>
         <div class="progress-step-label">Our Wheel</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
       <div class="progress-step active">
         <div class="progress-step-dot">3</div>
         <div class="progress-step-label">Alliance</div>
       </div>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-3-4.html" onclick="event.preventDefault(); flushAndGo('module-3-4.html');">
         <div class="progress-step-dot">4</div>
         <div class="progress-step-label">Co-living</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-3-5.html" onclick="event.preventDefault(); flushAndGo('module-3-5.html');">
         <div class="progress-step-dot">5</div>
         <div class="progress-step-label">Co-Dreaming</div>
-      </div>
+      </a>
     </div>
 
     <div class="page-subtitle">Module 3 · Part 3</div>
@@ -155,6 +155,7 @@
               <button class="btn btn-outline" onclick="exportDTAPDF()" style="font-size:0.75rem;">Download Alliance as PDF</button>
             </div>
           </div>
+          <input type="hidden" id="notes-state">
         </div>
       </div>
 
@@ -186,6 +187,11 @@
       </div>
 
     </div>
+
+    <label class="complete-toggle">
+      <input type="checkbox" id="complete-check" onclick="setCompleted('module-3-3', this.checked)">
+      Mark this section complete
+    </label>
 
     <div class="btn-group">
       <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
@@ -226,6 +232,8 @@
         btn.style.fontWeight = x===c?'500':'300';
         btn.style.borderWidth = x===c?'2px':'1px';
       });
+      syncNotesState();
+      scheduleSave('module-3-3');
     }
 
     function addNote(col) {
@@ -235,11 +243,19 @@
       notes[col].push({text, color: activeColor, id: Date.now()});
       renderNotes(col);
       inp.value = ''; inp.focus();
+      syncNotesState();
+      scheduleSave('module-3-3');
     }
 
     function deleteNote(col, id) {
       notes[col] = notes[col].filter(n=>n.id!==id);
       renderNotes(col);
+      syncNotesState();
+      scheduleSave('module-3-3');
+    }
+
+    function syncNotesState() {
+      document.getElementById('notes-state').value = JSON.stringify({ notes, activeColor });
     }
 
     function renderNotes(col) {
@@ -316,7 +332,16 @@
   </script>
   <script>
   (async () => {
-    await loadProgress('module-3-3');
+    const data = await loadProgress('module-3-3');
+    document.getElementById('complete-check').checked = await getCompleted('module-3-3');
+    if (data && data['notes-state']) {
+      const saved = JSON.parse(data['notes-state']);
+      if (saved.notes) {
+        for (let i = 0; i < notes.length; i++) notes[i] = saved.notes[i] || [];
+        [0,1,2].forEach(renderNotes);
+      }
+      if (saved.activeColor) setColor(saved.activeColor);
+    }
     initAutoSave('module-3-3');
   })();
   </script>

@@ -488,7 +488,13 @@ body::before {
   flex-direction: column;
   align-items: center;
   gap: 0.3rem;
+  text-decoration: none;
+  color: inherit;
 }
+
+a.progress-step { cursor: pointer; }
+a.progress-step:hover .progress-step-dot { border-color: var(--ocean); }
+a.progress-step:hover .progress-step-label { color: var(--ocean); }
 
 .progress-step-dot {
   width: 28px;
@@ -540,21 +546,36 @@ body::before {
   margin-bottom: 1.1rem;
 }
 
+.complete-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+}
+.complete-toggle input[type="checkbox"] {
+  width: 16px; height: 16px;
+  accent-color: var(--seafoam);
+  cursor: pointer;
+}
+
 /* Land module labels */
 .module-land-label {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   font-style: italic;
-  color: var(--seafoam);
+  color: var(--ocean);
   margin-bottom: 0.1rem;
   letter-spacing: 0.03em;
 }
 
 .card-land {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.82rem;
+  font-size: 1rem;
   font-style: italic;
-  color: var(--seafoam);
+  color: var(--ocean);
   margin-bottom: 0.25rem;
 }
 

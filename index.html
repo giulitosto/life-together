@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="js/progress.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     .module-group {
       background: var(--white);
@@ -74,6 +75,19 @@
       color: var(--muted);
       white-space: nowrap;
     }
+    .part-check {
+      width: 16px; height: 16px;
+      accent-color: var(--seafoam);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .part-download {
+      font-size: 0.85rem;
+      color: var(--seafoam);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .part-download:hover { color: var(--ocean); }
 
     .module-group.locked { opacity: 0.55; pointer-events: none; }
     .coming-soon {
@@ -229,7 +243,7 @@
       margin: 1.5rem 0 0.5rem;
     }
 
-    /* ── Password gate ── */
+    /* ── Track choice gate ── */
     #gate {
       position: fixed;
       inset: 0;
@@ -287,37 +301,6 @@
       color: rgba(255,255,255,0.45);
       margin-bottom: 0.85rem;
     }
-    .gate-input-wrap { position: relative; margin-bottom: 0.75rem; }
-    .gate-input {
-      width: 100%;
-      padding: 0.85rem 1.1rem;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.07);
-      font-family: 'Jost', sans-serif;
-      font-size: 1rem;
-      font-weight: 300;
-      color: var(--white);
-      letter-spacing: 0.12em;
-      text-align: center;
-      transition: border-color 0.2s;
-      outline: none;
-    }
-    .gate-input::placeholder { color: rgba(255,255,255,0.25); letter-spacing: 0.08em; }
-    .gate-input:focus { border-color: var(--seafoam); }
-    .gate-input.error { border-color: #e07a7a; animation: shake 0.35s ease; }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20%       { transform: translateX(-6px); }
-      60%       { transform: translateX(6px); }
-    }
-    .gate-error {
-      font-size: 0.78rem;
-      color: #e07a7a;
-      margin-bottom: 0.75rem;
-      min-height: 1.2em;
-      letter-spacing: 0.04em;
-    }
     .gate-btn {
       width: 100%;
       padding: 0.85rem;
@@ -333,6 +316,13 @@
       transition: background 0.2s, transform 0.2s;
     }
     .gate-btn:hover { background: var(--seafoam-light); transform: translateY(-1px); }
+    .gate-btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .gate-btn-outline:hover { background: rgba(255,255,255,0.08); }
+    .track-choice { display: flex; flex-direction: column; }
     .gate-hint {
       font-size: 0.72rem;
       color: rgba(255,255,255,0.25);
@@ -345,7 +335,7 @@
 </head>
 <body>
 
-  <!-- ── Password gate ── -->
+  <!-- ── Track choice gate ── -->
   <div id="gate">
     <div class="gate-card">
       <div class="gate-logo"><em>Relation</em>-ship</div>
@@ -353,22 +343,14 @@
       <svg class="gate-wave" width="48" height="20" viewBox="0 0 48 20" fill="none" aria-hidden="true">
         <path d="M0 10 Q6 2 12 10 Q18 18 24 10 Q30 2 36 10 Q42 18 48 10" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
       </svg>
-      <p class="gate-label">Enter your access code</p>
-      <div class="gate-input-wrap">
-        <input
-          type="password"
-          id="gate-input"
-          class="gate-input"
-          placeholder="Access code"
-          autocomplete="off"
-          autocapitalize="none"
-          spellcheck="false"
-        >
+      <p class="gate-label">How are you navigating this journey?</p>
+      <div class="track-choice">
+        <button class="gate-btn" style="margin-bottom:0.75rem;" onclick="chooseTrack('single')">On my own →</button>
+        <button class="gate-btn gate-btn-outline" onclick="chooseTrack('couple')">With my partner →</button>
       </div>
-      <p class="gate-error" id="gate-error" aria-live="polite"></p>
-      <button class="gate-btn" id="gate-btn" onclick="checkPassword()">Enter programme →</button>
       <p class="gate-hint">
-        Don't have an access code?<br>
+        On your own, you'll do Module 1, a solo journey of self-discovery.<br>
+        With a partner, you'll do all three modules together.<br><br>
         <a href="landing.html">Learn more about the programme</a>
       </p>
     </div>
@@ -386,10 +368,16 @@
       </svg>
     </div>
 
-    <p class="prose" style="text-align:center; font-size:0.88rem; color:var(--muted);">
+    <p class="prose" id="track-intro" style="text-align:center; font-size:0.88rem; color:var(--muted);">
       A programme for couples who want to know themselves and each other more deeply.<br>
       Module 1 is done individually. Modules 2 and 3 are done together.
     </p>
+
+    <div class="save-prompt" id="couple-upsell" style="display:none;">
+      <div class="save-prompt-title">Doing this with a partner?</div>
+      <p class="save-prompt-hint">Switch to couple mode to unlock Modules 2 and 3. Your Module 1 progress carries over.</p>
+      <button class="btn-save-names" onclick="switchToCouple()">Switch to couple →</button>
+    </div>
 
     <div class="name-prompt" id="name-prompt">
       <div class="name-prompt-title">For the couple modules — optional</div>
@@ -459,35 +447,50 @@
         </a>
         <div class="module-group-parts">
           <a href="module-1.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-1" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">1</div>
             <div class="part-name">Where I am <span class="part-sub">— Wheel of Life</span></div>
             <div class="part-time">~50 min</div>
+          <span class="part-download" data-page="module-1" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1');">⬇</span>
+
           </a>
           <a href="module-1-2.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-1-2" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">2</div>
             <div class="part-name">Who I am <span class="part-sub">— Origin Story & Values</span></div>
             <div class="part-time">~50 min</div>
+          <span class="part-download" data-page="module-1-2" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-2');">⬇</span>
+
           </a>
           <a href="module-1-3.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-1-3" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">3</div>
             <div class="part-name">How I am <span class="part-sub">— Lights & Shadows</span></div>
             <div class="part-time">~40 min</div>
+          <span class="part-download" data-page="module-1-3" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-3');">⬇</span>
+
           </a>
           <a href="module-1-4.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-1-4" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">4</div>
             <div class="part-name">I am enough <span class="part-sub">— Self-Love & Love Languages</span></div>
             <div class="part-time">~40 min</div>
+          <span class="part-download" data-page="module-1-4" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-4');">⬇</span>
+
           </a>
           <a href="module-1-5.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-1-5" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">5</div>
             <div class="part-name">Why I am <span class="part-sub">— Life Purpose</span></div>
             <div class="part-time">~50 min</div>
+          <span class="part-download" data-page="module-1-5" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-5');">⬇</span>
+
           </a>
         </div>
       </div>
 
       <!-- Module 2: You and I -->
-      <div class="module-group">
+      <div class="module-group" id="module-2-group">
         <a href="module-2-1.html" class="module-group-header">
           <div class="card-icon" aria-hidden="true">⚓</div>
           <div class="card-body">
@@ -500,35 +503,50 @@
         </a>
         <div class="module-group-parts">
           <a href="module-2-1.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-2-1" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">1</div>
             <div class="part-name">Land work <span class="part-sub">— My land, your land</span></div>
             <div class="part-time">~60 min</div>
+          <span class="part-download" data-page="module-2-1" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-1');">⬇</span>
+
           </a>
           <a href="module-2-2.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-2-2" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">2</div>
             <div class="part-name">Seeing each other <span class="part-sub">— Lights & Shadows together</span></div>
             <div class="part-time">~60 min</div>
+          <span class="part-download" data-page="module-2-2" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-2');">⬇</span>
+
           </a>
           <a href="module-2-3.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-2-3" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">3</div>
             <div class="part-name">Intentions & Words <span class="part-sub">— The language of your relationship</span></div>
             <div class="part-time">~45 min</div>
+          <span class="part-download" data-page="module-2-3" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-3');">⬇</span>
+
           </a>
           <a href="module-2-4.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-2-4" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">4</div>
             <div class="part-name">Love Languages together <span class="part-sub">— Closing the gap</span></div>
             <div class="part-time">~50 min</div>
+          <span class="part-download" data-page="module-2-4" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-4');">⬇</span>
+
           </a>
           <a href="module-2-5.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-2-5" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">5</div>
             <div class="part-name">Conversation Cards <span class="part-sub">— Knowing each other intentionally</span></div>
             <div class="part-time">~60 min</div>
+          <span class="part-download" data-page="module-2-5" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-5');">⬇</span>
+
           </a>
         </div>
       </div>
 
       <!-- Module 3: Relationship -->
-      <div class="module-group">
+      <div class="module-group" id="module-3-group">
         <a href="module-3-1.html" class="module-group-header">
           <div class="card-icon" aria-hidden="true">☽</div>
           <div class="card-body">
@@ -541,29 +559,44 @@
         </a>
         <div class="module-group-parts">
           <a href="module-3-1.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-3-1" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">1</div>
             <div class="part-name">1 + 1 = 3 <span class="part-sub">— Enter the third entity</span></div>
             <div class="part-time">~30 min</div>
+          <span class="part-download" data-page="module-3-1" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-1');">⬇</span>
+
           </a>
           <a href="module-3-2.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-3-2" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">2</div>
             <div class="part-name">Our Wheel <span class="part-sub">— The relationship wheel of life</span></div>
             <div class="part-time">~50 min</div>
+          <span class="part-download" data-page="module-3-2" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-2');">⬇</span>
+
           </a>
           <a href="module-3-3.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-3-3" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">3</div>
             <div class="part-name">Relationship Alliance <span class="part-sub">— Your shared compass</span></div>
             <div class="part-time">~60 min</div>
+          <span class="part-download" data-page="module-3-3" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-3');">⬇</span>
+
           </a>
           <a href="module-3-4.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-3-4" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">4</div>
             <div class="part-name">Co-living <span class="part-sub">— Daily practices, shared space, adventure</span></div>
             <div class="part-time">~60 min</div>
+          <span class="part-download" data-page="module-3-4" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-4');">⬇</span>
+
           </a>
           <a href="module-3-5.html" class="part-link">
+            <input type="checkbox" class="part-check" data-page="module-3-5" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">5</div>
             <div class="part-name">Co-Dreaming <span class="part-sub">— Your shared future</span></div>
             <div class="part-time">~2 hours</div>
+          <span class="part-download" data-page="module-3-5" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-5');">⬇</span>
+
           </a>
         </div>
       </div>
@@ -587,38 +620,40 @@
   </div>
 
   <script>
-    // ── Change this to update the access code ──
-    const ACCESS_CODE = 'WAVES2026';
-    const STORAGE_KEY = 'rs_access_v1';
+    const TRACK_KEY = 'rs_track_v1';
 
     function unlockCourse() {
       document.getElementById('gate').style.display = 'none';
       document.getElementById('course-content').style.display = 'block';
     }
 
-    function checkPassword() {
-      const input = document.getElementById('gate-input');
-      const error = document.getElementById('gate-error');
-      const val = input.value.trim().toUpperCase();
-      if (val === ACCESS_CODE) {
-        localStorage.setItem(STORAGE_KEY, '1');
-        error.textContent = '';
-        input.classList.remove('error');
-        unlockCourse();
-      } else {
-        error.textContent = 'Incorrect code — check your welcome email.';
-        input.classList.add('error');
-        input.value = '';
-        setTimeout(() => input.classList.remove('error'), 400);
-      }
+    function chooseTrack(track) {
+      localStorage.setItem(TRACK_KEY, track);
+      applyTrack(track);
+      unlockCourse();
     }
 
-    document.getElementById('gate-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') checkPassword();
-    });
+    function switchToCouple() {
+      localStorage.setItem(TRACK_KEY, 'couple');
+      applyTrack('couple');
+    }
 
-    // Check on load — skip gate if already unlocked
-    if (localStorage.getItem(STORAGE_KEY) === '1') {
+    function applyTrack(track) {
+      const isSingle = track === 'single';
+      document.getElementById('module-2-group').classList.toggle('locked', isSingle);
+      document.getElementById('module-3-group').classList.toggle('locked', isSingle);
+      document.getElementById('couple-upsell').style.display = isSingle ? 'block' : 'none';
+      document.getElementById('name-prompt').style.display = isSingle ? 'none' : '';
+
+      document.getElementById('track-intro').innerHTML = isSingle
+        ? 'A solo journey of self-discovery, on your own terms.<br>Modules 2 and 3 unlock when you do this with a partner.'
+        : 'A programme for couples who want to know themselves and each other more deeply.<br>Module 1 is done individually. Modules 2 and 3 are done together.';
+    }
+
+    // Check on load — skip gate if a track is already chosen
+    const savedTrack = localStorage.getItem(TRACK_KEY);
+    if (savedTrack) {
+      applyTrack(savedTrack);
       unlockCourse();
     }
 
@@ -689,8 +724,142 @@
         document.getElementById('save-prompt').style.display  = 'none';
         document.getElementById('save-status').style.display  = 'flex';
         document.getElementById('save-status-email').textContent = '✓ Progress saving · ' + user.email;
+        initChecklist();
       }
     })();
+
+    // ── Tick-off checklist ──────────────────────────────────────────────────
+    async function initChecklist() {
+      const progress = await getAllProgress();
+      document.querySelectorAll('.part-check').forEach(cb => {
+        const entry = progress[cb.dataset.page];
+        if (entry && entry.completed) {
+          cb.checked = true;
+          const dl = document.querySelector(`.part-download[data-page="${cb.dataset.page}"]`);
+          if (dl) dl.style.display = 'inline';
+        }
+      });
+    }
+
+    async function toggleComplete(checkbox) {
+      const page = checkbox.dataset.page;
+      await setCompleted(page, checkbox.checked);
+      const dl = document.querySelector(`.part-download[data-page="${page}"]`);
+      if (dl) dl.style.display = checkbox.checked ? 'inline' : 'none';
+    }
+
+    // ── Menu-level reflection download ──────────────────────────────────────
+    const PAGE_TITLES = {
+      'module-1': 'Where I Am — Wheel of Life',
+      'module-1-2': 'Who I Am — Origin Story & Values',
+      'module-1-3': 'How I Am — Lights & Shadows',
+      'module-1-4': 'I Am Enough — Self-Love & Love Languages',
+      'module-1-5': 'Why I Am — Life Purpose',
+      'module-2-1': 'Land Work',
+      'module-2-2': 'Seeing Each Other',
+      'module-2-3': 'Intentions & Words',
+      'module-2-4': 'Love Languages Together',
+      'module-2-5': 'Conversation Cards',
+      'module-3-1': '1 + 1 = 3',
+      'module-3-2': 'Our Wheel',
+      'module-3-3': 'Relationship Alliance',
+      'module-3-4': 'Co-living',
+      'module-3-5': 'Co-Dreaming'
+    };
+
+    function humanizeFieldId(id) {
+      return id.replace(/^r-/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    const STATE_FIELD_RENDERERS = {
+      'values-state': (val, blocks) => {
+        const v = JSON.parse(val);
+        const top5 = (v.allValues || []).filter(x => v.valueState && v.valueState[x] === 2);
+        blocks.push(['Top 5 Values', top5.map(x => `${x}: ${(v.top5Reflections || {})[x] || ''}`).join('\n') || '(none)']);
+      },
+      'chapters-state': (val, blocks) => {
+        JSON.parse(val).forEach((c, i) => blocks.push([c.title || `Chapter ${i + 1}`, c.reflection || '']));
+      },
+      'ls-state': (val, blocks) => {
+        const ls = JSON.parse(val);
+        blocks.push(['Lights', (ls.lights || []).filter(Boolean).join(', ') || '(none)']);
+        blocks.push(['Shadows', (ls.shadows || []).filter(Boolean).join(', ') || '(none)']);
+      },
+      'land-state': (val, blocks) => {
+        const l = JSON.parse(val);
+        blocks.push(['My Land', (l.my || []).filter(Boolean).join('\n') || '(none)']);
+        blocks.push(['Your Land', (l.your || []).filter(Boolean).join('\n') || '(none)']);
+        blocks.push(['Shared Land', (l.shared || []).filter(Boolean).join('\n') || '(none)']);
+      },
+      'tags-state': (val, blocks) => {
+        const t = JSON.parse(val);
+        ['a', 'b'].forEach(p => {
+          blocks.push([`Person ${p.toUpperCase()} — Lights`, ((t[p] || {}).light || []).join(', ') || '(none)']);
+          blocks.push([`Person ${p.toUpperCase()} — Shadows`, ((t[p] || {}).shadow || []).join(', ') || '(none)']);
+        });
+      },
+      'intentions-state': (val, blocks) => {
+        const s = JSON.parse(val);
+        blocks.push(['Intentions', (s.intentions || []).filter(Boolean).join('\n') || '(none)']);
+        blocks.push(['Word swaps', (s.wordPairs || []).map(p => `${p.less} → ${p.more}`).join('\n') || '(none)']);
+      },
+      'wheel-state': (val, blocks) => {
+        const w = JSON.parse(val);
+        if (w.scores) {
+          blocks.push(['Individual A scores', (w.scores[0] || []).join(', ')]);
+          blocks.push(['Individual B scores', (w.scores[1] || []).join(', ')]);
+        }
+        if (w.relScores) blocks.push(['Relationship wheel scores', w.relScores.join(', ')]);
+      },
+      'notes-state': (val, blocks) => {
+        const n = JSON.parse(val);
+        (n.notes || []).forEach((col, i) => {
+          blocks.push([`Alliance column ${i + 1}`, col.map(note => note.text).join('\n') || '(none)']);
+        });
+      },
+      'practices-state': (val, blocks) => {
+        const p = JSON.parse(val);
+        const chosen = (p.practices || []).filter(x => p.practiceState && p.practiceState[x]);
+        blocks.push(['Daily practices chosen', chosen.join('\n') || '(none)']);
+      },
+      'adventures-state': (val, blocks) => {
+        const list = JSON.parse(val);
+        blocks.push(['Adventure list', list.map(a => (a.done ? '✓ ' : '• ') + a.text).join('\n') || '(none)']);
+      },
+      'card-state': () => {}
+    };
+
+    async function downloadPartFromMenu(page) {
+      const user = await getUser();
+      if (!user) return;
+      const { data } = await _sb.from('progress').select('data').eq('user_id', user.id).eq('page', page).single();
+      const saved = (data && data.data) || {};
+      const blocks = [];
+      Object.entries(saved).forEach(([id, val]) => {
+        if (STATE_FIELD_RENDERERS[id]) {
+          STATE_FIELD_RENDERERS[id](val, blocks);
+        } else if (val) {
+          blocks.push([humanizeFieldId(id), val]);
+        }
+      });
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(16); doc.setTextColor(44, 74, 90);
+      doc.text(`Relation-ship — ${PAGE_TITLES[page] || page}`, 105, 18, { align: 'center' });
+      doc.setFontSize(8); doc.setFont('helvetica', 'normal'); doc.setTextColor(150, 150, 150);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+      let y = 35;
+      blocks.forEach(([title, body]) => {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(44, 74, 90);
+        doc.text(title, 20, y); y += 6;
+        doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(50, 50, 50);
+        const lines = doc.splitTextToSize(body || '(no notes)', 170);
+        doc.text(lines, 20, y); y += lines.length * 5 + 8;
+      });
+      doc.save(`relation-ship-${page}.pdf`);
+    }
   </script>
 </body>
 </html>

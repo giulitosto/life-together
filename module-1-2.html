@@ -145,30 +145,30 @@
     <a href="index.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 1 progress">
-      <div class="progress-step">
+      <a class="progress-step" href="module-1.html" onclick="event.preventDefault(); flushAndGo('module-1.html');">
         <div class="progress-step-dot">1</div>
         <div class="progress-step-label">Where I am</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
       <div class="progress-step active">
         <div class="progress-step-dot">2</div>
         <div class="progress-step-label">Who I am</div>
       </div>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-1-3.html" onclick="event.preventDefault(); flushAndGo('module-1-3.html');">
         <div class="progress-step-dot">3</div>
         <div class="progress-step-label">How I am</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-1-4.html" onclick="event.preventDefault(); flushAndGo('module-1-4.html');">
         <div class="progress-step-dot">4</div>
         <div class="progress-step-label">I am enough</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-1-5.html" onclick="event.preventDefault(); flushAndGo('module-1-5.html');">
         <div class="progress-step-dot">5</div>
         <div class="progress-step-label">Why I am</div>
-      </div>
+      </a>
     </div>
 
     <div class="page-subtitle">Module 1 · Part 2</div>
@@ -216,6 +216,7 @@
           </div>
           <div class="chapters-list" id="chapters-list"></div>
           <button class="add-chapter-btn" onclick="addChapter()">+ Add a chapter</button>
+          <input type="hidden" id="chapters-state">
         </div>
       </div>
 
@@ -231,7 +232,15 @@
 
           <div class="values-counter" id="values-counter"><strong>0</strong> top values chosen &nbsp;·&nbsp; max 5</div>
           <div class="values-grid" id="values-grid"></div>
+
+          <div class="add-value-row" style="display:flex; gap:0.5rem; margin-top:0.75rem;">
+            <input type="text" id="other-value-input" placeholder="Don't see your value? Add your own…"
+              style="flex:1; padding:0.55rem 0.85rem; border-radius:30px; border:1px solid rgba(44,74,90,0.2); font-family:'Jost',sans-serif; font-size:0.82rem; color:var(--ink);">
+            <button class="btn btn-outline" style="font-size:0.78rem; white-space:nowrap;" onclick="addOtherValue()">Add</button>
+          </div>
+
           <div class="values-hint" id="values-hint"></div>
+          <input type="hidden" id="values-state">
 
           <div class="top5-section" id="top5-section" style="display:none;">
             <h3 class="step-title" style="margin-bottom:0.4rem;">Your top 5</h3>
@@ -278,6 +287,11 @@
 
     </div>
 
+    <label class="complete-toggle">
+      <input type="checkbox" id="complete-check" onclick="setCompleted('module-1-2', this.checked)">
+      Mark this section complete
+    </label>
+
     <div class="btn-group">
       <button class="btn btn-rope" onclick="downloadReflections()">Download my reflections</button>
       <a href="module-1-3.html" class="btn btn-primary">Continue: How I am →</a>
@@ -304,25 +318,38 @@
       card.id = 'chapter-' + id;
       card.innerHTML = `
         <button class="chapter-delete" onclick="removeChapter(${id})" title="Remove">×</button>
-        <input type="text" class="chapter-title-input" id="ct-${id}"
+        <input type="text" class="chapter-title-input"
           placeholder="Chapter title (e.g. 'My twenties in London', 'The year everything changed')"
           value="${title || ''}">
-        <textarea class="reflection-textarea" id="cr-${id}"
+        <textarea class="reflection-textarea"
           placeholder="What defined this chapter? What did you learn about yourself? What did it leave behind?"
           rows="3">${reflection || ''}</textarea>
       `;
       list.appendChild(card);
+      card.querySelectorAll('input, textarea').forEach(el => {
+        el.addEventListener('input', () => { syncChaptersState(); scheduleSave('module-1-2'); });
+      });
     }
 
     function removeChapter(id) {
       const el = document.getElementById('chapter-' + id);
       if (el) el.remove();
+      syncChaptersState();
+      scheduleSave('module-1-2');
+    }
+
+    function syncChaptersState() {
+      const chapters = [...document.querySelectorAll('.chapter-card')].map(card => ({
+        title: card.querySelector('input').value,
+        reflection: card.querySelector('textarea').value
+      }));
+      document.getElementById('chapters-state').value = JSON.stringify(chapters);
     }
 
     addChapter();
 
     // ── Values ──
-    const ALL_VALUES = [
+    let ALL_VALUES = [
       'Adventure','Authenticity','Balance','Belonging','Calm',
       'Commitment','Compassion','Connection','Courage','Creativity',
       'Curiosity','Depth','Family','Freedom','Fun',
@@ -342,6 +369,27 @@
     function getTop5() {
       return ALL_VALUES.filter(v => valueState[v] === 2);
     }
+
+    function addOtherValue() {
+      const input = document.getElementById('other-value-input');
+      const raw = input.value.trim();
+      if (!raw) return;
+      const v = raw.charAt(0).toUpperCase() + raw.slice(1);
+      if (ALL_VALUES.some(existing => existing.toLowerCase() === v.toLowerCase())) {
+        input.value = '';
+        return;
+      }
+      ALL_VALUES.push(v);
+      valueState[v] = 0;
+      input.value = '';
+      renderValues();
+      syncValuesState();
+      scheduleSave('module-1-2');
+    }
+
+    document.getElementById('other-value-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); addOtherValue(); }
+    });
 
     function renderValues() {
       const grid = document.getElementById('values-grid');
@@ -385,6 +433,14 @@
       }
       renderValues();
       renderTop5();
+      syncValuesState();
+      scheduleSave('module-1-2');
+    }
+
+    function syncValuesState() {
+      document.getElementById('values-state').value = JSON.stringify({
+        allValues: ALL_VALUES, valueState, top5Reflections
+      });
     }
 
     function renderTop5() {
@@ -417,6 +473,11 @@
             rows="2">${top5Reflections[v] || ''}</textarea>
         `;
         list.appendChild(item);
+        item.querySelector('textarea').addEventListener('input', e => {
+          top5Reflections[v] = e.target.value;
+          syncValuesState();
+          scheduleSave('module-1-2');
+        });
       });
     }
 
@@ -492,7 +553,26 @@
   </script>
   <script>
   (async () => {
-    await loadProgress('module-1-2');
+    const data = await loadProgress('module-1-2');
+    document.getElementById('complete-check').checked = await getCompleted('module-1-2');
+    if (data) {
+      if (data['chapters-state']) {
+        const chapters = JSON.parse(data['chapters-state']);
+        if (chapters.length) {
+          document.getElementById('chapters-list').innerHTML = '';
+          chapterCount = 0;
+          chapters.forEach(c => addChapter(c.title, c.reflection));
+        }
+      }
+      if (data['values-state']) {
+        const vs = JSON.parse(data['values-state']);
+        ALL_VALUES = vs.allValues || ALL_VALUES;
+        Object.assign(valueState, vs.valueState || {});
+        Object.assign(top5Reflections, vs.top5Reflections || {});
+        renderValues();
+        renderTop5();
+      }
+    }
     initAutoSave('module-1-2');
   })();
   </script>

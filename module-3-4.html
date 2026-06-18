@@ -100,30 +100,30 @@
     <a href="index.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 3 progress">
-      <div class="progress-step">
+      <a class="progress-step" href="module-3-1.html" onclick="event.preventDefault(); flushAndGo('module-3-1.html');">
         <div class="progress-step-dot">1</div>
         <div class="progress-step-label">1+1=3</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-3-2.html" onclick="event.preventDefault(); flushAndGo('module-3-2.html');">
         <div class="progress-step-dot">2</div>
         <div class="progress-step-label">Our Wheel</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-3-3.html" onclick="event.preventDefault(); flushAndGo('module-3-3.html');">
         <div class="progress-step-dot">3</div>
         <div class="progress-step-label">Alliance</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
       <div class="progress-step active">
         <div class="progress-step-dot">4</div>
         <div class="progress-step-label">Co-living</div>
       </div>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-3-5.html" onclick="event.preventDefault(); flushAndGo('module-3-5.html');">
         <div class="progress-step-dot">5</div>
         <div class="progress-step-label">Co-Dreaming</div>
-      </div>
+      </a>
     </div>
 
     <div class="page-subtitle">Module 3 · Part 4</div>
@@ -155,6 +155,7 @@
       <input type="text" class="add-practice-input" id="practice-input" placeholder="Add your own practice…">
       <button class="add-practice-btn" onclick="addCustomPractice()">+ Add</button>
     </div>
+    <input type="hidden" id="practices-state">
 
     <div class="reflection-block" style="margin-top:1.5rem;">
       <span class="reflection-label">Our daily practices — what we're committing to</span>
@@ -179,15 +180,15 @@
     <div id="space-intentions">
       <div class="space-item">
         <div class="space-icon">🕯</div>
-        <input type="text" class="space-input" placeholder="e.g. Create a cosy corner that is just for us…">
+        <input type="text" class="space-input" id="space-1" placeholder="e.g. Create a cosy corner that is just for us…">
       </div>
       <div class="space-item">
         <div class="space-icon">🌿</div>
-        <input type="text" class="space-input" placeholder="e.g. Clear and refresh the dining table so we eat together…">
+        <input type="text" class="space-input" id="space-2" placeholder="e.g. Clear and refresh the dining table so we eat together…">
       </div>
       <div class="space-item">
         <div class="space-icon">✦</div>
-        <input type="text" class="space-input" placeholder="e.g. Add something that represents us — our story — to the room…">
+        <input type="text" class="space-input" id="space-3" placeholder="e.g. Add something that represents us — our story — to the room…">
       </div>
     </div>
 
@@ -217,11 +218,17 @@
       <input type="text" class="add-practice-input" id="adventure-input" placeholder="Add an adventure…">
       <button class="add-practice-btn" onclick="addAdventure()">+ Add</button>
     </div>
+    <input type="hidden" id="adventures-state">
 
     <div class="reflection-block" style="margin-top:1.5rem;">
       <span class="reflection-label">What we want to explore together</span>
       <textarea class="reflection-textarea" id="r-adventure" placeholder="What's the first adventure you'll commit to?…" rows="3"></textarea>
     </div>
+
+    <label class="complete-toggle">
+      <input type="checkbox" id="complete-check" onclick="setCompleted('module-3-4', this.checked)">
+      Mark this section complete
+    </label>
 
     <div class="btn-group">
       <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
@@ -274,6 +281,8 @@
     function togglePractice(text) {
       practiceState[text] = !practiceState[text];
       buildPractices();
+      syncPracticesState();
+      scheduleSave('module-3-4');
     }
 
     function addCustomPractice() {
@@ -285,6 +294,12 @@
       buildPractices();
       input.value = '';
       input.focus();
+      syncPracticesState();
+      scheduleSave('module-3-4');
+    }
+
+    function syncPracticesState() {
+      document.getElementById('practices-state').value = JSON.stringify({ practices: DAILY_PRACTICES, practiceState });
     }
 
     document.getElementById('practice-input').addEventListener('keydown', e => {
@@ -300,13 +315,17 @@
       adventures.forEach((a, i) => {
         const item = document.createElement('div');
         item.className = 'practice-item' + (a.done ? ' checked' : '');
-        item.onclick = () => { adventures[i].done = !adventures[i].done; buildAdventures(); };
+        item.onclick = () => { adventures[i].done = !adventures[i].done; buildAdventures(); syncAdventuresState(); scheduleSave('module-3-4'); };
         item.innerHTML = `
           <div class="practice-check">${a.done ? '✓' : ''}</div>
           <div class="practice-text">${a.text}</div>
         `;
         grid.appendChild(item);
       });
+    }
+
+    function syncAdventuresState() {
+      document.getElementById('adventures-state').value = JSON.stringify(adventures);
     }
 
     function addAdventure() {
@@ -317,6 +336,8 @@
       buildAdventures();
       input.value = '';
       input.focus();
+      syncAdventuresState();
+      scheduleSave('module-3-4');
     }
 
     document.getElementById('adventure-input').addEventListener('keydown', e => {
@@ -361,7 +382,24 @@
   </script>
   <script>
   (async () => {
-    await loadProgress('module-3-4');
+    const data = await loadProgress('module-3-4');
+    document.getElementById('complete-check').checked = await getCompleted('module-3-4');
+    if (data) {
+      if (data['practices-state']) {
+        const saved = JSON.parse(data['practices-state']);
+        DAILY_PRACTICES.length = 0;
+        DAILY_PRACTICES.push(...(saved.practices || []));
+        Object.keys(practiceState).forEach(k => delete practiceState[k]);
+        Object.assign(practiceState, saved.practiceState || {});
+        buildPractices();
+      }
+      if (data['adventures-state']) {
+        const saved = JSON.parse(data['adventures-state']);
+        adventures.length = 0;
+        adventures.push(...saved);
+        buildAdventures();
+      }
+    }
     initAutoSave('module-3-4');
   })();
   </script>

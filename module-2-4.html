@@ -77,30 +77,30 @@
     <a href="index.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 2 progress">
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-1.html" onclick="event.preventDefault(); flushAndGo('module-2-1.html');">
         <div class="progress-step-dot">1</div>
         <div class="progress-step-label">Land work</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-2.html" onclick="event.preventDefault(); flushAndGo('module-2-2.html');">
         <div class="progress-step-dot">2</div>
         <div class="progress-step-label">Lights & Shadows</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-3.html" onclick="event.preventDefault(); flushAndGo('module-2-3.html');">
         <div class="progress-step-dot">3</div>
         <div class="progress-step-label">Intentions</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
       <div class="progress-step active">
         <div class="progress-step-dot">4</div>
         <div class="progress-step-label">Love Languages</div>
       </div>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-2-5.html" onclick="event.preventDefault(); flushAndGo('module-2-5.html');">
         <div class="progress-step-dot">5</div>
         <div class="progress-step-label">Conversations</div>
-      </div>
+      </a>
     </div>
 
     <div class="page-subtitle">Module 2 · Part 4</div>
@@ -172,6 +172,11 @@
 
     </div>
 
+    <label class="complete-toggle">
+      <input type="checkbox" id="complete-check" onclick="setCompleted('module-2-4', this.checked)">
+      Mark this section complete
+    </label>
+
     <div class="btn-group">
       <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
       <a href="module-2-5.html" class="btn btn-primary">Continue: Conversation Cards →</a>
@@ -233,12 +238,12 @@
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:0.6rem;">
                 <div>
                   <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Give</div>
-                  <input type="range" min="1" max="5" step="1" value="${s.aGive}" style="width:100%;accent-color:var(--ocean);"
+                  <input type="range" id="slider-ag-${lang.name.replace(/ /g,'_')}" min="1" max="5" step="1" value="${s.aGive}" style="width:100%;accent-color:var(--ocean);"
                     oninput="updateScore('${lang.name}','aGive',this.value)">
                 </div>
                 <div>
                   <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Receive</div>
-                  <input type="range" min="1" max="5" step="1" value="${s.aReceive}" style="width:100%;accent-color:var(--seafoam);"
+                  <input type="range" id="slider-ar-${lang.name.replace(/ /g,'_')}" min="1" max="5" step="1" value="${s.aReceive}" style="width:100%;accent-color:var(--seafoam);"
                     oninput="updateScore('${lang.name}','aReceive',this.value)">
                 </div>
               </div>
@@ -260,12 +265,12 @@
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:0.6rem;">
                 <div>
                   <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Give</div>
-                  <input type="range" min="1" max="5" step="1" value="${s.bGive}" style="width:100%;accent-color:var(--ocean);"
+                  <input type="range" id="slider-bg-${lang.name.replace(/ /g,'_')}" min="1" max="5" step="1" value="${s.bGive}" style="width:100%;accent-color:var(--ocean);"
                     oninput="updateScore('${lang.name}','bGive',this.value)">
                 </div>
                 <div>
                   <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Receive</div>
-                  <input type="range" min="1" max="5" step="1" value="${s.bReceive}" style="width:100%;accent-color:var(--seafoam);"
+                  <input type="range" id="slider-br-${lang.name.replace(/ /g,'_')}" min="1" max="5" step="1" value="${s.bReceive}" style="width:100%;accent-color:var(--seafoam);"
                     oninput="updateScore('${lang.name}','bReceive',this.value)">
                 </div>
               </div>
@@ -372,7 +377,22 @@
   </script>
   <script>
   (async () => {
-    await loadProgress('module-2-4');
+    const data = await loadProgress('module-2-4');
+    document.getElementById('complete-check').checked = await getCompleted('module-2-4');
+    if (data) {
+      const keyMap = { ag: 'aGive', ar: 'aReceive', bg: 'bGive', br: 'bReceive' };
+      LANGUAGES.forEach(lang => {
+        const slug = lang.name.replace(/ /g, '_');
+        Object.entries(keyMap).forEach(([k, key]) => {
+          const val = data[`slider-${k}-${slug}`];
+          if (val === undefined) return;
+          scores[lang.name][key] = parseInt(val);
+          document.getElementById(`bar-${k}-${slug}`).style.width = `${parseInt(val) * 20}%`;
+          document.getElementById(`val-${k}-${slug}`).textContent = val;
+        });
+      });
+      updateGapAnalysis();
+    }
     initAutoSave('module-2-4');
   })();
   </script>

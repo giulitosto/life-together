@@ -147,30 +147,30 @@
     <a href="index.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 1 progress">
-      <div class="progress-step">
+      <a class="progress-step" href="module-1.html" onclick="event.preventDefault(); flushAndGo('module-1.html');">
         <div class="progress-step-dot">1</div>
         <div class="progress-step-label">Where I am</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-1-2.html" onclick="event.preventDefault(); flushAndGo('module-1-2.html');">
         <div class="progress-step-dot">2</div>
         <div class="progress-step-label">Who I am</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
       <div class="progress-step active">
         <div class="progress-step-dot">3</div>
         <div class="progress-step-label">How I am</div>
       </div>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-1-4.html" onclick="event.preventDefault(); flushAndGo('module-1-4.html');">
         <div class="progress-step-dot">4</div>
         <div class="progress-step-label">I am enough</div>
-      </div>
+      </a>
       <div class="progress-line" aria-hidden="true"></div>
-      <div class="progress-step">
+      <a class="progress-step" href="module-1-5.html" onclick="event.preventDefault(); flushAndGo('module-1-5.html');">
         <div class="progress-step-dot">5</div>
         <div class="progress-step-label">Why I am</div>
-      </div>
+      </a>
     </div>
 
     <div class="page-subtitle">Module 1 · Part 3</div>
@@ -243,6 +243,7 @@
               <button class="add-ls-btn shadow-btn" onclick="addEntry('shadow')">+ Add a shadow</button>
             </div>
           </div>
+          <input type="hidden" id="ls-state">
         </div>
       </div>
 
@@ -268,23 +269,28 @@
       <div class="step">
         <div class="step-num">4</div>
         <div class="step-body">
-          <h3 class="step-title">Bring it into your relationship (~5 min)</h3>
-          <div class="step-text">Now look at your lights and shadows through the lens of your relationship.</div>
+          <h3 class="step-title">Bring it into your relationships (~5 min)</h3>
+          <div class="step-text">Now look at your lights and shadows through the lens of your relationships, romantic, family, friendship, or professional.</div>
           <div class="prompt-box">
             <ul>
-              <li>Which of your lights does your partner most benefit from?</li>
-              <li>Which of your shadows shows up most in your relationship?</li>
-              <li>What would it mean for your partner to truly understand both sides of you?</li>
+              <li>Which of your lights do the people closest to you most benefit from?</li>
+              <li>Which of your shadows shows up most in your relationships?</li>
+              <li>What would it mean for the important people in your life to truly understand both sides of you?</li>
             </ul>
           </div>
           <div class="reflection-block">
-            <span class="reflection-label">In my relationship</span>
-            <textarea class="reflection-textarea" id="r-relationship" placeholder="How do your lights and shadows show up with your partner?…" rows="4"></textarea>
+            <span class="reflection-label">In my relationships</span>
+            <textarea class="reflection-textarea" id="r-relationship" placeholder="How do your lights and shadows show up in your relationships?…" rows="4"></textarea>
           </div>
         </div>
       </div>
 
     </div>
+
+    <label class="complete-toggle">
+      <input type="checkbox" id="complete-check" onclick="setCompleted('module-1-3', this.checked)">
+      Mark this section complete
+    </label>
 
     <div class="btn-group">
       <button class="btn btn-rope" onclick="downloadReflections()">Download my reflections</button>
@@ -303,7 +309,7 @@
   <script>
     let entryCount = 0;
 
-    function addEntry(type) {
+    function addEntry(type, value, skipFocus) {
       const id = ++entryCount;
       const listId = type === 'light' ? 'lights-list' : 'shadows-list';
       const list = document.getElementById(listId);
@@ -312,23 +318,34 @@
       el.id = `entry-${id}`;
       el.innerHTML = `
         <button class="ls-entry-delete" onclick="removeEntry(${id})" title="Remove">×</button>
-        <input type="text" class="ls-entry-input" id="ei-${id}"
-          placeholder="${type === 'light' ? 'e.g. Warmth, Curiosity, Resilience…' : 'e.g. Withdraw when hurt, Need to be right…'}">
+        <input type="text" class="ls-entry-input"
+          placeholder="${type === 'light' ? 'e.g. Warmth, Curiosity, Resilience…' : 'e.g. Withdraw when hurt, Need to be right…'}"
+          value="${value || ''}">
       `;
       list.appendChild(el);
-      document.getElementById(`ei-${id}`).focus();
+      const input = el.querySelector('input');
+      input.addEventListener('input', () => { syncLsState(); scheduleSave('module-1-3'); });
+      if (!skipFocus) input.focus();
     }
 
     function removeEntry(id) {
       const el = document.getElementById('entry-' + id);
       if (el) el.remove();
+      syncLsState();
+      scheduleSave('module-1-3');
+    }
+
+    function syncLsState() {
+      const lights = [...document.querySelectorAll('#lights-list .ls-entry-input')].map(i => i.value);
+      const shadows = [...document.querySelectorAll('#shadows-list .ls-entry-input')].map(i => i.value);
+      document.getElementById('ls-state').value = JSON.stringify({ lights, shadows });
     }
 
     // Seed with a couple of empty entries to invite engagement
-    addEntry('light');
-    addEntry('light');
-    addEntry('shadow');
-    addEntry('shadow');
+    addEntry('light', '', true);
+    addEntry('light', '', true);
+    addEntry('shadow', '', true);
+    addEntry('shadow', '', true);
 
     // ── PDF Download ──
     function downloadReflections() {
@@ -386,14 +403,22 @@
       addBlock('Patterns & tendencies', shadows.length ? shadows.join(', ') : '(none added)');
 
       addBlock('Connections & patterns', document.getElementById('r-connections').value);
-      addBlock('In my relationship', document.getElementById('r-relationship').value);
+      addBlock('In my relationships', document.getElementById('r-relationship').value);
 
       doc.save('relation-ship-how-i-am.pdf');
     }
   </script>
   <script>
   (async () => {
-    await loadProgress('module-1-3');
+    const data = await loadProgress('module-1-3');
+    document.getElementById('complete-check').checked = await getCompleted('module-1-3');
+    if (data && data['ls-state']) {
+      const ls = JSON.parse(data['ls-state']);
+      document.getElementById('lights-list').innerHTML = '';
+      document.getElementById('shadows-list').innerHTML = '';
+      (ls.lights || []).forEach(v => addEntry('light', v, true));
+      (ls.shadows || []).forEach(v => addEntry('shadow', v, true));
+    }
     initAutoSave('module-1-3');
   })();
   </script>
