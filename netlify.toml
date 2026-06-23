@@ -1,2 +1,13 @@
 [build]
   publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/landing"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/landing"
+  to = "/landing.html"
+  status = 200
