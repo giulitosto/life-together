@@ -244,118 +244,9 @@
       margin: 1.5rem 0 0.5rem;
     }
 
-    /* ── Track choice gate ── */
-    #gate {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      background: linear-gradient(152deg, #1A2E3B 0%, #2C4A5A 55%, #3D6475 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-    #gate::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.03;
-      pointer-events: none;
-    }
-    .gate-card {
-      position: relative;
-      background: rgba(253,250,245,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 24px;
-      padding: 3rem 2.5rem;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-    .gate-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.9);
-      margin-bottom: 0.4rem;
-    }
-    .gate-logo em { font-style: italic; }
-    .gate-tagline {
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--seafoam);
-      margin-bottom: 2rem;
-    }
-    .gate-wave {
-      margin: 0 auto 1.75rem;
-      display: block;
-      opacity: 0.5;
-    }
-    .gate-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
-      margin-bottom: 0.85rem;
-    }
-    .gate-btn {
-      width: 100%;
-      padding: 0.85rem;
-      border-radius: 40px;
-      border: none;
-      background: var(--white);
-      color: var(--ocean);
-      font-family: 'Jost', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .gate-btn:hover { background: var(--seafoam-light); transform: translateY(-1px); }
-    .gate-btn-outline {
-      background: transparent;
-      color: var(--white);
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-    .gate-btn-outline:hover { background: rgba(255,255,255,0.08); }
-    .track-choice { display: flex; flex-direction: column; }
-    .gate-hint {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.25);
-      margin-top: 1.5rem;
-      line-height: 1.6;
-    }
-    .gate-hint a { color: rgba(255,255,255,0.35); text-decoration: none; }
-    .gate-hint a:hover { color: rgba(255,255,255,0.6); }
   </style>
 </head>
 <body>
-
-  <!-- ── Track choice gate ── -->
-  <div id="gate">
-    <div class="gate-card">
-      <div class="gate-logo"><em>Relation</em>-ship</div>
-      <div class="gate-tagline">Navigating the waves of life together</div>
-      <svg class="gate-wave" width="48" height="20" viewBox="0 0 48 20" fill="none" aria-hidden="true">
-        <path d="M0 10 Q6 2 12 10 Q18 18 24 10 Q30 2 36 10 Q42 18 48 10" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
-      </svg>
-      <p class="gate-label">How are you navigating this journey?</p>
-      <div class="track-choice">
-        <button class="gate-btn" style="margin-bottom:0.75rem;" onclick="chooseTrack('single')">On my own →</button>
-        <button class="gate-btn gate-btn-outline" onclick="chooseTrack('couple')">With my partner →</button>
-      </div>
-      <p class="gate-hint">
-        On your own, you'll do Module 1, a solo journey of self-discovery.<br>
-        With a partner, you'll do all three modules together.<br><br>
-        <a href="landing.html">Learn more about the programme</a>
-      </p>
-    </div>
-  </div>
 
   <div class="container" id="course-content" style="display:none;">
     <header class="site-header">
@@ -381,8 +272,8 @@
     </div>
 
     <div class="name-prompt" id="name-prompt">
-      <div class="name-prompt-title">For the couple modules — optional</div>
-      <div class="name-fields">
+      <div class="name-prompt-title" id="name-prompt-title">For the couple modules: optional</div>
+      <div class="name-fields" id="name-fields-couple">
         <div class="name-field">
           <label for="input-name-a">Person A's name</label>
           <input type="text" id="input-name-a" placeholder="e.g. Alex" autocomplete="off">
@@ -392,8 +283,14 @@
           <input type="text" id="input-name-b" placeholder="e.g. Sam" autocomplete="off">
         </div>
       </div>
-      <p class="name-prompt-hint">
-        Adding your names personalises the couple exercises in Modules 2 and 3. Optional — stored only in your browser for this session.
+      <div class="name-fields" id="name-fields-single" style="display:none;">
+        <div class="name-field">
+          <label for="input-name-solo">Your name</label>
+          <input type="text" id="input-name-solo" placeholder="e.g. Alex" autocomplete="off">
+        </div>
+      </div>
+      <p class="name-prompt-hint" id="name-prompt-hint">
+        Adding your names personalises the couple exercises in Modules 2 and 3. Optional, stored only in your browser for this session.
       </p>
       <div class="name-save-row">
         <button class="btn-save-names" onclick="saveNames()">Save names</button>
@@ -624,17 +521,6 @@
   <script>
     const TRACK_KEY = 'rs_track_v1';
 
-    function unlockCourse() {
-      document.getElementById('gate').style.display = 'none';
-      document.getElementById('course-content').style.display = 'block';
-    }
-
-    function chooseTrack(track) {
-      localStorage.setItem(TRACK_KEY, track);
-      applyTrack(track);
-      unlockCourse();
-    }
-
     function switchToCouple() {
       localStorage.setItem(TRACK_KEY, 'couple');
       applyTrack('couple');
@@ -645,23 +531,36 @@
       document.getElementById('module-2-group').classList.toggle('locked', isSingle);
       document.getElementById('module-3-group').classList.toggle('locked', isSingle);
       document.getElementById('couple-upsell').style.display = isSingle ? 'block' : 'none';
-      document.getElementById('name-prompt').style.display = isSingle ? 'none' : '';
+
+      document.getElementById('name-fields-single').style.display = isSingle ? '' : 'none';
+      document.getElementById('name-fields-couple').style.display = isSingle ? 'none' : '';
+      document.getElementById('name-prompt-title').textContent = isSingle
+        ? 'Personalise your reflections: optional'
+        : 'For the couple modules: optional';
+      document.getElementById('name-prompt-hint').textContent = isSingle
+        ? 'Adding your name personalises your reflections. Optional, stored only in your browser for this session.'
+        : 'Adding your names personalises the couple exercises in Modules 2 and 3. Optional, stored only in your browser for this session.';
 
       document.getElementById('track-intro').innerHTML = isSingle
         ? 'A solo journey of self-discovery, on your own terms.<br>Modules 2 and 3 unlock when you do this with a partner.'
         : 'A programme for couples who want to know themselves and each other more deeply.<br>Module 1 is done individually. Modules 2 and 3 are done together.';
     }
 
-    // Check on load — skip gate if a track is already chosen
+    // Check on load — redirect to the track-choice page if none chosen yet
     const savedTrack = localStorage.getItem(TRACK_KEY);
-    if (savedTrack) {
+    if (!savedTrack) {
+      window.location.replace('start.html');
+    } else {
       applyTrack(savedTrack);
-      unlockCourse();
+      document.getElementById('course-content').style.display = 'block';
     }
 
     function saveNames() {
-      const a = document.getElementById('input-name-a').value.trim();
-      const b = document.getElementById('input-name-b').value.trim();
+      const isSingle = localStorage.getItem(TRACK_KEY) === 'single';
+      const a = isSingle
+        ? document.getElementById('input-name-solo').value.trim()
+        : document.getElementById('input-name-a').value.trim();
+      const b = isSingle ? '' : document.getElementById('input-name-b').value.trim();
       if (a) sessionStorage.setItem('nameA', a);
       if (b) sessionStorage.setItem('nameB', b);
       if (a || b) {
@@ -681,7 +580,7 @@
       greet.style.display = 'block';
     }
 
-    ['input-name-a', 'input-name-b'].forEach(id => {
+    ['input-name-a', 'input-name-b', 'input-name-solo'].forEach(id => {
       document.getElementById(id).addEventListener('keydown', e => {
         if (e.key === 'Enter') saveNames();
       });
@@ -692,6 +591,7 @@
     if (storedA || storedB) {
       document.getElementById('input-name-a').value = storedA;
       document.getElementById('input-name-b').value = storedB;
+      document.getElementById('input-name-solo').value = storedA;
       document.getElementById('name-prompt').style.display = 'none';
       showGreeting(storedA, storedB);
     }

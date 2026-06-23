@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relation-ship, Navigating the waves of life together</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(152deg, #1A2E3B 0%, #2C4A5A 55%, #3D6475 100%);
+      padding: 2rem;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+    }
+    .gate-card {
+      position: relative;
+      background: rgba(253,250,245,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .gate-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 0.4rem;
+    }
+    .gate-logo em { font-style: italic; }
+    .gate-tagline {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--seafoam);
+      margin-bottom: 2rem;
+    }
+    .gate-wave {
+      margin: 0 auto 1.75rem;
+      display: block;
+      opacity: 0.5;
+    }
+    .gate-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 0.85rem;
+    }
+    .gate-btn {
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 40px;
+      border: none;
+      background: var(--white);
+      color: var(--ocean);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .gate-btn:hover { background: var(--seafoam-light); transform: translateY(-1px); }
+    .gate-btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .gate-btn-outline:hover { background: rgba(255,255,255,0.08); }
+    .track-choice { display: flex; flex-direction: column; }
+    .gate-hint {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.25);
+      margin-top: 1.5rem;
+      line-height: 1.6;
+    }
+    .gate-hint a { color: rgba(255,255,255,0.35); text-decoration: none; }
+    .gate-hint a:hover { color: rgba(255,255,255,0.6); }
+  </style>
+</head>
+<body>
+
+  <div class="gate-card">
+    <div class="gate-logo"><em>Relation</em>-ship</div>
+    <div class="gate-tagline">Navigating the waves of life together</div>
+    <svg class="gate-wave" width="48" height="20" viewBox="0 0 48 20" fill="none" aria-hidden="true">
+      <path d="M0 10 Q6 2 12 10 Q18 18 24 10 Q30 2 36 10 Q42 18 48 10" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+    </svg>
+    <p class="gate-label">How are you navigating this journey?</p>
+    <div class="track-choice">
+      <button class="gate-btn" style="margin-bottom:0.75rem;" onclick="chooseTrack('single')">On my own →</button>
+      <button class="gate-btn gate-btn-outline" onclick="chooseTrack('couple')">With my partner →</button>
+    </div>
+    <p class="gate-hint">
+      On your own, you'll do Module 1, a solo journey of self-discovery.<br>
+      With a partner, you'll do all three modules together.<br><br>
+      <a href="landing.html">Learn more about the programme</a>
+    </p>
+  </div>
+
+  <script>
+    const TRACK_KEY = 'rs_track_v1';
+
+    // Already chosen — skip straight to the course menu
+    if (localStorage.getItem(TRACK_KEY)) {
+      window.location.replace('index.html');
+    }
+
+    function chooseTrack(track) {
+      localStorage.setItem(TRACK_KEY, track);
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
