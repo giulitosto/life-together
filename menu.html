@@ -228,17 +228,6 @@
       <button class="btn-primary-sm" onclick="switchToCouple()">Switch to couple →</button>
     </div>
 
-    <!-- Sign-in prompt (not authenticated) -->
-    <div class="info-card" id="save-prompt">
-      <div class="info-card-title">Save your progress</div>
-      <p class="info-card-hint">Enter your email to save your reflections and return from any device.</p>
-      <div class="card-field-row">
-        <input type="email" id="auth-email" placeholder="your@email.com" autocomplete="email">
-        <button class="btn-primary-sm" onclick="sendMagicLink()">Send link →</button>
-      </div>
-      <p class="card-msg" id="save-prompt-msg"></p>
-    </div>
-
     <!-- Profile setup (authenticated, display_name missing) -->
     <div class="info-card" id="setup-card" style="display:none;">
       <div class="info-card-title" id="setup-title">Tell us your name</div>
@@ -496,26 +485,9 @@
     }
 
     // ── Auth ──────────────────────────────────────────────────────────────────
-    async function sendMagicLink() {
-      const email = document.getElementById('auth-email').value.trim();
-      const msg   = document.getElementById('save-prompt-msg');
-      if (!email) { msg.textContent = 'Please enter your email.'; return; }
-      msg.textContent = 'Sending…';
-      const { error } = await _sb.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: window.location.origin + '/menu.html' }
-      });
-      msg.textContent = error ? error.message : 'Check your email for a magic link.';
-    }
-
-    document.getElementById('auth-email').addEventListener('keydown', e => {
-      if (e.key === 'Enter') sendMagicLink();
-    });
-
     async function doSignOut() {
       await _sb.auth.signOut();
-      document.getElementById('save-status').style.display = 'none';
-      document.getElementById('save-prompt').style.display = 'block';
+      window.location.href = 'start.html';
     }
 
     // ── Profile setup ──────────────────────────────────────────────────────────
@@ -567,7 +539,6 @@
 
     // ── Status bar ─────────────────────────────────────────────────────────────
     function showStatusBar(displayName, partnerName, coupleStatus) {
-      document.getElementById('save-prompt').style.display  = 'none';
       document.getElementById('save-status').style.display  = 'flex';
       document.getElementById('status-name').textContent    = displayName || 'Welcome';
       const coupleEl = document.getElementById('status-couple');
@@ -583,9 +554,7 @@
     // ── On load: check auth + profile ─────────────────────────────────────────
     (async () => {
       const user = await getUser();
-      if (!user) return;
-
-      document.getElementById('save-prompt').style.display = 'none';
+      if (!user) { window.location.href = 'start.html'; return; }
 
       const profile = await getProfile();
       const isSingle = localStorage.getItem(TRACK_KEY) === 'single';
