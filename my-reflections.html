@@ -146,7 +146,7 @@
       const order = Object.keys(PAGE_TITLES).filter(p => pages.includes(p));
       const sections = order.map(page => ({ page, blocks: renderSectionBlocks((PROGRESS[page] || {}).data) }));
       const doc = buildReflectionsPdf(sections);
-      doc.save(`relation-ship-reflections-${new Date().toISOString().slice(0, 10)}.pdf`);
+      downloadPdf(doc, `relation-ship-reflections-${new Date().toISOString().slice(0, 10)}.pdf`);
       msg.textContent = '';
     }
 

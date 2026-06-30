@@ -116,3 +116,16 @@ function buildReflectionsPdf(sections) {
   });
   return doc;
 }
+
+// Reliable cross-browser PDF download via blob + anchor (works from async contexts)
+function downloadPdf(doc, filename) {
+  const blob = doc.output('blob');
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}

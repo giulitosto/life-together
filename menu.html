@@ -641,22 +641,26 @@
 
     // ── Menu-level reflection download ─────────────────────────────────────────
     async function downloadPartFromMenu(page) {
-      const user = await getUser();
-      if (!user) return;
-      let savedData = null;
-      if (_isCouplePage(page)) {
-        const coupleId = await _getCoupleId();
-        if (coupleId) {
-          const { data } = await _sb.from('couple_progress').select('data').eq('couple_id', coupleId).eq('page', page).single();
+      try {
+        const user = await getUser();
+        if (!user) return;
+        let savedData = null;
+        if (_isCouplePage(page)) {
+          const coupleId = await _getCoupleId();
+          if (coupleId) {
+            const { data } = await _sb.from('couple_progress').select('data').eq('couple_id', coupleId).eq('page', page).single();
+            savedData = data?.data;
+          }
+        } else {
+          const { data } = await _sb.from('progress').select('data').eq('user_id', user.id).eq('page', page).single();
           savedData = data?.data;
         }
-      } else {
-        const { data } = await _sb.from('progress').select('data').eq('user_id', user.id).eq('page', page).single();
-        savedData = data?.data;
+        const blocks = renderSectionBlocks(savedData || {});
+        const doc = buildReflectionsPdf([{ page, blocks }]);
+        downloadPdf(doc, `relation-ship-${page}.pdf`);
+      } catch (e) {
+        console.error('Download failed:', e);
       }
-      const blocks = renderSectionBlocks(savedData || {});
-      const doc = buildReflectionsPdf([{ page, blocks }]);
-      doc.save(`relation-ship-${page}.pdf`);
     }
   </script>
 </body>
