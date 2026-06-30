@@ -101,7 +101,7 @@
       <div class="site-tagline">Navigating the waves of life together</div>
     </header>
 
-    <a href="index.html" class="back-link">Back to menu</a>
+    <a href="menu.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 3 progress">
       <div class="progress-step active">
@@ -219,7 +219,7 @@
       <a href="module-3-2.html" class="btn btn-primary">Continue: Our Wheel →</a>
     </div>
     <div style="margin-top:0.75rem;">
-      <a href="index.html" class="btn btn-outline">Back to menu</a>
+      <a href="menu.html" class="btn btn-outline">Back to menu</a>
     </div>
 
     <footer class="page-footer">
@@ -229,10 +229,14 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
-    const nameA = sessionStorage.getItem('nameA') || 'You';
-    const nameB = sessionStorage.getItem('nameB') || 'You';
-    document.getElementById('circle-a').textContent = nameA;
-    document.getElementById('circle-b').textContent = nameB;
+    let nameA = 'You', nameB = 'You';
+    (async () => {
+      const profile = await getProfile();
+      nameA = profile?.display_name || 'You';
+      nameB = profile?.partner_name || 'You';
+      document.getElementById('circle-a').textContent = nameA;
+      document.getElementById('circle-b').textContent = nameB;
+    })();
 
     function downloadReflections() {
       const { jsPDF } = window.jspdf;

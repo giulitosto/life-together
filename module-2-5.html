@@ -125,7 +125,7 @@
       <div class="site-tagline">Navigating the waves of life together</div>
     </header>
 
-    <a href="index.html" class="back-link">Back to menu</a>
+    <a href="menu.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 2 progress">
       <a class="progress-step" href="module-2-1.html" onclick="event.preventDefault(); flushAndGo('module-2-1.html');">
@@ -217,7 +217,7 @@
 
     <div class="btn-group">
       <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
-      <a href="index.html" class="btn btn-primary">Back to menu →</a>
+      <a href="menu.html" class="btn btn-primary">Back to menu →</a>
     </div>
 
     <footer class="page-footer">
@@ -227,8 +227,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
-    const nameA = sessionStorage.getItem('nameA') || 'Person A';
-    const nameB = sessionStorage.getItem('nameB') || 'Person B';
+    let nameA = 'Person A', nameB = 'Person B';
+    getProfile().then(p => { nameA = p?.display_name || 'Person A'; nameB = p?.partner_name || 'Person B'; });
 
     const ALL_CARDS = [
       { cat: 'Knowing each other', q: 'What is something you find stressful that I might not fully realise?' },

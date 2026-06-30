@@ -121,12 +121,12 @@
 
     // Already chosen — skip straight to the course menu
     if (localStorage.getItem(TRACK_KEY)) {
-      window.location.replace('index.html');
+      window.location.replace('menu.html');
     }
 
     function chooseTrack(track) {
       localStorage.setItem(TRACK_KEY, track);
-      window.location.href = 'index.html';
+      window.location.href = 'menu.html';
     }
   </script>
 </body>

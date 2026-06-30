@@ -123,7 +123,7 @@
       <div class="site-tagline">Navigating the waves of life together</div>
     </header>
 
-    <a href="index.html" class="back-link">Back to menu</a>
+    <a href="menu.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 1 progress">
       <a class="progress-step" href="module-1.html" onclick="event.preventDefault(); flushAndGo('module-1.html');">
@@ -253,7 +253,7 @@
       <a href="module-1-5.html" class="btn btn-primary">Continue: Why I am →</a>
     </div>
     <div style="margin-top:0.75rem;">
-      <a href="index.html" class="btn btn-outline">Back to menu</a>
+      <a href="menu.html" class="btn btn-outline">Back to menu</a>
     </div>
 
     <footer class="page-footer">
@@ -399,11 +399,9 @@
 
     // ── Dear {name}, ──
     (async () => {
-      const user = await getUser();
-      if (user?.email) {
-        const name = user.email.split('@')[0];
-        const display = name.charAt(0).toUpperCase() + name.slice(1);
-        document.getElementById('dear-me-label').textContent = `Dear ${display},`;
+      const profile = await getProfile();
+      if (profile?.display_name) {
+        document.getElementById('dear-me-label').textContent = `Dear ${profile.display_name},`;
       }
     })();
   </script>

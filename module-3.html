@@ -110,7 +110,7 @@
       <div class="site-tagline">Navigating the waves of life together</div>
     </header>
 
-    <a href="index.html" class="back-link">Back to menu</a>
+    <a href="menu.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Course progress">
       <div class="progress-step done">
@@ -388,7 +388,7 @@
       <a href="feedback.html" class="btn btn-primary">Share your feedback →</a>
     </div>
     <div style="margin-top:0.75rem;">
-      <a href="index.html" class="btn btn-outline">Back to menu</a>
+      <a href="menu.html" class="btn btn-outline">Back to menu</a>
     </div>
 
     <footer class="page-footer">
@@ -416,18 +416,19 @@
       }
     }
 
-    // ── Names from sessionStorage ──
-    const nameA = sessionStorage.getItem('nameA') || '';
-    const nameB = sessionStorage.getItem('nameB') || '';
-    const coupleDisplay = [nameA, nameB].filter(Boolean).join(' & ');
-
-    // Update reflection labels with names if set
-    if (coupleDisplay) {
-      for (let i = 1; i <= 6; i++) {
-        const el = document.getElementById('label-' + i);
-        if (el) el.textContent = coupleDisplay + '\u2019s reflections';
+    let nameA = '', nameB = '', coupleDisplay = '';
+    (async () => {
+      const profile = await getProfile();
+      nameA = profile?.display_name || '';
+      nameB = profile?.partner_name || '';
+      coupleDisplay = [nameA, nameB].filter(Boolean).join(' & ');
+      if (coupleDisplay) {
+        for (let i = 1; i <= 6; i++) {
+          const el = document.getElementById('label-' + i);
+          if (el) el.textContent = coupleDisplay + '’s reflections';
+        }
       }
-    }
+    })();
 
     // ── Download reflections as PDF (matches module-1/2 style) ──
     function downloadReflections() {

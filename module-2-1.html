@@ -147,7 +147,7 @@
       <div class="site-tagline">Navigating the waves of life together</div>
     </header>
 
-    <a href="index.html" class="back-link">Back to menu</a>
+    <a href="menu.html" class="back-link">Back to menu</a>
 
     <div class="progress-indicator" aria-label="Module 2 progress">
       <div class="progress-step active">
@@ -307,7 +307,7 @@
       <a href="module-2-2.html" class="btn btn-primary">Continue: Lights & Shadows together →</a>
     </div>
     <div style="margin-top:0.75rem;">
-      <a href="index.html" class="btn btn-outline">Back to menu</a>
+      <a href="menu.html" class="btn btn-outline">Back to menu</a>
     </div>
 
     <footer class="page-footer">
@@ -317,10 +317,14 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
-    const nameA = sessionStorage.getItem('nameA') || 'Person A';
-    const nameB = sessionStorage.getItem('nameB') || 'Person B';
-    document.getElementById('name-a-label').textContent = nameA;
-    document.getElementById('name-b-label').textContent = nameB;
+    let nameA = 'Person A', nameB = 'Person B';
+    (async () => {
+      const profile = await getProfile();
+      nameA = profile?.display_name || 'Person A';
+      nameB = profile?.partner_name || 'Person B';
+      document.getElementById('name-a-label').textContent = nameA;
+      document.getElementById('name-b-label').textContent = nameB;
+    })();
 
     let entryCount = 0;
 

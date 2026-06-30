@@ -39,7 +39,6 @@
       transition: opacity 0.2s;
     }
     .module-group-header:hover::before { opacity: 1; }
-
     .module-group-parts {
       border-top: 1px solid var(--sand-dark);
       padding: 0.5rem 0;
@@ -66,16 +65,8 @@
       flex-shrink: 0;
     }
     .part-name { flex: 1; }
-    .part-sub {
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.03em;
-    }
-    .part-time {
-      font-size: 0.7rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
+    .part-sub { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.03em; }
+    .part-time { font-size: 0.7rem; color: var(--muted); white-space: nowrap; }
     .part-check {
       width: 16px; height: 16px;
       accent-color: var(--seafoam);
@@ -89,7 +80,6 @@
       flex-shrink: 0;
     }
     .part-download:hover { color: var(--ocean); }
-
     .module-group.locked { opacity: 0.55; pointer-events: none; }
     .coming-soon {
       font-size: 0.68rem;
@@ -103,32 +93,36 @@
       white-space: nowrap;
     }
 
-    /* Existing name prompt styles */
-    .name-prompt {
+    /* ── Shared card style ── */
+    .info-card {
       background: #f5f8f7;
       border: 1px solid #d9ece8;
       border-radius: 12px;
       padding: 1.25rem 1.5rem;
-      margin: 1.5rem 0 2rem;
+      margin: 0.75rem 0 1.5rem;
     }
-    .name-prompt-title {
+    .info-card-title {
       font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: #8FBCB0;
-      margin-bottom: 0.9rem;
+      margin-bottom: 0.5rem;
     }
-    .name-fields { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-    .name-field { flex: 1; min-width: 120px; }
-    .name-field label {
-      display: block;
-      font-size: 0.75rem;
+    .info-card-hint {
+      font-size: 0.78rem;
       color: #aaa;
-      margin-bottom: 0.3rem;
-      letter-spacing: 0.05em;
+      margin-bottom: 0.85rem;
+      line-height: 1.5;
     }
-    .name-field input {
-      width: 100%;
+    .card-field-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+    .card-field-row input {
+      flex: 1;
+      min-width: 140px;
       padding: 0.55rem 0.75rem;
       border: 1px solid #ddd;
       border-radius: 8px;
@@ -139,21 +133,14 @@
       box-sizing: border-box;
       transition: border-color 0.2s;
     }
-    .name-field input:focus { outline: none; border-color: #8FBCB0; }
-    .name-field input::placeholder { color: #ccc; }
-    .name-prompt-hint {
-      font-size: 0.75rem;
-      color: #bbb;
-      margin-top: 0.85rem;
-      line-height: 1.5;
+    .card-field-row input:focus { outline: none; border-color: #8FBCB0; }
+    .card-msg {
+      font-size: 0.78rem;
+      color: #8FBCB0;
+      margin-top: 0.5rem;
+      min-height: 1.1em;
     }
-    .name-save-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-top: 0.9rem;
-    }
-    .btn-save-names {
+    .btn-primary-sm {
       padding: 0.5rem 1.1rem;
       background: #8FBCB0;
       color: #fff;
@@ -163,9 +150,10 @@
       font-size: 0.82rem;
       cursor: pointer;
       transition: background 0.2s;
+      white-space: nowrap;
     }
-    .btn-save-names:hover { background: #7aada0; }
-    .btn-skip-names {
+    .btn-primary-sm:hover { background: #7aada0; }
+    .btn-ghost-sm {
       font-size: 0.8rem;
       color: #bbb;
       background: none;
@@ -175,55 +163,9 @@
       text-decoration: underline;
       padding: 0;
     }
-    .btn-skip-names:hover { color: #999; }
-    .names-saved-msg { display: none; font-size: 0.82rem; color: #8FBCB0; }
+    .btn-ghost-sm:hover { color: #999; }
 
-    /* ── Save progress prompt ── */
-    .save-prompt {
-      background: #f5f8f7;
-      border: 1px solid #d9ece8;
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-      margin: 0.75rem 0 2rem;
-    }
-    .save-prompt-title {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #8FBCB0;
-      margin-bottom: 0.5rem;
-    }
-    .save-prompt-hint {
-      font-size: 0.78rem;
-      color: #aaa;
-      margin-bottom: 0.85rem;
-      line-height: 1.5;
-    }
-    .save-email-row {
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-    .save-email-row input[type=email] {
-      flex: 1;
-      min-width: 160px;
-      padding: 0.55rem 0.75rem;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.88rem;
-      color: #333;
-      background: #fff;
-      box-sizing: border-box;
-      transition: border-color 0.2s;
-    }
-    .save-email-row input[type=email]:focus { outline: none; border-color: #8FBCB0; }
-    .save-prompt-msg {
-      font-size: 0.78rem;
-      color: #8FBCB0;
-      margin-top: 0.6rem;
-      min-height: 1.1em;
-    }
+    /* ── Signed-in status bar ── */
     .save-status {
       display: flex;
       align-items: center;
@@ -234,16 +176,30 @@
       border: 1px solid #d9ece8;
       border-radius: 12px;
       padding: 0.75rem 1.25rem;
-      margin: 0.75rem 0 2rem;
-    }
-    .welcome-greeting {
-      display: none;
-      font-size: 0.88rem;
-      color: #8FBCB0;
-      text-align: center;
-      margin: 1.5rem 0 0.5rem;
+      margin: 0.75rem 0 1.5rem;
+      flex-wrap: wrap;
     }
 
+    /* ── Invite link box ── */
+    .invite-link-box {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .invite-link-box input[type=text] {
+      flex: 1;
+      min-width: 180px;
+      padding: 0.45rem 0.7rem;
+      border: 1px solid #d9ece8;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      color: #666;
+      background: #fff;
+      box-sizing: border-box;
+    }
   </style>
 </head>
 <body>
@@ -265,59 +221,61 @@
       Module 1 is done individually. Modules 2 and 3 are done together.
     </p>
 
-    <div class="save-prompt" id="couple-upsell" style="display:none;">
-      <div class="save-prompt-title">Doing this with a partner?</div>
-      <p class="save-prompt-hint">Switch to couple mode to unlock Modules 2 and 3. Your Module 1 progress carries over.</p>
-      <button class="btn-save-names" onclick="switchToCouple()">Switch to couple →</button>
+    <!-- Couple upsell (single-track users only) -->
+    <div class="info-card" id="couple-upsell" style="display:none;">
+      <div class="info-card-title">Doing this with a partner?</div>
+      <p class="info-card-hint">Switch to couple mode to unlock Modules 2 and 3. Your Module 1 progress carries over.</p>
+      <button class="btn-primary-sm" onclick="switchToCouple()">Switch to couple →</button>
     </div>
 
-    <div class="name-prompt" id="name-prompt">
-      <div class="name-prompt-title" id="name-prompt-title">For the couple modules: optional</div>
-      <div class="name-fields" id="name-fields-couple">
-        <div class="name-field">
-          <label for="input-name-a">Person A's name</label>
-          <input type="text" id="input-name-a" placeholder="e.g. Alex" autocomplete="off">
-        </div>
-        <div class="name-field">
-          <label for="input-name-b">Person B's name</label>
-          <input type="text" id="input-name-b" placeholder="e.g. Sam" autocomplete="off">
-        </div>
-      </div>
-      <div class="name-fields" id="name-fields-single" style="display:none;">
-        <div class="name-field">
-          <label for="input-name-solo">Your name</label>
-          <input type="text" id="input-name-solo" placeholder="e.g. Alex" autocomplete="off">
-        </div>
-      </div>
-      <p class="name-prompt-hint" id="name-prompt-hint">
-        Adding your names personalises the couple exercises in Modules 2 and 3. Optional, stored only in your browser for this session.
-      </p>
-      <div class="name-save-row">
-        <button class="btn-save-names" onclick="saveNames()">Save names</button>
-        <button class="btn-skip-names" onclick="skipNames()">Skip for now</button>
-        <span class="names-saved-msg" id="names-saved-msg">✓ Names saved</span>
-      </div>
-    </div>
-
-    <!-- Save progress prompt (shown when not signed in) -->
-    <div class="save-prompt" id="save-prompt">
-      <div class="save-prompt-title">💾 Save your progress</div>
-      <p class="save-prompt-hint">Enter your email to save reflections and return anytime. One account per couple.</p>
-      <div class="save-email-row">
+    <!-- Sign-in prompt (not authenticated) -->
+    <div class="info-card" id="save-prompt">
+      <div class="info-card-title">Save your progress</div>
+      <p class="info-card-hint">Enter your email to save your reflections and return from any device.</p>
+      <div class="card-field-row">
         <input type="email" id="auth-email" placeholder="your@email.com" autocomplete="email">
-        <button class="btn-save-names" onclick="sendMagicLink()">Send link →</button>
+        <button class="btn-primary-sm" onclick="sendMagicLink()">Send link →</button>
       </div>
-      <p class="save-prompt-msg" id="save-prompt-msg"></p>
+      <p class="card-msg" id="save-prompt-msg"></p>
     </div>
 
-    <!-- Signed-in status -->
+    <!-- Profile setup (authenticated, display_name missing) -->
+    <div class="info-card" id="setup-card" style="display:none;">
+      <div class="info-card-title" id="setup-title">Tell us your name</div>
+      <p class="info-card-hint" id="setup-hint">This personalises your reflections throughout the programme.</p>
+      <div class="card-field-row">
+        <input type="text" id="setup-name" placeholder="Your name" autocomplete="given-name">
+      </div>
+      <div id="setup-partner-fields">
+        <div class="card-field-row">
+          <input type="text" id="setup-partner-name" placeholder="Partner's name">
+          <input type="email" id="setup-partner-email" placeholder="Partner's email">
+        </div>
+      </div>
+      <div class="card-field-row" style="margin-top:0.5rem;">
+        <button class="btn-primary-sm" onclick="saveSetup()">Save &amp; continue →</button>
+      </div>
+      <p class="card-msg" id="setup-msg"></p>
+    </div>
+
+    <!-- Couple invite (authenticated, couple track, no couple_id yet) -->
+    <div class="info-card" id="invite-card" style="display:none;">
+      <div class="info-card-title">Invite your partner</div>
+      <p class="info-card-hint" id="invite-hint">Send this link to your partner so they can join your shared profile.</p>
+      <div class="invite-link-box">
+        <input type="text" id="invite-link-input" readonly>
+        <button class="btn-primary-sm" onclick="copyInviteLink()">Copy link</button>
+      </div>
+      <p class="card-msg" id="invite-msg"></p>
+    </div>
+
+    <!-- Signed-in status bar -->
     <div class="save-status" id="save-status" style="display:none;">
-      <span id="save-status-email" style="flex:1;"></span>
-      <a href="my-reflections.html" class="btn-skip-names" style="text-decoration:none;">My reflections</a>
-      <button class="btn-skip-names" onclick="doSignOut()">Sign out</button>
+      <span id="status-name" style="flex:1;"></span>
+      <span id="status-couple" style="color:#aaa;"></span>
+      <a href="my-reflections.html" class="btn-ghost-sm" style="text-decoration:none;">My reflections</a>
+      <button class="btn-ghost-sm" onclick="doSignOut()">Sign out</button>
     </div>
-
-    <p class="welcome-greeting" id="welcome-greeting"></p>
 
     <nav aria-label="Course modules" style="margin-top:1.5rem;">
 
@@ -350,40 +308,35 @@
             <div class="part-num">1</div>
             <div class="part-name">Where I am <span class="part-sub">— Wheel of Life</span></div>
             <div class="part-time">~50 min</div>
-          <span class="part-download" data-page="module-1" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1');">⬇</span>
-
+            <span class="part-download" data-page="module-1" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1');">⬇</span>
           </a>
           <a href="module-1-2.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-1-2" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">2</div>
             <div class="part-name">Who I am <span class="part-sub">— Origin Story & Values</span></div>
             <div class="part-time">~50 min</div>
-          <span class="part-download" data-page="module-1-2" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-2');">⬇</span>
-
+            <span class="part-download" data-page="module-1-2" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-2');">⬇</span>
           </a>
           <a href="module-1-3.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-1-3" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">3</div>
             <div class="part-name">How I am <span class="part-sub">— Lights & Shadows</span></div>
             <div class="part-time">~40 min</div>
-          <span class="part-download" data-page="module-1-3" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-3');">⬇</span>
-
+            <span class="part-download" data-page="module-1-3" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-3');">⬇</span>
           </a>
           <a href="module-1-4.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-1-4" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">4</div>
             <div class="part-name">I am enough <span class="part-sub">— Self-Love & Love Languages</span></div>
             <div class="part-time">~40 min</div>
-          <span class="part-download" data-page="module-1-4" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-4');">⬇</span>
-
+            <span class="part-download" data-page="module-1-4" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-4');">⬇</span>
           </a>
           <a href="module-1-5.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-1-5" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">5</div>
             <div class="part-name">Why I am <span class="part-sub">— Life Purpose</span></div>
             <div class="part-time">~50 min</div>
-          <span class="part-download" data-page="module-1-5" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-5');">⬇</span>
-
+            <span class="part-download" data-page="module-1-5" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-1-5');">⬇</span>
           </a>
         </div>
       </div>
@@ -406,40 +359,35 @@
             <div class="part-num">1</div>
             <div class="part-name">Land work <span class="part-sub">— My land, your land</span></div>
             <div class="part-time">~60 min</div>
-          <span class="part-download" data-page="module-2-1" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-1');">⬇</span>
-
+            <span class="part-download" data-page="module-2-1" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-1');">⬇</span>
           </a>
           <a href="module-2-2.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-2-2" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">2</div>
             <div class="part-name">Seeing each other <span class="part-sub">— Lights & Shadows together</span></div>
             <div class="part-time">~60 min</div>
-          <span class="part-download" data-page="module-2-2" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-2');">⬇</span>
-
+            <span class="part-download" data-page="module-2-2" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-2');">⬇</span>
           </a>
           <a href="module-2-3.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-2-3" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">3</div>
             <div class="part-name">Intentions & Words <span class="part-sub">— The language of your relationship</span></div>
             <div class="part-time">~45 min</div>
-          <span class="part-download" data-page="module-2-3" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-3');">⬇</span>
-
+            <span class="part-download" data-page="module-2-3" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-3');">⬇</span>
           </a>
           <a href="module-2-4.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-2-4" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">4</div>
             <div class="part-name">Love Languages together <span class="part-sub">— Closing the gap</span></div>
             <div class="part-time">~50 min</div>
-          <span class="part-download" data-page="module-2-4" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-4');">⬇</span>
-
+            <span class="part-download" data-page="module-2-4" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-4');">⬇</span>
           </a>
           <a href="module-2-5.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-2-5" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">5</div>
             <div class="part-name">Conversation Cards <span class="part-sub">— Knowing each other intentionally</span></div>
             <div class="part-time">~60 min</div>
-          <span class="part-download" data-page="module-2-5" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-5');">⬇</span>
-
+            <span class="part-download" data-page="module-2-5" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-2-5');">⬇</span>
           </a>
         </div>
       </div>
@@ -462,40 +410,35 @@
             <div class="part-num">1</div>
             <div class="part-name">1 + 1 = 3 <span class="part-sub">— Enter the third entity</span></div>
             <div class="part-time">~30 min</div>
-          <span class="part-download" data-page="module-3-1" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-1');">⬇</span>
-
+            <span class="part-download" data-page="module-3-1" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-1');">⬇</span>
           </a>
           <a href="module-3-2.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-3-2" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">2</div>
             <div class="part-name">Our Wheel <span class="part-sub">— The relationship wheel of life</span></div>
             <div class="part-time">~50 min</div>
-          <span class="part-download" data-page="module-3-2" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-2');">⬇</span>
-
+            <span class="part-download" data-page="module-3-2" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-2');">⬇</span>
           </a>
           <a href="module-3-3.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-3-3" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">3</div>
             <div class="part-name">Relationship Alliance <span class="part-sub">— Your shared compass</span></div>
             <div class="part-time">~60 min</div>
-          <span class="part-download" data-page="module-3-3" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-3');">⬇</span>
-
+            <span class="part-download" data-page="module-3-3" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-3');">⬇</span>
           </a>
           <a href="module-3-4.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-3-4" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">4</div>
             <div class="part-name">Co-living <span class="part-sub">— Daily practices, shared space, adventure</span></div>
             <div class="part-time">~60 min</div>
-          <span class="part-download" data-page="module-3-4" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-4');">⬇</span>
-
+            <span class="part-download" data-page="module-3-4" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-4');">⬇</span>
           </a>
           <a href="module-3-5.html" class="part-link">
             <input type="checkbox" class="part-check" data-page="module-3-5" onclick="event.stopPropagation(); toggleComplete(this);">
             <div class="part-num">5</div>
             <div class="part-name">Co-Dreaming <span class="part-sub">— Your shared future</span></div>
             <div class="part-time">~2 hours</div>
-          <span class="part-download" data-page="module-3-5" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-5');">⬇</span>
-
+            <span class="part-download" data-page="module-3-5" style="display:none;" title="Download reflections" onclick="event.stopPropagation(); event.preventDefault(); downloadPartFromMenu('module-3-5');">⬇</span>
           </a>
         </div>
       </div>
@@ -531,69 +474,25 @@
       document.getElementById('module-2-group').classList.toggle('locked', isSingle);
       document.getElementById('module-3-group').classList.toggle('locked', isSingle);
       document.getElementById('couple-upsell').style.display = isSingle ? 'block' : 'none';
-
-      document.getElementById('name-fields-single').style.display = isSingle ? '' : 'none';
-      document.getElementById('name-fields-couple').style.display = isSingle ? 'none' : '';
-      document.getElementById('name-prompt-title').textContent = isSingle
-        ? 'Personalise your reflections: optional'
-        : 'For the couple modules: optional';
-      document.getElementById('name-prompt-hint').textContent = isSingle
-        ? 'Adding your name personalises your reflections. Optional, stored only in your browser for this session.'
-        : 'Adding your names personalises the couple exercises in Modules 2 and 3. Optional, stored only in your browser for this session.';
-
+      document.getElementById('setup-partner-fields').style.display = isSingle ? 'none' : '';
+      document.getElementById('setup-title').textContent = isSingle
+        ? 'Tell us your name'
+        : 'Set up your couple profile';
+      document.getElementById('setup-hint').textContent = isSingle
+        ? 'This personalises your reflections throughout the programme.'
+        : 'Your names will appear across all exercises. Your partner will receive a link to join your shared profile.';
       document.getElementById('track-intro').innerHTML = isSingle
         ? 'A solo journey of self-discovery, on your own terms.<br>Modules 2 and 3 unlock when you do this with a partner.'
         : 'A programme for couples who want to know themselves and each other more deeply.<br>Module 1 is done individually. Modules 2 and 3 are done together.';
     }
 
-    // Check on load — redirect to the track-choice page if none chosen yet
+    // Redirect to track-choice if none chosen
     const savedTrack = localStorage.getItem(TRACK_KEY);
     if (!savedTrack) {
       window.location.replace('start.html');
     } else {
       applyTrack(savedTrack);
       document.getElementById('course-content').style.display = 'block';
-    }
-
-    function saveNames() {
-      const isSingle = localStorage.getItem(TRACK_KEY) === 'single';
-      const a = isSingle
-        ? document.getElementById('input-name-solo').value.trim()
-        : document.getElementById('input-name-a').value.trim();
-      const b = isSingle ? '' : document.getElementById('input-name-b').value.trim();
-      if (a) sessionStorage.setItem('nameA', a);
-      if (b) sessionStorage.setItem('nameB', b);
-      if (a || b) {
-        document.getElementById('names-saved-msg').style.display = 'inline';
-        showGreeting(a, b);
-      }
-    }
-
-    function skipNames() {
-      document.getElementById('name-prompt').style.display = 'none';
-    }
-
-    function showGreeting(a, b) {
-      const names = [a, b].filter(Boolean).join(' & ');
-      const greet = document.getElementById('welcome-greeting');
-      greet.textContent = 'Welcome, ' + names + ' ☽';
-      greet.style.display = 'block';
-    }
-
-    ['input-name-a', 'input-name-b', 'input-name-solo'].forEach(id => {
-      document.getElementById(id).addEventListener('keydown', e => {
-        if (e.key === 'Enter') saveNames();
-      });
-    });
-
-    const storedA = sessionStorage.getItem('nameA') || '';
-    const storedB = sessionStorage.getItem('nameB') || '';
-    if (storedA || storedB) {
-      document.getElementById('input-name-a').value = storedA;
-      document.getElementById('input-name-b').value = storedB;
-      document.getElementById('input-name-solo').value = storedA;
-      document.getElementById('name-prompt').style.display = 'none';
-      showGreeting(storedA, storedB);
     }
 
     // ── Auth ──────────────────────────────────────────────────────────────────
@@ -604,7 +503,7 @@
       msg.textContent = 'Sending…';
       const { error } = await _sb.auth.signInWithOtp({
         email,
-        options: { emailRedirectTo: window.location.origin + '/index.html' }
+        options: { emailRedirectTo: window.location.origin + '/menu.html' }
       });
       msg.textContent = error ? error.message : 'Check your email for a magic link.';
     }
@@ -615,22 +514,112 @@
 
     async function doSignOut() {
       await _sb.auth.signOut();
-      document.getElementById('save-status').style.display  = 'none';
-      document.getElementById('save-prompt').style.display  = 'block';
+      document.getElementById('save-status').style.display = 'none';
+      document.getElementById('save-prompt').style.display = 'block';
     }
 
-    // Show signed-in state or prompt on load
+    // ── Profile setup ──────────────────────────────────────────────────────────
+    async function saveSetup() {
+      const myName      = document.getElementById('setup-name').value.trim();
+      const partnerName = document.getElementById('setup-partner-name').value.trim();
+      const partnerEmail= document.getElementById('setup-partner-email').value.trim();
+      const msg         = document.getElementById('setup-msg');
+      const isSingle    = localStorage.getItem(TRACK_KEY) === 'single';
+
+      if (!myName) { msg.textContent = 'Please enter your name.'; return; }
+      msg.textContent = 'Saving…';
+
+      try {
+        if (isSingle) {
+          await setProfile({ display_name: myName });
+        } else {
+          if (!partnerName || !partnerEmail) {
+            msg.textContent = 'Please enter your partner\'s name and email.';
+            return;
+          }
+          const { invite_token } = await createCouple(partnerEmail, partnerName);
+          await setProfile({ display_name: myName });
+          showInviteCard(invite_token);
+        }
+        document.getElementById('setup-card').style.display = 'none';
+        showStatusBar(myName, partnerName, isSingle ? null : 'pending');
+        initChecklist();
+      } catch (e) {
+        msg.textContent = e.message || 'Something went wrong.';
+      }
+    }
+
+    // ── Invite link ────────────────────────────────────────────────────────────
+    function showInviteCard(token) {
+      const url = window.location.origin + '/join.html?token=' + token;
+      document.getElementById('invite-link-input').value = url;
+      document.getElementById('invite-card').style.display = 'block';
+    }
+
+    function copyInviteLink() {
+      const input = document.getElementById('invite-link-input');
+      input.select();
+      navigator.clipboard.writeText(input.value).then(() => {
+        document.getElementById('invite-msg').textContent = '✓ Link copied';
+        setTimeout(() => { document.getElementById('invite-msg').textContent = ''; }, 2000);
+      });
+    }
+
+    // ── Status bar ─────────────────────────────────────────────────────────────
+    function showStatusBar(displayName, partnerName, coupleStatus) {
+      document.getElementById('save-prompt').style.display  = 'none';
+      document.getElementById('save-status').style.display  = 'flex';
+      document.getElementById('status-name').textContent    = displayName || 'Welcome';
+      const coupleEl = document.getElementById('status-couple');
+      if (coupleStatus === 'linked') {
+        coupleEl.textContent = 'Linked with ' + partnerName + ' ✓';
+      } else if (coupleStatus === 'pending') {
+        coupleEl.textContent = 'Invite sent to ' + partnerName;
+      } else {
+        coupleEl.textContent = '';
+      }
+    }
+
+    // ── On load: check auth + profile ─────────────────────────────────────────
     (async () => {
       const user = await getUser();
-      if (user) {
-        document.getElementById('save-prompt').style.display  = 'none';
-        document.getElementById('save-status').style.display  = 'flex';
-        document.getElementById('save-status-email').textContent = '✓ Progress saving · ' + user.email;
+      if (!user) return;
+
+      document.getElementById('save-prompt').style.display = 'none';
+
+      const profile = await getProfile();
+      const isSingle = localStorage.getItem(TRACK_KEY) === 'single';
+
+      if (!profile.display_name) {
+        // First login — show setup card
+        document.getElementById('setup-card').style.display = 'block';
+      } else {
+        // Profile complete — show status bar
+        let coupleStatus = null;
+        if (!isSingle) {
+          if (profile.couple_id) {
+            // Check if partner has joined
+            const { data: couple } = await _sb.from('couples')
+              .select('user_b, invite_token')
+              .eq('id', profile.couple_id)
+              .single();
+            if (couple?.user_b) {
+              coupleStatus = 'linked';
+            } else {
+              coupleStatus = 'pending';
+              if (couple?.invite_token) showInviteCard(couple.invite_token);
+            }
+          } else {
+            // Couple track but no couple record yet — show setup
+            document.getElementById('setup-card').style.display = 'block';
+          }
+        }
+        showStatusBar(profile.display_name, profile.partner_name, coupleStatus);
         initChecklist();
       }
     })();
 
-    // ── Tick-off checklist ──────────────────────────────────────────────────
+    // ── Tick-off checklist ─────────────────────────────────────────────────────
     async function initChecklist() {
       const progress = await getAllProgress();
       document.querySelectorAll('.part-check').forEach(cb => {
@@ -650,12 +639,22 @@
       if (dl) dl.style.display = checkbox.checked ? 'inline' : 'none';
     }
 
-    // ── Menu-level reflection download (shared helpers in js/export.js) ──────
+    // ── Menu-level reflection download ─────────────────────────────────────────
     async function downloadPartFromMenu(page) {
       const user = await getUser();
       if (!user) return;
-      const { data } = await _sb.from('progress').select('data').eq('user_id', user.id).eq('page', page).single();
-      const blocks = renderSectionBlocks((data && data.data) || {});
+      let savedData = null;
+      if (_isCouplePage(page)) {
+        const coupleId = await _getCoupleId();
+        if (coupleId) {
+          const { data } = await _sb.from('couple_progress').select('data').eq('couple_id', coupleId).eq('page', page).single();
+          savedData = data?.data;
+        }
+      } else {
+        const { data } = await _sb.from('progress').select('data').eq('user_id', user.id).eq('page', page).single();
+        savedData = data?.data;
+      }
+      const blocks = renderSectionBlocks(savedData || {});
       const doc = buildReflectionsPdf([{ page, blocks }]);
       doc.save(`relation-ship-${page}.pdf`);
     }

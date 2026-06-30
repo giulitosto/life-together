@@ -1,5 +1,5 @@
 // ── Shared section titles, field renderers, and PDF export ──────────────────
-// Used by index.html (single-section download) and my-reflections.html
+// Used by menu.html (single-section download) and my-reflections.html
 // (combined download). Order of keys here is the canonical module order.
 
 const PAGE_TITLES = {

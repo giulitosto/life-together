@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(152deg, #1A2E3B 0%, #2C4A5A 55%, #3D6475 100%);
+      padding: 2rem;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+    }
+    .gate-card {
+      position: relative;
+      background: rgba(253,250,245,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .gate-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 0.4rem;
+    }
+    .gate-logo em { font-style: italic; }
+    .gate-tagline {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--seafoam);
+      margin-bottom: 2rem;
+    }
+    .gate-wave {
+      margin: 0 auto 1.75rem;
+      display: block;
+      opacity: 0.5;
+    }
+    .gate-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 0.85rem;
+    }
+    .gate-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.9);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      box-sizing: border-box;
+      margin-bottom: 0.65rem;
+      transition: border-color 0.2s;
+    }
+    .gate-input:focus { outline: none; border-color: var(--seafoam); }
+    .gate-input::placeholder { color: rgba(255,255,255,0.25); }
+    .gate-btn {
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 40px;
+      border: none;
+      background: var(--white);
+      color: var(--ocean);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      margin-top: 0.5rem;
+    }
+    .gate-btn:hover { background: var(--seafoam-light); transform: translateY(-1px); }
+    .gate-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .gate-msg {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 1rem;
+      line-height: 1.6;
+      min-height: 1.2em;
+    }
+    .gate-msg.success { color: var(--seafoam); }
+    .gate-msg.error { color: #e07070; }
+  </style>
+</head>
+<body>
+
+  <div class="gate-card">
+    <div class="gate-logo"><em>Relation</em>-ship</div>
+    <div class="gate-tagline">Navigating the waves of life together</div>
+    <svg class="gate-wave" width="48" height="20" viewBox="0 0 48 20" fill="none" aria-hidden="true">
+      <path d="M0 10 Q6 2 12 10 Q18 18 24 10 Q30 2 36 10 Q42 18 48 10" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+    </svg>
+
+    <!-- Step 1: sign in -->
+    <div id="step-signin">
+      <p class="gate-label" id="signin-label">You've been invited to join a couple profile</p>
+      <input class="gate-input" type="text" id="your-name" placeholder="Your name">
+      <input class="gate-input" type="email" id="join-email" placeholder="Your email address" autocomplete="email">
+      <button class="gate-btn" onclick="sendJoinLink()">Send magic link →</button>
+      <p class="gate-msg" id="signin-msg"></p>
+    </div>
+
+    <!-- Step 2: linked (shown after acceptCoupleInvite succeeds) -->
+    <div id="step-linked" style="display:none;">
+      <p class="gate-label" style="color:var(--seafoam); letter-spacing:0.1em;">Profiles linked</p>
+      <p class="gate-msg success" id="linked-msg"></p>
+      <button class="gate-btn" onclick="window.location.href='menu.html'" style="margin-top:1.5rem;">Go to the programme →</button>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const TOKEN  = params.get('token');
+
+    if (!TOKEN) {
+      document.getElementById('signin-label').textContent = 'Invalid invite link.';
+      document.getElementById('step-signin').querySelector('input, button').disabled = true;
+    }
+
+    // Store token in sessionStorage so it survives the magic-link redirect
+    if (TOKEN) sessionStorage.setItem('join_token', TOKEN);
+
+    async function sendJoinLink() {
+      const name  = document.getElementById('your-name').value.trim();
+      const email = document.getElementById('join-email').value.trim();
+      const msg   = document.getElementById('signin-msg');
+      if (!name)  { msg.textContent = 'Please enter your name.'; return; }
+      if (!email) { msg.textContent = 'Please enter your email.'; return; }
+
+      // Store name so we can save it after auth redirect
+      sessionStorage.setItem('join_name', name);
+
+      msg.textContent = 'Sending…';
+      const { error } = await _sb.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.origin + '/join.html' }
+      });
+      msg.textContent = error ? error.message : 'Check your email — click the link to finish joining.';
+    }
+
+    document.getElementById('join-email').addEventListener('keydown', e => {
+      if (e.key === 'Enter') sendJoinLink();
+    });
+
+    // After magic-link redirect: token is in sessionStorage, user is now authed
+    (async () => {
+      const user = await getUser();
+      if (!user) return;
+
+      const token = sessionStorage.getItem('join_token');
+      if (!token) return;
+
+      const joinName = sessionStorage.getItem('join_name');
+
+      // Already linked?
+      const profile = await getProfile();
+      if (profile?.couple_id) {
+        sessionStorage.removeItem('join_token');
+        sessionStorage.removeItem('join_name');
+        document.getElementById('step-signin').style.display = 'none';
+        document.getElementById('step-linked').style.display = 'block';
+        document.getElementById('linked-msg').textContent = 'Your profile is already linked.';
+        return;
+      }
+
+      try {
+        await acceptCoupleInvite(token);
+        if (joinName) await setProfile({ display_name: joinName });
+        sessionStorage.removeItem('join_token');
+        sessionStorage.removeItem('join_name');
+        // Switch to couple track
+        localStorage.setItem('rs_track_v1', 'couple');
+        document.getElementById('step-signin').style.display = 'none';
+        document.getElementById('step-linked').style.display = 'block';
+        document.getElementById('linked-msg').textContent =
+          'You\'re now linked with your partner. Your progress on Modules 2 and 3 will be shared.';
+      } catch (e) {
+        document.getElementById('signin-msg').textContent = e.message || 'Could not link profiles.';
+        document.getElementById('signin-msg').className = 'gate-msg error';
+      }
+    })();
+  </script>
+</body>
+</html>

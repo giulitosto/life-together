@@ -135,7 +135,7 @@
       </svg>
     </div>
 
-    <a href="index.html" class="back-link">Back to menu</a>
+    <a href="menu.html" class="back-link">Back to menu</a>
 
     <div class="part-label">Welcome</div>
     <h1 class="page-title">A letter from Drew &amp; Giuli</h1>
@@ -224,7 +224,7 @@
     <a href="module-1.html" class="btn btn-primary">Begin Part 1 →</a>
 
     <div style="margin-top: 1.5rem;">
-      <a href="index.html" class="back-link">Back to menu</a>
+      <a href="menu.html" class="back-link">Back to menu</a>
     </div>
 
     <footer class="page-footer">
@@ -233,14 +233,16 @@
   </div>
 
   <script>
-    // Show personalised welcome if names were set on homepage
-    const nameA = sessionStorage.getItem('nameA') || '';
-    const nameB = sessionStorage.getItem('nameB') || '';
-    if (nameA || nameB) {
-      const names = [nameA, nameB].filter(Boolean).join(' & ');
-      const header = document.querySelector('.part-label');
-      if (header) header.textContent = 'Welcome, ' + names;
-    }
+    (async () => {
+      const profile = await getProfile();
+      const nameA = profile?.display_name || '';
+      const nameB = profile?.partner_name || '';
+      if (nameA || nameB) {
+        const names = [nameA, nameB].filter(Boolean).join(' & ');
+        const header = document.querySelector('.part-label');
+        if (header) header.textContent = 'Welcome, ' + names;
+      }
+    })();
   </script>
   <script>
   (async () => {
