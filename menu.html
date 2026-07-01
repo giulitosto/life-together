@@ -511,7 +511,20 @@
           }
           const { invite_token } = await createCouple(partnerEmail, partnerName);
           await setProfile({ display_name: myName });
+          const inviteUrl = window.location.origin + '/join.html?token=' + invite_token;
           showInviteCard(invite_token);
+          // Send invite email via Netlify function; copyable link is the fallback
+          try {
+            await fetch('/.netlify/functions/send-invite', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ to: partnerEmail, partnerName, inviterName: myName, inviteUrl })
+            });
+            document.getElementById('invite-hint').textContent =
+              `Invite email sent to ${partnerEmail}. They can also use the link below.`;
+          } catch (_) {
+            // silent — copyable link is still shown
+          }
         }
         document.getElementById('setup-card').style.display = 'none';
         showStatusBar(myName, partnerName, isSingle ? null : 'pending');
