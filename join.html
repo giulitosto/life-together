@@ -160,7 +160,7 @@
       msg.textContent = 'Sending…';
       const { error } = await _sb.auth.signInWithOtp({
         email,
-        options: { emailRedirectTo: window.location.origin + '/join.html' }
+        options: { emailRedirectTo: window.location.origin + '/join.html?token=' + TOKEN }
       });
       msg.textContent = error ? error.message : 'Check your email — click the link to finish joining.';
     }
@@ -169,12 +169,12 @@
       if (e.key === 'Enter') sendJoinLink();
     });
 
-    // After magic-link redirect: token is in sessionStorage, user is now authed
+    // After magic-link redirect: token is in URL (preferred) or sessionStorage (fallback)
     (async () => {
       const user = await getUser();
       if (!user) return;
 
-      const token = sessionStorage.getItem('join_token');
+      const token = params.get('token') || sessionStorage.getItem('join_token');
       if (!token) return;
 
       const joinName = sessionStorage.getItem('join_name');
