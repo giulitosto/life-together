@@ -567,7 +567,7 @@
     // ── On load: check auth + profile ─────────────────────────────────────────
     (async () => {
       const user = await getUser();
-      if (!user) { window.location.href = 'start.html'; return; }
+      if (!user) { localStorage.removeItem('rs_track_v1'); window.location.href = 'start.html'; return; }
 
       const profile = await getProfile();
       const isSingle = localStorage.getItem(TRACK_KEY) === 'single';

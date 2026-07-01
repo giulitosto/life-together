@@ -6,6 +6,8 @@
   <title>Relation-ship, Navigating the waves of life together</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/progress.js"></script>
   <style>
     body {
       min-height: 100vh;
@@ -104,30 +106,76 @@
     <svg class="gate-wave" width="48" height="20" viewBox="0 0 48 20" fill="none" aria-hidden="true">
       <path d="M0 10 Q6 2 12 10 Q18 18 24 10 Q30 2 36 10 Q42 18 48 10" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
     </svg>
-    <p class="gate-label">How are you navigating this journey?</p>
-    <div class="track-choice">
-      <button class="gate-btn" style="margin-bottom:0.75rem;" onclick="chooseTrack('single')">On my own →</button>
-      <button class="gate-btn gate-btn-outline" onclick="chooseTrack('couple')">With my partner →</button>
+    <!-- Step 1: track choice -->
+    <div id="step-track">
+      <p class="gate-label">How are you navigating this journey?</p>
+      <div class="track-choice">
+        <button class="gate-btn" style="margin-bottom:0.75rem;" onclick="chooseTrack('single')">On my own →</button>
+        <button class="gate-btn gate-btn-outline" onclick="chooseTrack('couple')">With my partner →</button>
+      </div>
+      <p class="gate-hint">
+        On your own, you'll do Module 1, a solo journey of self-discovery.<br>
+        With a partner, you'll do all three modules together.<br><br>
+        <a href="landing.html">Learn more about the programme</a>
+      </p>
     </div>
-    <p class="gate-hint">
-      On your own, you'll do Module 1, a solo journey of self-discovery.<br>
-      With a partner, you'll do all three modules together.<br><br>
-      <a href="landing.html">Learn more about the programme</a>
-    </p>
+
+    <!-- Step 2: sign-in (shown after track chosen) -->
+    <div id="step-signin" style="display:none;">
+      <p class="gate-label" id="signin-label">Sign in to get started</p>
+      <div class="track-choice">
+        <input type="email" id="signin-email" placeholder="your@email.com"
+          autocomplete="email"
+          style="width:100%;padding:0.75rem 1rem;border-radius:40px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff;font-family:inherit;font-size:0.85rem;text-align:center;box-sizing:border-box;margin-bottom:0.75rem;">
+        <button class="gate-btn" onclick="sendMagicLink()">Send magic link →</button>
+      </div>
+      <p class="gate-hint" id="signin-msg" style="min-height:1.2em;"></p>
+      <p class="gate-hint" style="margin-top:0.5rem;">
+        <a href="#" onclick="showTrackStep(); return false;">← Change track</a>
+      </p>
+    </div>
   </div>
 
   <script>
     const TRACK_KEY = 'rs_track_v1';
 
-    // Already chosen — skip straight to the course menu
-    if (localStorage.getItem(TRACK_KEY)) {
-      window.location.replace('menu.html');
+    // If already authenticated, go straight to menu
+    (async () => {
+      const user = await getUser();
+      if (user) { window.location.replace('menu.html'); }
+    })();
+
+    function showTrackStep() {
+      document.getElementById('step-track').style.display = '';
+      document.getElementById('step-signin').style.display = 'none';
     }
 
     function chooseTrack(track) {
       localStorage.setItem(TRACK_KEY, track);
-      window.location.href = 'menu.html';
+      document.getElementById('step-track').style.display = 'none';
+      document.getElementById('signin-label').textContent =
+        track === 'couple' ? 'Sign in to begin with your partner' : 'Sign in to begin';
+      document.getElementById('step-signin').style.display = '';
+      document.getElementById('signin-email').focus();
     }
+
+    async function sendMagicLink() {
+      const email = document.getElementById('signin-email').value.trim();
+      const msg   = document.getElementById('signin-msg');
+      if (!email) { msg.textContent = 'Please enter your email.'; return; }
+      msg.textContent = 'Sending…';
+      const { error } = await _sb.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.origin + '/menu.html' }
+      });
+      msg.textContent = error ? error.message : 'Check your email for a magic link.';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && document.getElementById('step-signin').style.display !== 'none') {
+        sendMagicLink();
+      }
+    });
   </script>
 </body>
 </html>
