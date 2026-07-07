@@ -449,14 +449,14 @@
       gap: 5rem; align-items: center; margin-top: 3rem;
     }
     .about-img {
-      aspect-ratio: 4/5; border-radius: 24px;
+      aspect-ratio: 4/3; border-radius: 24px;
       background: var(--sand-dark);
       position: relative; overflow: hidden;
       display: flex; align-items: flex-end; justify-content: center;
     }
     .about-img img {
       position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover;
+      object-fit: cover; object-position: center top;
     }
     .about-img::before {
       content: '';
@@ -636,7 +636,7 @@
       .journey-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
       .journey-connector { display: none; }
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-img { aspect-ratio: 16/9; max-height: 280px; }
+      .about-img { aspect-ratio: 4/3; max-height: 320px; }
     }
     @media (max-width: 640px) {
       .lp-section { padding: 4rem 0; }
