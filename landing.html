@@ -454,9 +454,13 @@
       position: relative; overflow: hidden;
       display: flex; align-items: flex-end; justify-content: center;
     }
+    .about-img img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover;
+    }
     .about-img::before {
       content: '';
-      position: absolute; inset: 0;
+      position: absolute; inset: 0; z-index: 1;
       background: linear-gradient(155deg, rgba(143,188,176,0.2) 0%, rgba(196,149,106,0.12) 100%);
     }
     .about-img-label {
@@ -880,7 +884,7 @@
     <div class="lp-wrap">
       <div class="about-grid">
         <div class="about-img reveal">
-          <span class="about-img-label">Photo of Giuli & Drew</span>
+          <img src="images/giuli-drew-web.jpg" alt="Giuli & Drew">
         </div>
         <div class="about-text reveal reveal-d2">
           <p class="section-eyebrow">Who we are</p>
