@@ -242,7 +242,7 @@
             </ul>
           </div>
           <div class="info-note">
-            <strong>Be specific.</strong> "I need space" is hard to act on. "I need an hour alone after work before I can talk" gives your partner something real to work with.
+            <strong>Be specific.</strong> "I need space" is hard to act on. "I need time alone to recharge, particularly after busy days at work" gives your partner something real to work with.
           </div>
 
           <div class="land-grid">
@@ -266,7 +266,7 @@
         <div class="step-num">3</div>
         <div class="step-body">
           <h3 class="step-title">Share your maps (~20 min)</h3>
-          <div class="step-text">Take turns, 10 minutes each, walking the other person through your land. The listener's role is to listen with an empathetic and caring heart, not to respond or fix. Listen as if you're visiting somewhere you've never been.</div>
+          <div class="step-text">Take turns, 10 minutes each, walking the other person through your land. The listener's role is to listen with an empathetic and caring heart, you can ask questions to clarify things if you need. This listener's role is not to respond or fix anything that comes up. Listen as if you're visiting somewhere you've never been.</div>
           <div class="prompt-box">
             <ul>
               <li>What surprised you about your partner's land?</li>
@@ -289,8 +289,8 @@
           <div class="prompt-box">
             <ul>
               <li>What do you both need to feel at home in your shared space?</li>
-              <li>What rules or agreements would help you each feel safe there?</li>
-              <li>What kind of land are you building together?</li>
+              <li>What rules or agreement would help you both feel grounded in your space?</li>
+              <li>What qualities does the land you are building together have?</li>
             </ul>
           </div>
 
@@ -341,7 +341,7 @@
 
     let entryCount = 0;
 
-    function addLandEntry(side, value, skipFocus) {
+    function addLandEntry(side, value, skipFocus, placeholderOverride) {
       const id = ++entryCount;
       const listId = side === 'my' ? 'my-land-entries'
                    : side === 'your' ? 'your-land-entries'
@@ -355,10 +355,11 @@
         your: 'e.g. I need to feel heard before moving on…',
         shared: 'e.g. We always talk through conflict before sleeping…'
       };
+      const placeholder = placeholderOverride || placeholders[side];
       item.innerHTML = `
         <div class="boundary-dot"></div>
         <input type="text" class="boundary-input"
-          placeholder="${placeholders[side]}" value="${value || ''}">
+          placeholder="${placeholder}" value="${value || ''}">
         <button class="chapter-delete" onclick="removeLandEntry(${id})" title="Remove"
           style="position:static; margin-left:0.25rem; font-size:0.9rem;">×</button>
       `;
@@ -385,7 +386,9 @@
     }
 
     // Seed with starter entries
-    addLandEntry('my', '', true); addLandEntry('my', '', true);
+    addLandEntry('my', '', true, 'e.g. I need time alone to recharge, particularly after busy days at work…');
+    addLandEntry('my', '', true, 'e.g. Having a peaceful and slow morning is really important to my day…');
+    addLandEntry('my', '', true, 'e.g. Having no phone time in the evening is a time I value deeply…');
     addLandEntry('your', '', true); addLandEntry('your', '', true);
 
     // ── PDF ──
