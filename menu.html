@@ -475,15 +475,6 @@
         : 'A programme for couples who want to know themselves and each other more deeply.<br>Module 1 is done individually. Modules 2 and 3 are done together.';
     }
 
-    // Redirect to track-choice if none chosen
-    const savedTrack = localStorage.getItem(TRACK_KEY);
-    if (!savedTrack) {
-      window.location.replace('start.html');
-    } else {
-      applyTrack(savedTrack);
-      document.getElementById('course-content').style.display = 'block';
-    }
-
     // ── Auth ──────────────────────────────────────────────────────────────────
     async function doSignOut() {
       await _sb.auth.signOut();
@@ -570,7 +561,17 @@
       if (!user) { localStorage.removeItem('rs_track_v1'); window.location.href = 'start.html'; return; }
 
       const profile = await getProfile();
+
+      // Track is normally chosen on start.html, but a magic link can be opened
+      // in a different browser/app than the one that set it — infer it from
+      // the profile instead of bouncing back to start.html (was causing a
+      // start.html <-> menu.html redirect loop).
+      if (!localStorage.getItem(TRACK_KEY)) {
+        localStorage.setItem(TRACK_KEY, profile?.couple_id ? 'couple' : 'single');
+      }
       const isSingle = localStorage.getItem(TRACK_KEY) === 'single';
+      applyTrack(isSingle ? 'single' : 'couple');
+      document.getElementById('course-content').style.display = 'block';
 
       if (!profile.display_name) {
         // First login — show setup card
