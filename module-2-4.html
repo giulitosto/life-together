@@ -23,11 +23,12 @@
     .ll-compare-header {
       display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;
     }
-    .ll-compare-icon { font-size: 1.2rem; flex-shrink: 0; }
     .ll-compare-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.05rem; color: var(--ocean); font-weight: 500; flex: 1;
     }
+    .ll-person-col.person-a { border-right: 1px solid rgba(44,74,90,0.12); padding-right: 1rem; }
+    .ll-person-col.person-b { padding-left: 1rem; background: rgba(143,188,176,0.05); border-radius: 0 10px 10px 0; }
     .ll-bar-group { display: grid; gap: 0.35rem; }
     .ll-bar-row { display: flex; align-items: center; gap: 0.6rem; }
     .ll-bar-label {
@@ -124,12 +125,12 @@
     </div>
 
     <div class="prose">
-      <p>In Module 1 you each explored your own love languages — how you naturally give love, and how you most deeply receive it. Now you bring those profiles together.</p>
-      <p>Most misunderstandings in love aren't about intent — they're about translation. You might be expressing love constantly, in the language that comes naturally to you, while your partner is waiting to hear it in a completely different language. This section is about closing that gap.</p>
+      <p>In <a href="module-1-4.html">Module 1 Part 4 (I am enough)</a> you each explored your own love languages: how you naturally give love, and how you most deeply receive it. Now you bring those profiles together.</p>
+      <p>Most misunderstandings in love and relationships aren't about intent, they're about translation and communication between humans. This section is about minimizing that gap and finding a shared love language for your relationship.</p>
     </div>
 
     <div class="info-note">
-      <strong>Enter your Module 1 scores below</strong> — or re-rate if you'd like a fresh read. Then explore what the comparison reveals together.
+      <strong>Your Module 1 scores are pulled in automatically below</strong> — adjust any slider if you'd like a fresh read. Then explore what the comparison reveals together.
     </div>
 
     <h2 class="section-heading">Steps</h2>
@@ -140,7 +141,7 @@
         <div class="step-num">1</div>
         <div class="step-body">
           <h3 class="step-title">Enter your scores (~10 min)</h3>
-          <div class="step-text">Each person enters their love language ratings from Module 1 Part 4 — how strongly each language resonates for giving and receiving (1 = rarely, 5 = deeply me). The comparison updates live.</div>
+          <div class="step-text">Your ratings from Module 1 Part 4 are pulled in automatically below, how strongly each language resonates for giving and receiving (1 = rarely, 5 = deeply me). Adjust any slider if you'd like a fresh read. The comparison updates live.</div>
 
           <div class="ll-compare-grid" id="ll-compare-grid"></div>
         </div>
@@ -203,17 +204,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     let nameA = 'Person A', nameB = 'Person B';
-    getProfile().then(p => {
-      nameA = p?.display_name || 'Person A';
-      nameB = p?.partner_name || 'Person B';
-    });
 
     const LANGUAGES = [
-      { name: 'Words of Affirmation', icon: '💬' },
-      { name: 'Quality Time',         icon: '⏳' },
-      { name: 'Acts of Service',      icon: '🤝' },
-      { name: 'Physical Touch',       icon: '🤲' },
-      { name: 'Receiving Gifts',      icon: '🎁' }
+      { name: 'Words of Affirmation' },
+      { name: 'Quality Time' },
+      { name: 'Acts of Service' },
+      { name: 'Physical Touch' },
+      { name: 'Receiving Gifts' }
     ];
 
     const scores = {};
@@ -230,11 +227,10 @@
         card.id = 'llc-' + lang.name.replace(/ /g,'_');
         card.innerHTML = `
           <div class="ll-compare-header">
-            <div class="ll-compare-icon">${lang.icon}</div>
             <div class="ll-compare-name">${lang.name}</div>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 1.5rem;">
-            <div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 0;">
+            <div class="ll-person-col person-a">
               <div style="font-size:0.68rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;">${nameA}</div>
               <div class="ll-bar-group">
                 <div class="ll-bar-row">
@@ -261,7 +257,7 @@
                 </div>
               </div>
             </div>
-            <div>
+            <div class="ll-person-col person-b">
               <div style="font-size:0.68rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;">${nameB}</div>
               <div class="ll-bar-group">
                 <div class="ll-bar-row">
@@ -319,19 +315,19 @@
           const card = document.createElement('div');
           card.className = 'gap-card aligned';
           card.innerHTML = `
-            <div class="gap-card-label">Aligned ${lang.icon}</div>
+            <div class="gap-card-label">Aligned</div>
             <div class="gap-card-text"><strong>${lang.name}</strong> — you're both naturally giving and receiving in this language. A strength to celebrate.</div>
           `;
           container.appendChild(card);
         } else if (gapANeeds >= 2 || gapBNeeds >= 2) {
           const who = gapANeeds >= gapBNeeds
-            ? `${nameA} needs more ${lang.name.toLowerCase()} than ${nameB} naturally gives`
-            : `${nameB} needs more ${lang.name.toLowerCase()} than ${nameA} naturally gives`;
+            ? `${nameA} may desire more ${lang.name.toLowerCase()} than ${nameB} may naturally be inclined to give`
+            : `${nameB} may desire more ${lang.name.toLowerCase()} than ${nameA} may naturally be inclined to give`;
           const card = document.createElement('div');
           card.className = 'gap-card gap';
           card.innerHTML = `
-            <div class="gap-card-label">Gap to explore ${lang.icon}</div>
-            <div class="gap-card-text"><strong>${lang.name}</strong> — ${who}. Worth a conversation about what this looks like in practice.</div>
+            <div class="gap-card-label">Gap to explore</div>
+            <div class="gap-card-text"><strong>${lang.name}</strong> — ${who}. Explore what this means in your relationship.</div>
           `;
           container.appendChild(card);
         }
@@ -342,8 +338,35 @@
       }
     }
 
-    buildGrid();
-    updateGapAnalysis();
+    async function fetchPartnerLoveLanguageScores() {
+      const profile = await getProfile();
+      if (!profile?.couple_id) return null;
+      const { data: couple } = await _sb.from('couples')
+        .select('user_a, user_b')
+        .eq('id', profile.couple_id)
+        .single();
+      if (!couple) return null;
+      const user = await getUser();
+      const partnerId = couple.user_a === user.id ? couple.user_b : couple.user_a;
+      if (!partnerId) return null;
+      const { data } = await _sb.from('profiles')
+        .select('love_language_scores')
+        .eq('id', partnerId)
+        .single();
+      return data?.love_language_scores || null;
+    }
+
+    function applyModule1Scores(identity, ownLL, partnerLL) {
+      LANGUAGES.forEach(lang => {
+        const own = ownLL?.[lang.name];
+        const partner = partnerLL?.[lang.name];
+        const [ownKeys, partnerKeys] = identity?.isUserA
+          ? [['aGive', 'aReceive'], ['bGive', 'bReceive']]
+          : [['bGive', 'bReceive'], ['aGive', 'aReceive']];
+        if (own) { scores[lang.name][ownKeys[0]] = own.give; scores[lang.name][ownKeys[1]] = own.receive; }
+        if (partner) { scores[lang.name][partnerKeys[0]] = partner.give; scores[lang.name][partnerKeys[1]] = partner.receive; }
+      });
+    }
 
     function downloadReflections() {
       const { jsPDF } = window.jspdf;
@@ -387,27 +410,40 @@
 
       doc.save('relation-ship-love-languages-together.pdf');
     }
-  </script>
-  <script>
-  (async () => {
-    const data = await loadProgress('module-2-4');
-    document.getElementById('complete-check').checked = await getCompleted('module-2-4');
-    if (data) {
-      const keyMap = { ag: 'aGive', ar: 'aReceive', bg: 'bGive', br: 'bReceive' };
-      LANGUAGES.forEach(lang => {
-        const slug = lang.name.replace(/ /g, '_');
-        Object.entries(keyMap).forEach(([k, key]) => {
-          const val = data[`slider-${k}-${slug}`];
-          if (val === undefined) return;
-          scores[lang.name][key] = parseInt(val);
-          document.getElementById(`bar-${k}-${slug}`).style.width = `${parseInt(val) * 20}%`;
-          document.getElementById(`val-${k}-${slug}`).textContent = val;
+
+    (async () => {
+      // Resolve real names before the grid is ever rendered, so headers never
+      // flash "Person A / Person B" (previously they were baked in at build
+      // time, before the identity lookup had resolved).
+      const identity = await getCoupleIdentity();
+      nameA = identity?.nameA || 'Person A';
+      nameB = identity?.nameB || 'Person B';
+
+      // Auto-pull both partners' Module 1 Part 4 scores as the starting point.
+      const [profile, partnerLL] = await Promise.all([getProfile(), fetchPartnerLoveLanguageScores()]);
+      applyModule1Scores(identity, profile?.love_language_scores, partnerLL);
+
+      buildGrid();
+
+      // Any scores already saved/re-rated here in Module 2 win over the M1 pull.
+      const data = await loadProgress('module-2-4');
+      document.getElementById('complete-check').checked = await getCompleted('module-2-4');
+      if (data) {
+        const keyMap = { ag: 'aGive', ar: 'aReceive', bg: 'bGive', br: 'bReceive' };
+        LANGUAGES.forEach(lang => {
+          const slug = lang.name.replace(/ /g, '_');
+          Object.entries(keyMap).forEach(([k, key]) => {
+            const val = data[`slider-${k}-${slug}`];
+            if (val === undefined) return;
+            scores[lang.name][key] = parseInt(val);
+            document.getElementById(`bar-${k}-${slug}`).style.width = `${parseInt(val) * 20}%`;
+            document.getElementById(`val-${k}-${slug}`).textContent = val;
+          });
         });
-      });
+      }
       updateGapAnalysis();
-    }
-    initAutoSave('module-2-4');
-  })();
+      initAutoSave('module-2-4');
+    })();
   </script>
 </body>
 </html>

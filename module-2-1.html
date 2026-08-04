@@ -199,7 +199,7 @@
 
     <div class="prose">
       <p>Welcome to Module 2. You've each spent time getting to know yourself — your story, your values, your lights and shadows. Now you bring that self into contact with another.</p>
-      <p>Land work comes from the ORSC coaching tradition. The idea is simple: each person has their own inner world — their <em>land</em> — with its own landscape, rules, and tender spots. Before you can truly meet each other, you need to understand the territory you're each standing on.</p>
+      <p>Land work comes from Process-Oriented Psychology and the work of <a href="https://www.aamindell.net/process-work">Arnold Mindell</a>. The idea is simple: each person has their own inner world, their <em>land</em>, with its own landscape, rules, and tender spots. Before you can truly meet each other, you need to understand the territory you're each standing on.</p>
     </div>
 
     <details class="script-toggle">
@@ -332,9 +332,9 @@
   <script>
     let nameA = 'Person A', nameB = 'Person B';
     (async () => {
-      const profile = await getProfile();
-      nameA = profile?.display_name || 'Person A';
-      nameB = profile?.partner_name || 'Person B';
+      const identity = await getCoupleIdentity();
+      nameA = identity?.nameA || 'Person A';
+      nameB = identity?.nameB || 'Person B';
       document.getElementById('name-a-label').textContent = nameA;
       document.getElementById('name-b-label').textContent = nameB;
     })();

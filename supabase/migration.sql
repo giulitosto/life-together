@@ -122,6 +122,28 @@ begin
 end;
 $$;
 
+-- ── 2026-07-28: Partner profile visibility ────────────────────────────────────
+-- Needed so each partner can resolve the couple's fixed identity (who is
+-- user_a / user_b) by reading the OTHER partner's display_name, not just
+-- their own row.
+create policy "couple_can_view_partner_profile"
+  on public.profiles for select
+  using (
+    couple_id is not null and couple_id in (
+      select couple_id from public.profiles where id = auth.uid()
+    )
+  );
+
+-- ── 2026-08-04: Love language scores on profile, for partner auto-pull ────────
+-- Module 2 Part 4 auto-pulls each partner's Module 1 Part 4 love language
+-- scores. Stored as a dedicated column on profiles (mirrored from progress
+-- whenever Module 1 Part 4 saves) rather than read out of the progress table
+-- directly, so the existing couple_can_view_partner_profile policy exposes
+-- only these numeric scores to a partner, never the private Module 1 letter
+-- and reflections that live alongside them in progress.data.
+alter table public.profiles
+  add column if not exists love_language_scores jsonb not null default '{}';
+
 -- Grants
 grant all on public.couples to anon, authenticated;
 grant all on public.couple_progress to anon, authenticated;

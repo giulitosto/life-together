@@ -334,10 +334,19 @@
       });
     }
 
+    let _llProfileTimer;
+    function syncLoveLanguageProfile() {
+      const payload = {};
+      LANGUAGES.forEach(l => { payload[l.name] = { give: scores[l.name].give, receive: scores[l.name].receive }; });
+      setProfile({ love_language_scores: payload });
+    }
+
     function updateScore(name, type, val) {
       scores[name][type] = parseInt(val);
       document.getElementById(`${type}-val-${name.replace(/ /g,'_')}`).textContent = val;
       updateResults();
+      clearTimeout(_llProfileTimer);
+      _llProfileTimer = setTimeout(syncLoveLanguageProfile, 500);
     }
 
     function updateResults() {
@@ -432,6 +441,7 @@
       });
       updateResults();
     }
+    syncLoveLanguageProfile();
     initAutoSave('module-1-4');
   })();
   </script>
