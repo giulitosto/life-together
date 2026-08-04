@@ -35,6 +35,41 @@ async function setProfile(fields) {
   _profileCache = { ..._profileCache, ...fields };
 }
 
+// ── Couple identity (fixed, not self-referential) ──────────────────────────────
+// Returns { isUserA, nameA, nameB }, where "A" and "B" always mean the couple's
+// user_a and user_b (fixed by the couples row), the same for both partners.
+// Use this instead of profile.display_name/partner_name whenever a page needs
+// to know who is "A" and who is "B", otherwise each partner sees themselves as
+// A and their partner as B, which collides on any shared a/b input field.
+let _coupleIdentityCache = null;
+async function getCoupleIdentity() {
+  if (_coupleIdentityCache) return _coupleIdentityCache;
+  const user = await getUser();
+  if (!user) return null;
+  const profile = await getProfile();
+  if (!profile?.couple_id) return null;
+
+  const { data: couple } = await _sb.from('couples')
+    .select('user_a, user_b')
+    .eq('id', profile.couple_id)
+    .single();
+  if (!couple) return null;
+
+  const ids = [couple.user_a, couple.user_b].filter(Boolean);
+  const { data: profiles } = await _sb.from('profiles')
+    .select('id, display_name')
+    .in('id', ids);
+  const byId = {};
+  (profiles || []).forEach(p => { byId[p.id] = p.display_name; });
+
+  _coupleIdentityCache = {
+    isUserA: user.id === couple.user_a,
+    nameA: byId[couple.user_a] || 'Person A',
+    nameB: (couple.user_b && byId[couple.user_b]) || 'Person B'
+  };
+  return _coupleIdentityCache;
+}
+
 // ── Couple helpers ────────────────────────────────────────────────────────────
 // Creates a couple record, stores couple_id on the current user's profile,
 // and returns { couple_id, invite_token } so the caller can show the invite link.
