@@ -152,8 +152,8 @@
     </div>
 
     <div class="prose">
-      <p>Welcome to Module 3 — the final movement of the programme, and perhaps the most expansive. You've done the work of knowing yourself and seeing each other. Now you turn toward the relationship itself.</p>
-      <p>Here is the central idea of this module: when two people come together, something new is created. Not just a couple — a third entity. A living system with its own character, needs, and potential.</p>
+      <p>Welcome to Module 3, the final movement of the programme, and perhaps the most expansive. You've done the work of knowing yourself and seeing each other. Now you turn toward the relationship itself.</p>
+      <p>Here is the central idea of this module: when two people come together, something new is created. Not just a couple, a third entity. A living system with its own character, needs, and potential.</p>
     </div>
 
     <div class="entity-visual">
@@ -165,25 +165,25 @@
     </div>
 
     <div class="prose">
-      <p>Most people think of a relationship as the sum of two people. But a relationship is its own thing — distinct from either of you individually. It has its own rhythm, its own culture, its own health. It can thrive or struggle independently of whether either person is "doing well."</p>
-      <p>This is both a responsibility and a freedom. The relationship needs tending — just as you would tend to a garden, or a living thing in your care. And it can grow in ways that neither of you could grow alone.</p>
+      <p>Most people think of a relationship as the sum of two people. A relationship is its own thing, distinct from either of you individually. It has its own rhythm, its own culture, its own health. It can thrive or struggle independently of whether either person is "doing well."</p>
+      <p>This is both a responsibility and a freedom. The relationship needs tending, just as you would tend to a garden, or a living thing in your care. And it can grow in ways that neither of you could grow alone.</p>
     </div>
 
-    <h2 class="section-heading">What this means in practice</h2>
+    <h2 class="section-heading">A relationship as a third entity… what does it mean in practice?</h2>
 
     <div class="principle-card">
       <div class="principle-num">1</div>
       <div class="principle-body">
         <div class="principle-title">The relationship has its own needs</div>
-        <div class="principle-text">Just as you each have personal needs — for space, connection, growth — your relationship has needs too. For attention, for shared meaning, for repair when it's been hurt. When those needs go unmet, the relationship suffers even if both individuals seem fine.</div>
+        <div class="principle-text">Just as you each have personal needs, for space, connection, growth, your relationship has needs too. For attention, for shared meaning, for repair when it's been hurt. When those needs go unmet, the relationship suffers even if both individuals seem fine.</div>
       </div>
     </div>
 
     <div class="principle-card">
       <div class="principle-num">2</div>
       <div class="principle-body">
-        <div class="principle-title">It can be addressed directly</div>
-        <div class="principle-text">You can speak to the relationship as if it's in the room. <em>"What does our relationship need right now?"</em> is a different question — and often a more useful one — than <em>"What do I need?"</em> or <em>"What do you need?"</em> It shifts the frame from competition to collaboration.</div>
+        <div class="principle-title">The relationship can be addressed directly</div>
+        <div class="principle-text">You can speak to the relationship as if it's in the room. <em>"What does our relationship need right now?"</em> is a different question, and often a more useful one, than <em>"What do I need?"</em> or <em>"What do you need?"</em> It shifts the frame from competition to collaboration.</div>
       </div>
     </div>
 
@@ -198,8 +198,8 @@
     <div class="principle-card">
       <div class="principle-num">4</div>
       <div class="principle-body">
-        <div class="principle-title">It has a life of its own</div>
-        <div class="principle-text">Your relationship will go through seasons — periods of closeness and distance, growth and rest, ease and difficulty. These aren't failures. They're the natural rhythm of a living thing. The goal isn't to keep it at peak summer forever. It's to tend it through all its seasons.</div>
+        <div class="principle-title">The relationship has a life of its own</div>
+        <div class="principle-text">Your relationship will go through seasons, periods of closeness and distance, growth and rest, ease and difficulty. These aren't failures. They're the natural rhythm of a living thing. The goal isn't to keep it at peak summer forever. It's to tend it through all its seasons.</div>
       </div>
     </div>
 
@@ -207,10 +207,10 @@
 
     <div class="prompt-box">
       <ul>
-        <li>If your relationship were a living thing, what kind of creature would it be right now?</li>
-        <li>What does it need that it isn't currently getting?</li>
-        <li>What is it good at — what is its greatest strength?</li>
-        <li>If it could speak, what would it ask of each of you?</li>
+        <li>Your relationship is a living thing, what does it look like?</li>
+        <li>What does your relationship need that it isn't currently getting?</li>
+        <li>What is your relationship good at? List some of its greatest strengths.</li>
+        <li>If your relationship could speak, what would it ask each of you?</li>
       </ul>
     </div>
 
@@ -241,9 +241,9 @@
   <script>
     let nameA = 'You', nameB = 'You';
     (async () => {
-      const profile = await getProfile();
-      nameA = profile?.display_name || 'You';
-      nameB = profile?.partner_name || 'You';
+      const identity = await getCoupleIdentity();
+      nameA = identity?.nameA || 'You';
+      nameB = identity?.nameB || 'You';
       document.getElementById('circle-a').textContent = nameA;
       document.getElementById('circle-b').textContent = nameB;
     })();

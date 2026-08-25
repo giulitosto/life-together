@@ -81,7 +81,7 @@
     </div>
 
     <div class="prose">
-      <p>In Module 1 you each created your own Wheel of Life. Now you look at them together — and then go one step further, rating the same areas from the perspective of your <em>relationship</em> as an entity.</p>
+      <p>In <a href="module-1.html">Module 1</a> you each created your own Wheel of Life. Now you look at them together, and then go one step further, rating the same areas from the perspective of your <em>relationship</em> as a unique and separate entity.</p>
       <p>Where are you thriving as a couple? Where is your relationship hungry for more attention? The overlapping view often reveals things that neither individual wheel could show alone.</p>
     </div>
 
@@ -103,7 +103,7 @@
             <div class="mode-toggle">
               <button class="mode-btn active" id="tab-ind-a" onclick="setTab(0)">Individual A</button>
               <button class="mode-btn" id="tab-ind-b" onclick="setTab(1)">Individual B</button>
-              <button class="mode-btn" id="tab-couple" onclick="setTab(2)">Couple — overlapping</button>
+              <button class="mode-btn" id="tab-couple" onclick="setTab(2)">Couple, overlapping</button>
             </div>
             <div class="sliders-grid" id="sliders"></div>
             <canvas id="wol" width="320" height="320"></canvas>
@@ -116,7 +116,7 @@
           <div class="prompt-box">
             <ul>
               <li>Where are your wheels most aligned? Most different?</li>
-              <li>Which area shows the greatest gap between you — and what does that tell you?</li>
+              <li>Which area shows the greatest gap between you, and what does that tell you?</li>
               <li>What stands out that you haven't talked about before?</li>
             </ul>
           </div>
@@ -130,12 +130,17 @@
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-body">
-          <h3 class="step-title">The relationship wheel — how satisfied are <em>we</em>? (~20 min)</h3>
-          <div class="step-text">Now, together, rate each area from the perspective of your relationship as a whole. Not "how satisfied am I?" — but "how satisfied are we, as a couple, in this area of our life together?" Agree on a single score for each.</div>
+          <h3 class="step-title">The relationship wheel, how satisfied are <em>we</em>? (~20 min)</h3>
+          <div class="step-text">Now, together, rate each area from the perspective of your relationship as a whole. Not "how satisfied am I?", take the perspective of "how satisfied are we, as a couple, in this area of our life together?" Discuss and agree on a single score for each.</div>
 
           <div class="wheel-container">
+            <div class="mode-toggle">
+              <button class="mode-btn active" id="rel-toggle-off" onclick="toggleRelOverlap(false)">Relationship only</button>
+              <button class="mode-btn" id="rel-toggle-on" onclick="toggleRelOverlap(true)">+ Show individual wheels</button>
+            </div>
             <div class="sliders-grid" id="rel-sliders"></div>
             <canvas id="rel-wol" width="320" height="320"></canvas>
+            <div class="wheel-legend" id="rel-legend"></div>
             <div class="btn-group" style="justify-content:center; margin-top:1rem;">
               <button class="btn btn-outline" onclick="exportRelWheelPDF()" style="font-size:0.75rem;">Download as PDF</button>
             </div>
@@ -187,9 +192,9 @@
   <script>
     let nameA = 'Person A', nameB = 'Person B';
     (async () => {
-      const profile = await getProfile();
-      nameA = profile?.display_name || 'Person A';
-      nameB = profile?.partner_name || 'Person B';
+      const identity = await getCoupleIdentity();
+      nameA = identity?.nameA || 'Person A';
+      nameB = identity?.nameB || 'Person B';
       document.getElementById('tab-ind-a').textContent = nameA;
       document.getElementById('tab-ind-b').textContent = nameB;
     })();
@@ -237,7 +242,7 @@
     }
 
     function syncWheelState() {
-      document.getElementById('wheel-state').value = JSON.stringify({ scores, relScores, activeTab });
+      document.getElementById('wheel-state').value = JSON.stringify({ scores, relScores, activeTab, showRelOverlap });
     }
 
     function draw() {
@@ -251,6 +256,7 @@
 
     // Relationship wheel
     const REL_COLOR = [{ fill:'rgba(196,149,106,0.25)', stroke:'#C4956A', pdf:[196,149,106] }];
+    let showRelOverlap = false;
     function renderRelSliders() {
       const grid = document.getElementById('rel-sliders');
       grid.innerHTML = '';
@@ -264,9 +270,32 @@
     function updateRel(i,val) {
       relScores[i] = parseInt(val);
       document.getElementById('rv'+i).textContent = val;
-      drawWheel('rel-wol', [0], [relScores], REL_COLOR);
+      drawRelWheel();
       syncWheelState();
       scheduleSave('module-3-2');
+    }
+
+    function toggleRelOverlap(show) {
+      showRelOverlap = show;
+      document.getElementById('rel-toggle-off').classList.toggle('active', !show);
+      document.getElementById('rel-toggle-on').classList.toggle('active', show);
+      drawRelWheel();
+      syncWheelState();
+      scheduleSave('module-3-2');
+    }
+
+    function drawRelWheel() {
+      if (showRelOverlap) {
+        drawWheel('rel-wol', [0, 1, 2], [scores[0], scores[1], relScores], [COLORS[0], COLORS[1], REL_COLOR[0]]);
+      } else {
+        drawWheel('rel-wol', [0], [relScores], REL_COLOR);
+      }
+      const legend = document.getElementById('rel-legend');
+      legend.innerHTML = showRelOverlap
+        ? `<span><span class="leg-dot" style="background:${COLORS[0].stroke}"></span>${nameA}</span>
+           <span><span class="leg-dot" style="background:${COLORS[1].stroke}"></span>${nameB}</span>
+           <span><span class="leg-dot" style="background:${REL_COLOR[0].stroke}"></span>Relationship</span>`
+        : '';
     }
 
     function drawWheel(canvasId, toDraw, scoreData, colorData) {
@@ -396,8 +425,8 @@
     }
 
     renderSliders(); draw();
-    renderRelSliders(); drawWheel('rel-wol',[0],[relScores],REL_COLOR);
-    window.addEventListener('resize', () => { draw(); drawWheel('rel-wol',[0],[relScores],REL_COLOR); });
+    renderRelSliders(); drawRelWheel();
+    window.addEventListener('resize', () => { draw(); drawRelWheel(); });
   </script>
   <script>
   (async () => {
@@ -408,11 +437,14 @@
       if (saved.scores) { scores[0] = saved.scores[0]; scores[1] = saved.scores[1]; }
       if (saved.relScores) { for (let i = 0; i < relScores.length; i++) relScores[i] = saved.relScores[i]; }
       if (saved.activeTab !== undefined) activeTab = saved.activeTab;
+      if (saved.showRelOverlap !== undefined) showRelOverlap = saved.showRelOverlap;
       ['tab-ind-a','tab-ind-b','tab-couple'].forEach((id,i) => {
         document.getElementById(id).classList.toggle('active', i===activeTab);
       });
+      document.getElementById('rel-toggle-off').classList.toggle('active', !showRelOverlap);
+      document.getElementById('rel-toggle-on').classList.toggle('active', showRelOverlap);
       renderSliders(); draw();
-      renderRelSliders(); drawWheel('rel-wol',[0],[relScores],REL_COLOR);
+      renderRelSliders(); drawRelWheel();
     }
     initAutoSave('module-3-2');
   })();
