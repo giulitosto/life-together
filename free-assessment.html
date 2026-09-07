@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Wheel of Life Assessment, Relation-ship</title>
+  <meta name="description" content="Rate your life 1-10 across 8 areas in 5 minutes. The same Wheel of Life exercise from Module 1 of the Relation-ship programme, free to try.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sand: #F5F0E8;
+      --sand-dark: #EAE3D2;
+      --ocean: #2C4A5A;
+      --ocean-light: #3D6475;
+      --seafoam: #8FBCB0;
+      --seafoam-light: #B8D8D2;
+      --rope: #C4956A;
+      --rope-light: #DDB896;
+      --ink: #1E2D35;
+      --muted: #7A8D8A;
+      --white: #FDFAF5;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--sand);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(143,188,176,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(196,149,106,0.10) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(44,74,90,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    .site-header { text-align: center; padding: 3rem 0 2.5rem; }
+    .site-logo { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 6vw, 3rem); font-weight: 300; color: var(--ocean); letter-spacing: 0.02em; line-height: 1.1; }
+    .site-logo .logo-italic { font-style: italic; color: var(--rope); }
+    .site-tagline { font-size: 0.8rem; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 0.5rem; }
+
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: 300; color: var(--ocean); line-height: 1.2; margin-bottom: 0.5rem; }
+    .page-subtitle { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rope); font-weight: 400; margin-bottom: 2rem; }
+
+    .wave-divider { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; color: var(--seafoam); }
+    .wave-divider::before, .wave-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--seafoam-light), transparent); }
+    .wave-divider svg { flex-shrink: 0; opacity: 0.6; }
+
+    .prose { font-size: 0.95rem; color: var(--ink); line-height: 1.8; margin-bottom: 1.5rem; }
+    .prose p + p { margin-top: 1rem; }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.4rem; border-radius: 30px; font-family: 'Jost', sans-serif; font-size: 0.8rem; font-weight: 400; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; text-decoration: none; border: 1px solid transparent; }
+    .btn-primary { background: var(--ocean); color: var(--white); border-color: var(--ocean); }
+    .btn-primary:hover { background: var(--ocean-light); }
+    .btn-outline { background: transparent; color: var(--ocean); border-color: rgba(44,74,90,0.3); }
+    .btn-outline:hover { background: var(--white); border-color: var(--ocean); }
+    .btn-rope { background: var(--rope); color: var(--white); border-color: var(--rope); }
+    .btn-rope:hover { background: var(--rope-light); border-color: var(--rope-light); color: var(--ocean); }
+    .btn-group { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+
+    .page-footer { text-align: center; padding: 2rem 0 0; border-top: 1px solid var(--sand-dark); margin-top: 3rem; }
+    .page-footer p { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
+
+    .wheel-container { background: var(--white); border: 1px solid rgba(44,74,90,0.1); border-radius: 16px; padding: 1.5rem; margin: 1.5rem 0; }
+    .sliders-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; margin-bottom: 1.25rem; }
+    .slider-row label { font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 2px; letter-spacing: 0.03em; }
+    .slider-row .val { font-size: 0.75rem; font-weight: 500; color: var(--ocean); float: right; }
+    .slider-row input[type=range] { width: 100%; accent-color: var(--seafoam); }
+    canvas { display: block; margin: 0 auto; max-width: 100%; }
+
+    .gate-card { background: var(--white); border: 1px solid rgba(44,74,90,0.1); border-radius: 16px; padding: 1.75rem; margin: 1.5rem 0; }
+    .gate-card input { width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid rgba(44,74,90,0.15); background: var(--sand); color: var(--ink); font-family: 'Jost', sans-serif; font-size: 0.9rem; box-sizing: border-box; margin-bottom: 0.65rem; }
+    .gate-card input:focus { outline: none; border-color: var(--seafoam); }
+    .gate-msg { font-size: 0.78rem; color: var(--muted); margin-top: 0.75rem; min-height: 1.2em; }
+    .gate-msg.error { color: #b0524a; }
+
+    .result-card { background: rgba(143,188,176,0.12); border-left: 3px solid var(--seafoam); border-radius: 0 12px 12px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .result-card .label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rope); margin-bottom: 0.4rem; }
+    .result-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--ocean); font-weight: 500; margin-bottom: 0.5rem; }
+    .result-card p { font-size: 0.9rem; color: var(--ink); line-height: 1.7; }
+
+    .upsell-card { background: var(--ocean); color: var(--white); border-radius: 16px; padding: 1.75rem; margin: 2rem 0 1rem; }
+    .upsell-card .label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--seafoam-light); margin-bottom: 0.5rem; }
+    .upsell-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; margin-bottom: 0.6rem; }
+    .upsell-card p { font-size: 0.88rem; line-height: 1.7; opacity: 0.9; margin-bottom: 1.25rem; }
+    .upsell-card .btn-primary { background: var(--white); color: var(--ocean); border-color: var(--white); }
+    .upsell-card .btn-primary:hover { background: var(--seafoam-light); }
+
+    #step-results { display: none; }
+    @media (max-width: 420px) { .sliders-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <div class="page-subtitle">Free Tool · ~5 minutes · Individual</div>
+    <h1 class="page-title">Rate your life, 1 to 10.</h1>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <p>Most people have never done this deliberately. The Wheel of Life gives you a bird's eye view of eight core areas at once, where things are flourishing, and where they need attention.</p>
+      <p>This is the same exercise from Module 1 of the Relation-ship programme, free for you to try. Be honest, go with your gut, and take about five minutes.</p>
+    </div>
+
+    <!-- WHEEL TOOL -->
+    <div class="wheel-container">
+      <div class="sliders-grid" id="sliders"></div>
+      <canvas id="wol" width="320" height="320"></canvas>
+    </div>
+
+    <div class="btn-group" style="justify-content:center;">
+      <button class="btn btn-primary" onclick="showGate()">See my results →</button>
+    </div>
+
+    <!-- EMAIL CAPTURE: placeholder until an ESP (e.g. Kit) is set up. See KIT_FORM_ACTION in the script below. -->
+    <div class="gate-card" id="step-gate" style="display:none;">
+      <div class="page-subtitle" style="margin-bottom:0.75rem;">One last step</div>
+      <p class="prose" style="margin-bottom:1rem;">Where should we send your personal Wheel of Life and a free reflection guide for the area that needs the most attention?</p>
+      <input type="text" id="gate-name" placeholder="First name (optional)">
+      <input type="email" id="gate-email" placeholder="Your email address" autocomplete="email">
+      <button class="btn btn-primary" onclick="submitGate()" style="width:100%; justify-content:center;">Get my results →</button>
+      <p class="gate-msg" id="gate-msg"></p>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="step-results">
+      <div class="result-card">
+        <div class="label">Your lowest-scoring area</div>
+        <h3 id="result-area"></h3>
+        <p id="result-text"></p>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-outline" onclick="exportWheelPDF()">Download my Wheel (PDF)</button>
+        <button class="btn btn-rope" onclick="exportHandoutPDF()">Download my reflection guide (PDF)</button>
+      </div>
+
+      <div class="upsell-card">
+        <div class="label">Go deeper</div>
+        <h3>Get early access</h3>
+        <p>Your free Wheel is a snapshot. Join the waitlist to be first to access "Know Yourself", the full Module 1 experience, plus the complete Relation-ship programme when we launch.</p>
+        <a href="index.html#join" class="btn btn-primary">Join the waitlist →</a>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <p>Relation-ship &nbsp;·&nbsp; A Life Together programme</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // TODO: paste your Kit (ConvertKit) form endpoint once the account exists,
+    // e.g. https://app.kit.com/forms/1234567/subscriptions
+    const KIT_FORM_ACTION = '';
+
+    const categories = ['Career','Finances','Health','Family','Relationships','Personal growth','Fun &\nleisure','Environment'];
+    const scores = Array(8).fill(5);
+
+    const REFLECTIONS = {
+      'Career': {
+        why: "How you show up at work shapes how you show up at home. When career pressure builds, it often surfaces as distance or a short temper rather than a conversation.",
+        questions: [
+          "Does my current pace at work feel sustainable for us, not just for me?",
+          "When work is hard, do I bring it home or leave it at the door, and does my partner know which one I'm doing?",
+          "What would career success look like if I measured it by how we're doing together?"
+        ]
+      },
+      'Finances': {
+        why: "Money is rarely just about money. It's about safety, freedom, and fairness.",
+        questions: [
+          "When did we last talk about money without it turning into an argument?",
+          "Do we know what enough looks like for us, or are we chasing a moving target?",
+          "Is there a financial conversation I've been avoiding?"
+        ]
+      },
+      'Health': {
+        why: "Your body is the vessel you show up in for your partner, every day.",
+        questions: [
+          "Am I bringing my best energy to this relationship, or the leftovers?",
+          "What's one habit that, if I changed it, would change how I show up for us?",
+          "Do we treat our health as a shared project, or two separate ones?"
+        ]
+      },
+      'Family': {
+        why: "Family, whichever shape it takes, is where a lot of our oldest patterns live.",
+        questions: [
+          "Which family patterns am I repeating, on purpose or not?",
+          "Do we agree on the role extended family plays in our life together?",
+          "What kind of family culture are we building, deliberately?"
+        ]
+      },
+      'Relationships': {
+        why: "The people around a couple shape the couple.",
+        questions: [
+          "Do our friendships add to us, or quietly drain from us?",
+          "When did we last spend time with people who make us feel more like a team?",
+          "Is there a relationship in my life that needs a boundary?"
+        ]
+      },
+      'Personal growth': {
+        why: "Growing separately is fine. Growing apart is the risk.",
+        questions: [
+          "What am I working on right now, for myself?",
+          "Does my partner know what I'm becoming, or only what I already am?",
+          "Are we cheering each other's growth on, or quietly competing with it?"
+        ]
+      },
+      'Fun &\nleisure': {
+        why: "Play isn't a reward for finishing the real work, it is the real work of staying close.",
+        questions: [
+          "When did we last do something with no agenda, just for fun?",
+          "What did we enjoy doing together early on that's quietly disappeared?",
+          "What's one small, playful thing we could do this week?"
+        ]
+      },
+      'Environment': {
+        why: "The space you live in either supports the life you want or quietly works against it.",
+        questions: [
+          "Does our home feel like a place we chose, or a place that happened to us?",
+          "Is there a change to our physical space that would change how we feel together?",
+          "What would it take for our environment to feel more ours?"
+        ]
+      }
+    };
+
+    function renderSliders() {
+      const grid = document.getElementById('sliders');
+      grid.innerHTML = '';
+      categories.forEach((cat,i) => {
+        const row = document.createElement('div'); row.className = 'slider-row';
+        row.innerHTML = `<label><span class="val" id="v${i}">${scores[i]}</span>${cat.replace('\n',' ')}</label>
+          <input type="range" id="slider-${i}" min="1" max="10" step="1" value="${scores[i]}" oninput="update(${i},this.value)">`;
+        grid.appendChild(row);
+      });
+    }
+
+    function update(i,val) {
+      scores[i] = parseInt(val);
+      document.getElementById('v'+i).textContent = val;
+      draw();
+    }
+
+    function draw() {
+      const canvas = document.getElementById('wol');
+      const contentSize = Math.min(320, canvas.parentElement.offsetWidth - 16);
+      const pad = 20;
+      const size = contentSize;
+      canvas.width = size + pad*2; canvas.height = size + pad*2;
+      const ctx = canvas.getContext('2d');
+      const cx = size/2 + pad, cy = size/2 + pad, R = size * 0.36;
+      const n = categories.length;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const gridC='rgba(0,0,0,0.06)', axisC='rgba(0,0,0,0.12)', textC='rgba(30,45,53,0.7)';
+
+      for(let ring=1;ring<=10;ring++){
+        ctx.beginPath();
+        for(let k=0;k<n;k++){
+          const a=(k/n)*2*Math.PI-Math.PI/2, r=(ring/10)*R;
+          k===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+        }
+        ctx.closePath();
+        ctx.strokeStyle=ring===10?axisC:gridC; ctx.lineWidth=ring===10?1:0.5; ctx.stroke();
+      }
+      for(let k=0;k<n;k++){
+        const a=(k/n)*2*Math.PI-Math.PI/2;
+        ctx.beginPath(); ctx.moveTo(cx,cy);
+        ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));
+        ctx.strokeStyle=axisC; ctx.lineWidth=0.5; ctx.stroke();
+      }
+
+      ctx.beginPath();
+      categories.forEach((_,k)=>{
+        const a=(k/n)*2*Math.PI-Math.PI/2, r=(scores[k]/10)*R;
+        k===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+      });
+      ctx.closePath(); ctx.fillStyle='rgba(44,74,90,0.2)'; ctx.fill();
+      ctx.strokeStyle='#2C4A5A'; ctx.lineWidth=2; ctx.stroke();
+
+      const fontSize = Math.max(9, size*0.033);
+      ctx.font = `${fontSize}px Jost,sans-serif`; ctx.fillStyle = textC;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      categories.forEach((cat,k)=>{
+        const a=(k/n)*2*Math.PI-Math.PI/2, r=R+size*0.14;
+        const x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
+        if(cat.includes('\n')){
+          const lines=cat.split('\n'), lh=fontSize*1.3;
+          lines.forEach((line,li)=>ctx.fillText(line,x,y+(li-(lines.length-1)/2)*lh));
+        } else {
+          ctx.fillText(cat,x,y);
+        }
+      });
+    }
+
+    function showGate() {
+      document.getElementById('step-gate').style.display = 'block';
+      document.getElementById('step-gate').scrollIntoView({behavior:'smooth', block:'center'});
+    }
+
+    function lowestCategory() {
+      let idx = 0;
+      scores.forEach((s,i) => { if (s < scores[idx]) idx = i; });
+      return categories[idx];
+    }
+
+    async function submitGate() {
+      const name = document.getElementById('gate-name').value.trim();
+      const email = document.getElementById('gate-email').value.trim();
+      const msg = document.getElementById('gate-msg');
+      if (!email || !email.includes('@')) { msg.textContent = 'Please enter a valid email.'; msg.className = 'gate-msg error'; return; }
+
+      if (KIT_FORM_ACTION) {
+        try {
+          await fetch(KIT_FORM_ACTION, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ email_address: email, first_name: name })
+          });
+        } catch (e) { /* fail silently, still show results */ }
+      }
+
+      revealResults(name);
+    }
+
+    function revealResults(name) {
+      const area = lowestCategory();
+      const r = REFLECTIONS[area];
+      document.getElementById('result-area').textContent = area.replace('\n',' ');
+      document.getElementById('result-text').textContent = r.why;
+      document.getElementById('step-gate').style.display = 'none';
+      document.getElementById('step-results').style.display = 'block';
+      document.getElementById('step-results').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function exportWheelPDF() {
+      const {jsPDF}=window.jspdf;
+      const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+      const off=document.createElement('canvas'); off.width=600; off.height=600;
+      const ctx=off.getContext('2d'); ctx.fillStyle='#FDFAF5'; ctx.fillRect(0,0,600,600);
+      const cx=300,cy=300,R=220,n=categories.length;
+      for(let ring=1;ring<=10;ring++){
+        ctx.beginPath();
+        for(let k=0;k<n;k++){
+          const a=(k/n)*2*Math.PI-Math.PI/2,r=(ring/10)*R;
+          k===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+        }
+        ctx.closePath(); ctx.strokeStyle=ring===10?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.07)'; ctx.lineWidth=ring===10?1.5:0.8; ctx.stroke();
+      }
+      for(let k=0;k<n;k++){
+        const a=(k/n)*2*Math.PI-Math.PI/2;
+        ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));
+        ctx.strokeStyle='rgba(0,0,0,0.15)'; ctx.lineWidth=0.8; ctx.stroke();
+      }
+      ctx.beginPath();
+      categories.forEach((_,k)=>{
+        const a=(k/n)*2*Math.PI-Math.PI/2,r=(scores[k]/10)*R;
+        k===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+      });
+      ctx.closePath(); ctx.fillStyle='rgba(44,74,90,0.25)'; ctx.fill();
+      ctx.strokeStyle='#2C4A5A'; ctx.lineWidth=3; ctx.stroke();
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      categories.forEach((cat,k)=>{
+        const a=(k/n)*2*Math.PI-Math.PI/2,r=R+36;
+        const px=cx+r*Math.cos(a), py=cy+r*Math.sin(a);
+        ctx.font='bold 16px sans-serif'; ctx.fillStyle='#2C4A5A';
+        if(cat.includes('\n')){
+          const lines=cat.split('\n');
+          lines.forEach((line,li)=>ctx.fillText(line,px,py+(li-(lines.length-1)/2)*20));
+        } else {
+          ctx.fillText(cat,px,py);
+        }
+      });
+
+      doc.setFont('helvetica','bold'); doc.setFontSize(18); doc.setTextColor(44,74,90);
+      doc.text('Relation-ship, Wheel of Life',105,18,{align:'center'});
+      doc.addImage(off.toDataURL('image/png'),'PNG',27,30,152,152);
+
+      let y=190;
+      doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.setTextColor(44,74,90);
+      doc.text('Scores',20,y); y+=7;
+      doc.setFontSize(8); doc.setTextColor(100,100,100);
+      doc.text('Area',20,y); doc.text('Score',100,y,{align:'right'});
+      doc.line(20,y+2,190,y+2); y+=7;
+      doc.setFont('helvetica','normal');
+      categories.forEach((cat,i)=>{
+        doc.setTextColor(50,50,50); doc.text(cat.replace('\n',' '),20,y);
+        doc.setTextColor(44,74,90); doc.text(String(scores[i]),100,y,{align:'right'});
+        y+=7;
+      });
+      doc.setFontSize(7); doc.setTextColor(180,180,180);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`,105,285,{align:'center'});
+      doc.save('relation-ship-wheel.pdf');
+    }
+
+    function exportHandoutPDF() {
+      const area = lowestCategory();
+      const r = REFLECTIONS[area];
+      const {jsPDF}=window.jspdf;
+      const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+
+      doc.setFont('helvetica','bold'); doc.setFontSize(18); doc.setTextColor(44,74,90);
+      doc.text('Relation-ship',105,20,{align:'center'});
+      doc.setFontSize(10); doc.setFont('helvetica','normal'); doc.setTextColor(150,150,150);
+      doc.text('Your Reflection Guide',105,27,{align:'center'});
+
+      let y = 45;
+      doc.setFontSize(9); doc.setTextColor(196,149,106);
+      doc.text('YOUR LOWEST-SCORING AREA', 20, y); y += 8;
+      doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(44,74,90);
+      doc.text(area.replace('\n',' '), 20, y); y += 10;
+
+      doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(50,50,50);
+      const whyLines = doc.splitTextToSize(r.why, 170);
+      doc.text(whyLines, 20, y); y += whyLines.length * 5.5 + 8;
+
+      doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(44,74,90);
+      doc.text('Ask yourself, or each other', 20, y); y += 8;
+
+      doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(50,50,50);
+      r.questions.forEach((q, i) => {
+        const qLines = doc.splitTextToSize(`${i+1}. ${q}`, 165);
+        doc.text(qLines, 20, y); y += qLines.length * 5.5 + 6;
+      });
+
+      y += 6;
+      doc.setDrawColor(230,225,210); doc.line(20, y, 190, y); y += 10;
+      doc.setFont('helvetica','italic'); doc.setFontSize(9); doc.setTextColor(100,100,100);
+      const closing = doc.splitTextToSize('This is one area out of eight. Join the waitlist to be first in line for the full Know Yourself module and the complete programme.', 170);
+      doc.text(closing, 20, y);
+
+      doc.setFontSize(7); doc.setTextColor(180,180,180);
+      doc.text(`Generated ${new Date().toLocaleDateString()}`,105,285,{align:'center'});
+      doc.save('relation-ship-reflection-guide.pdf');
+    }
+
+    renderSliders(); draw();
+    window.addEventListener('resize', draw);
+  </script>
+</body>
+</html>
