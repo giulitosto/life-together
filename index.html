@@ -946,7 +946,15 @@
                 Add Modules 2 & 3 later for £247, or save £97 by starting with the complete journey
               </li>
             </ul>
-            <a href="#waitlist-email" class="btn-join" onclick="focusWaitlist(event)">Join the waitlist · from £50 →</a>
+            <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="waitlist-form-entry">
+              <input type="hidden" name="form-name" value="waitlist">
+              <p style="position:absolute; left:-9999px;" aria-hidden="true">
+                <label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+              </p>
+              <input type="email" name="email" id="waitlist-email-entry" required placeholder="you@example.com" class="waitlist-input" aria-label="Email address">
+              <button type="submit" class="btn-join">Join the waitlist · from £50 →</button>
+            </form>
+            <p class="waitlist-status" id="waitlist-status-entry" role="status" aria-live="polite"></p>
             <p class="pricing-note">No payment today · questions? hello@lifetogether.uk</p>
           </div>
         </div>
@@ -1150,43 +1158,37 @@
       });
     });
 
-    // ── Waitlist form (Netlify Forms, progressively enhanced) ──
-    const waitlistForm = document.getElementById('waitlist-form');
-    const waitlistStatus = document.getElementById('waitlist-status');
-    waitlistForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const formData = new FormData(waitlistForm);
-      const submitBtn = waitlistForm.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      waitlistStatus.className = 'waitlist-status';
-      waitlistStatus.textContent = '';
+    // ── Waitlist forms (Netlify Forms, progressively enhanced) ──
+    // Both pricing cards have their own form; wire each the same way.
+    document.querySelectorAll('form[name="waitlist"]').forEach((waitlistForm) => {
+      const waitlistStatus = waitlistForm.parentElement.querySelector('.waitlist-status');
+      waitlistForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(waitlistForm);
+        const submitBtn = waitlistForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        waitlistStatus.className = 'waitlist-status';
+        waitlistStatus.textContent = '';
 
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString()
-      })
-        .then((res) => {
-          if (!res.ok) throw new Error('Submission failed');
-          waitlistForm.reset();
-          waitlistForm.style.display = 'none';
-          waitlistStatus.classList.add('success');
-          waitlistStatus.textContent = "You're on the list. We'll email you when we launch.";
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
         })
-        .catch(() => {
-          waitlistStatus.classList.add('error');
-          waitlistStatus.textContent = 'Something went wrong, please try again or email hello@lifetogether.uk';
-          submitBtn.disabled = false;
-        });
+          .then((res) => {
+            if (!res.ok) throw new Error('Submission failed');
+            waitlistForm.reset();
+            waitlistForm.style.display = 'none';
+            waitlistStatus.classList.add('success');
+            waitlistStatus.textContent = "You're on the list. We'll email you when we launch.";
+          })
+          .catch(() => {
+            waitlistStatus.classList.add('error');
+            waitlistStatus.textContent = 'Something went wrong, please try again or email hello@lifetogether.uk';
+            submitBtn.disabled = false;
+          });
+      });
     });
-
-    // ── Entry-card CTA: scroll to and focus the single shared waitlist form ──
-    function focusWaitlist(e) {
-      e.preventDefault();
-      const email = document.getElementById('waitlist-email');
-      email.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      email.focus();
-    }
   </script>
 
 </body>
