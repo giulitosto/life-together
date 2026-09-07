@@ -549,12 +549,21 @@
       outline: none; border-color: var(--seafoam-light);
       background: rgba(255,255,255,0.1);
     }
+    .pricing-wrap.tier-entry .waitlist-input {
+      border-color: rgba(44,74,90,0.25); background: var(--sand); color: var(--ink);
+    }
+    .pricing-wrap.tier-entry .waitlist-input::placeholder { color: var(--muted); }
+    .pricing-wrap.tier-entry .waitlist-input:focus {
+      border-color: var(--ocean); background: var(--white);
+    }
     .waitlist-status {
       text-align: center; margin-top: 0.85rem;
       font-size: 0.82rem; min-height: 1.2em;
     }
     .waitlist-status.success { color: var(--seafoam-light); }
     .waitlist-status.error { color: var(--rope-light); }
+    .pricing-wrap.tier-entry .waitlist-status.success { color: var(--ocean); }
+    .pricing-wrap.tier-entry .waitlist-status.error { color: #b0524a; }
 
     /* ════════════════════════════════════════
        FAQ
