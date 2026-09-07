@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Relation-ship · Life Together</title>
-  <meta name="description" content="A self-guided couples course for partners navigating life's big transitions. 3 modules, 15 sessions, at your own pace. £297 per couple.">
+  <meta name="description" content="A self-guided couples course for partners navigating life's big transitions. 3 modules, 15 sessions, at your own pace. From £50, or £200 per couple for the complete journey.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -481,11 +481,41 @@
     /* ════════════════════════════════════════
        PRICING
     ════════════════════════════════════════ */
+    .pricing-grid {
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch;
+      gap: 1.75rem; max-width: 920px; margin: 3.5rem auto 0;
+    }
     .pricing-wrap {
-      max-width: 560px; margin: 3.5rem auto 0;
+      max-width: 420px; flex: 1 1 380px; margin: 0;
       background: var(--ocean);
       border-radius: 28px; overflow: hidden;
       box-shadow: 0 28px 72px rgba(26,46,59,0.28);
+      display: flex; flex-direction: column;
+    }
+    .pricing-wrap.tier-entry {
+      background: var(--white);
+      border: 1.5px solid rgba(44,74,90,0.15);
+      box-shadow: 0 12px 40px rgba(44,74,90,0.08);
+    }
+    .pricing-wrap.tier-entry .pricing-head { border-bottom-color: var(--sand-dark); }
+    .pricing-wrap.tier-entry .pricing-eyebrow { color: var(--rope); }
+    .pricing-wrap.tier-entry .pricing-name,
+    .pricing-wrap.tier-entry .pricing-currency,
+    .pricing-wrap.tier-entry .pricing-num { color: var(--ocean); }
+    .pricing-wrap.tier-entry .pricing-per { color: var(--muted); }
+    .pricing-wrap.tier-entry .pricing-list li { color: var(--ink); border-bottom-color: var(--sand-dark); }
+    .pricing-wrap.tier-entry .price-check { background: rgba(143,188,176,0.18); color: var(--ocean); }
+    .pricing-wrap.tier-entry .btn-join { background: var(--ocean); color: var(--white); }
+    .pricing-wrap.tier-entry .btn-join:hover { background: var(--ocean-light); }
+    .pricing-wrap.tier-entry .pricing-note { color: var(--muted); }
+    .pricing-save-badge {
+      display: inline-block; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--rope-light); background: rgba(196,149,106,0.18); border-radius: 20px;
+      padding: 0.3rem 0.75rem; margin-bottom: 0.85rem;
+    }
+    .pricing-strike {
+      color: rgba(255,255,255,0.4); text-decoration: line-through;
+      font-size: 0.85rem; margin-left: 0.5rem; align-self: center;
     }
     .pricing-head {
       padding: 2.75rem 2.75rem 2.25rem;
@@ -517,8 +547,8 @@
       font-size: 0.78rem; color: rgba(255,255,255,0.45);
       letter-spacing: 0.04em; margin-top: 0.25rem;
     }
-    .pricing-body { padding: 2.25rem 2.75rem 2.75rem; }
-    .pricing-list { list-style: none; padding: 0; margin: 0 0 2.25rem; }
+    .pricing-body { padding: 2.25rem 2.75rem 2.75rem; flex: 1; display: flex; flex-direction: column; }
+    .pricing-list { list-style: none; padding: 0; margin: 0 0 2.25rem; flex: 1; }
     .pricing-list li {
       display: flex; align-items: flex-start; gap: 0.8rem;
       padding: 0.65rem 0; font-size: 0.88rem; color: rgba(255,255,255,0.78);
@@ -696,7 +726,7 @@
             <div class="hero-stat-label">Of depth</div>
           </div>
           <div>
-            <div class="hero-stat-num">£297</div>
+            <div class="hero-stat-num">£200</div>
             <div class="hero-stat-label">Per couple</div>
           </div>
         </div>
@@ -942,52 +972,90 @@
   <!-- ═══ PRICING ═══ -->
   <section class="lp-section bg-white" id="join" aria-labelledby="pricing-heading">
     <div class="lp-wrap">
-      <div class="reveal" style="text-align:center; max-width:560px; margin:0 auto;">
+      <div class="reveal" style="text-align:center; max-width:640px; margin:0 auto;">
         <p class="section-eyebrow">Join the programme</p>
-        <h2 class="section-title" id="pricing-heading">One investment.<br><em>Lifetime of depth.</em></h2>
+        <h2 class="section-title" id="pricing-heading">Start small.<br><em>Or dive all the way in.</em></h2>
         <p class="section-body" style="margin:0 auto; text-align:center;">
-          One payment per couple. Unlimited access. No subscriptions, no upsells.
+          Try Module 1 on your own, or commit to the complete journey upfront and save £97. No subscriptions, ever.
         </p>
       </div>
-      <div class="pricing-wrap reveal">
-        <div class="pricing-head">
-          <p class="pricing-eyebrow">Relation-ship Self-Paced Programme</p>
-          <h3 class="pricing-name">The complete journey —<br>at your own pace</h3>
-          <div class="pricing-amount">
-            <span class="pricing-currency">£</span>
-            <span class="pricing-num">297</span>
+      <div class="pricing-grid">
+        <div class="pricing-wrap tier-entry reveal">
+          <div class="pricing-head">
+            <p class="pricing-eyebrow">Start here</p>
+            <h3 class="pricing-name">Know Yourself</h3>
+            <div class="pricing-amount">
+              <span class="pricing-currency">£</span>
+              <span class="pricing-num">50</span>
+            </div>
+            <p class="pricing-per">one-time payment · lifetime access to Module 1</p>
           </div>
-          <p class="pricing-per">per couple · one-time payment · lifetime access</p>
+          <div class="pricing-body">
+            <ul class="pricing-list">
+              <li>
+                <span class="price-check" aria-hidden="true">✓</span>
+                Module 1: the complete solo journey of self-discovery (~3.5 hours)
+              </li>
+              <li>
+                <span class="price-check" aria-hidden="true">✓</span>
+                Wheel of Life, values and life-chapters exercises
+              </li>
+              <li>
+                <span class="price-check" aria-hidden="true">✓</span>
+                Works on any device — no app, no account needed
+              </li>
+              <li>
+                <span class="price-check" aria-hidden="true">✓</span>
+                Add Modules 2 & 3 later for £247, or save £97 by starting with the complete journey
+              </li>
+            </ul>
+            <a href="start.html" class="btn-join">Start with Know Yourself — £50 →</a>
+            <p class="pricing-note">Secure checkout · questions? hello@lifetogether.uk</p>
+          </div>
         </div>
-        <div class="pricing-body">
-          <ul class="pricing-list">
-            <li>
-              <span class="price-check" aria-hidden="true">✓</span>
-              3 modules, 15 sessions (~12 hours of guided exercises)
-            </li>
-            <li>
-              <span class="price-check" aria-hidden="true">✓</span>
-              Module 1: complete solo journey of self-discovery for each partner
-            </li>
-            <li>
-              <span class="price-check" aria-hidden="true">✓</span>
-              Modules 2 & 3: couple sessions with interactive tools and reflection prompts
-            </li>
-            <li>
-              <span class="price-check" aria-hidden="true">✓</span>
-              Co-Dreaming audio guided session (created by Giuli & Drew)
-            </li>
-            <li>
-              <span class="price-check" aria-hidden="true">✓</span>
-              Works on any device — no app, no account needed
-            </li>
-            <li>
-              <span class="price-check" aria-hidden="true">✓</span>
-              Lifetime access — revisit whenever life shifts
-            </li>
-          </ul>
-          <a href="start.html" class="btn-join">Join Relation-ship — £297 →</a>
-          <p class="pricing-note">Secure checkout · 14-day satisfaction guarantee · questions? hello@lifetogether.uk</p>
+
+        <div class="pricing-wrap reveal">
+          <div class="pricing-head">
+            <span class="pricing-save-badge">Best value · save £97</span>
+            <p class="pricing-eyebrow">Relation-ship Self-Paced Programme</p>
+            <h3 class="pricing-name">The complete journey —<br>at your own pace</h3>
+            <div class="pricing-amount">
+              <span class="pricing-currency">£</span>
+              <span class="pricing-num">200</span>
+              <span class="pricing-strike">£297</span>
+            </div>
+            <p class="pricing-per">per couple · one-time payment · lifetime access</p>
+          </div>
+          <div class="pricing-body">
+            <ul class="pricing-list">
+              <li>
+                <span class="price-check" aria-hidden="true">✓</span>
+                3 modules, 15 sessions (~12 hours of guided exercises)
+              </li>
+              <li>
+                <span class="price-check" aria-hidden="true">✓</span>
+                Module 1: complete solo journey of self-discovery for each partner
+              </li>
+              <li>
+                <span class="price-check" aria-hidden="true">✓</span>
+                Modules 2 & 3: couple sessions with interactive tools and reflection prompts
+              </li>
+              <li>
+                <span class="price-check" aria-hidden="true">✓</span>
+                Co-Dreaming audio guided session (created by Giuli & Drew)
+              </li>
+              <li>
+                <span class="price-check" aria-hidden="true">✓</span>
+                Works on any device — no app, no account needed
+              </li>
+              <li>
+                <span class="price-check" aria-hidden="true">✓</span>
+                Lifetime access — revisit whenever life shifts
+              </li>
+            </ul>
+            <a href="start.html" class="btn-join">Join the Complete Journey — £200 →</a>
+            <p class="pricing-note">Secure checkout · 14-day satisfaction guarantee · questions? hello@lifetogether.uk</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1077,7 +1145,7 @@
       <p class="final-sub">
         One programme. Fifteen sessions. A lifetime of tools for navigating whatever comes next — as a team.
       </p>
-      <a href="#join" class="btn-hero">Begin the journey — £297 →</a>
+      <a href="#join" class="btn-hero">Begin the journey — from £50 →</a>
     </div>
   </section>
 
