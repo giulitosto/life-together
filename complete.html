@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programme Complete, Relation-ship</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .complete-card {
+      background: linear-gradient(135deg, rgba(143,188,176,0.12), rgba(196,149,106,0.06));
+      border: 1px solid rgba(143,188,176,0.25);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .complete-card p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      color: var(--ocean);
+      line-height: 2;
+      font-style: italic;
+    }
+    .complete-sig {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-top: 1.5rem;
+      font-style: normal;
+    }
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 500;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-logo"><span class="logo-italic">Relation</span>-ship</div>
+      <div class="site-tagline">Navigating the waves of life together</div>
+    </header>
+
+    <div class="wave-divider">
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+        <path d="M0 6 Q3 0 6 6 Q9 12 12 6 Q15 0 18 6 Q21 12 24 6" stroke="#8FBCB0" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="page-subtitle">Journey's end</div>
+    <h1 class="page-title">You've arrived</h1>
+
+    <div class="complete-card">
+      <p>You've completed the programme.<br><br>
+      You've done the work of knowing yourself,<br>seeing each other,<br>and tending the living thing between you.<br><br>
+      That is no small thing.<br>
+      It is, in fact, everything.</p>
+      <div class="complete-sig">~ Drew &amp; Giuli</div>
+    </div>
+
+    <div class="btn-group">
+      <a href="feedback.html" class="btn btn-primary">Share your experience →</a>
+    </div>
+    <div style="margin-top:0.75rem;">
+      <a href="menu.html" class="btn btn-outline">Back to menu</a>
+    </div>
+
+    <footer class="page-footer">
+      <p>Relation-ship &nbsp;·&nbsp; A Life Together programme</p>
+    </footer>
+  </div>
+
+  <script>
+    // ── Confetti, on-brand palette, respects reduced-motion ──
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      const COLORS = ['#2C4A5A', '#3D6475', '#8FBCB0', '#B8D8D2', '#C4956A', '#DDB896', '#FDFAF5'];
+      const DURATION = 4200;    // ms the whole effect runs for
+      const SPAWN_TIME = 1300;  // ms over which pieces keep popping in from the sides
+      const TOTAL_PIECES = 150;
+      const FADE = 700;         // ms fade-out at the end
+
+      function resize() {
+        canvas.width = window.innerWidth * devicePixelRatio;
+        canvas.height = window.innerHeight * devicePixelRatio;
+        ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      // Pops in from the left or right edge with an inward burst, then arcs
+      // down under gravity, like two confetti cannons firing from the sides.
+      function makePiece() {
+        const w = window.innerWidth, h = window.innerHeight;
+        const fromLeft = Math.random() < 0.5;
+        const dir = fromLeft ? 1 : -1;
+        const speed = 7 + Math.random() * 7;
+        const angle = (Math.random() * 70 - 35) * Math.PI / 180; // spread around horizontal
+        return {
+          x: fromLeft ? -10 : w + 10,
+          y: h * (0.15 + Math.random() * 0.7),
+          vx: dir * speed * Math.cos(angle),
+          vy: -speed * Math.sin(angle) - Math.random() * 3,
+          gravity: 0.18 + Math.random() * 0.12,
+          drag: 0.98,
+          size: 6 + Math.random() * 7,
+          color: COLORS[(Math.random() * COLORS.length) | 0],
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.3,
+          shape: Math.random() < 0.5 ? 'rect' : 'circle',
+        };
+      }
+
+      const pieces = [];
+      const start = performance.now();
+      let raf, spawned = 0;
+
+      function draw(now) {
+        const elapsed = now - start;
+        const w = window.innerWidth, h = window.innerHeight;
+        ctx.clearRect(0, 0, w, h);
+
+        // Stagger spawning so pieces keep popping in rather than firing all at once
+        const shouldHaveSpawned = Math.min(TOTAL_PIECES, Math.ceil((elapsed / SPAWN_TIME) * TOTAL_PIECES));
+        while (spawned < shouldHaveSpawned) { pieces.push(makePiece()); spawned++; }
+
+        let opacity = 1;
+        if (elapsed > DURATION - FADE) {
+          opacity = Math.max(0, 1 - (elapsed - (DURATION - FADE)) / FADE);
+        }
+        ctx.globalAlpha = opacity;
+
+        pieces.forEach(p => {
+          p.vy += p.gravity;
+          p.vx *= p.drag;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rotation += p.rotSpeed;
+          if (p.y > h + 30) return; // let spent pieces fall away, no recycling
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation);
+          ctx.fillStyle = p.color;
+          if (p.shape === 'rect') {
+            ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.66);
+          } else {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size / 2.4, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        });
+
+        if (elapsed < DURATION) {
+          raf = requestAnimationFrame(draw);
+        } else {
+          ctx.clearRect(0, 0, w, h);
+          canvas.style.display = 'none';
+        }
+      }
+
+      raf = requestAnimationFrame(draw);
+    })();
+  </script>
+</body>
+</html>

@@ -17,13 +17,17 @@
       padding: 0.8rem 1rem;
       display: flex;
       align-items: center;
-      gap: 0.85rem;
-      transition: background 0.15s;
-      cursor: pointer;
+      gap: 0.7rem;
+      transition: background 0.15s, box-shadow 0.15s;
     }
     .practice-item.checked {
       background: rgba(143,188,176,0.1);
       border-color: rgba(143,188,176,0.3);
+    }
+    .practice-item.dragging { opacity: 0.4; box-shadow: 0 6px 18px rgba(44,74,90,0.15); }
+    .practice-check-area {
+      display: flex; align-items: center; gap: 0.7rem;
+      flex: 1; min-width: 0; cursor: pointer;
     }
     .practice-check {
       width: 20px; height: 20px;
@@ -40,8 +44,43 @@
       border-color: var(--seafoam);
       color: var(--white);
     }
-    .practice-text { font-size: 0.85rem; color: var(--ink); flex: 1; line-height: 1.4; }
+    .practice-text { font-size: 0.85rem; color: var(--ink); flex: 1; line-height: 1.4; min-width: 0; }
     .practice-item.checked .practice-text { color: var(--muted); }
+    .practice-freq {
+      flex-shrink: 0;
+      padding: 0.4rem 0.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(44,74,90,0.15);
+      background: var(--sand);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      color: var(--ink);
+      cursor: pointer;
+      max-width: 100px;
+    }
+    .practice-freq-other {
+      flex-shrink: 0;
+      width: 100px;
+      padding: 0.4rem 0.5rem;
+      border-radius: 8px;
+      border: 1px dashed rgba(44,74,90,0.25);
+      background: var(--white);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      color: var(--ink);
+    }
+    .practice-freq-other::placeholder { color: var(--muted); opacity: 0.5; font-style: italic; }
+    .practice-delete, .adventure-delete {
+      flex-shrink: 0;
+      background: none; border: none;
+      color: var(--muted);
+      font-size: 1.15rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0 2px;
+      transition: color 0.2s;
+    }
+    .practice-delete:hover, .adventure-delete:hover { color: var(--rope); }
     .add-practice-row {
       display: flex; gap: 8px; margin-top: 0.5rem;
     }
@@ -65,6 +104,25 @@
       cursor: pointer; transition: background 0.2s; white-space: nowrap;
     }
     .add-practice-btn:hover { background: var(--ocean-light); }
+
+    .adventure-grid { display: grid; gap: 0.65rem; margin: 1rem 0; }
+    .adventure-item {
+      background: var(--white);
+      border: 1px solid rgba(44,74,90,0.08);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .adventure-item.checked { background: rgba(143,188,176,0.1); border-color: rgba(143,188,176,0.3); }
+    .adventure-item.dragging { opacity: 0.4; box-shadow: 0 6px 18px rgba(44,74,90,0.15); }
+    .adventure-drag-handle {
+      flex-shrink: 0; cursor: grab; color: var(--muted); font-size: 0.85rem;
+      letter-spacing: -1px; touch-action: none; padding: 0 3px; user-select: none;
+    }
+    .adventure-drag-handle:active { cursor: grabbing; }
 
     .space-item {
       background: var(--white);
@@ -147,17 +205,17 @@
     </div>
 
     <div class="prose">
-      <p>A relationship doesn't just happen in the big moments — the trips, the milestones, the crises. It lives in the ordinary. The morning routine. The way you greet each other at the end of the day. Who makes the coffee. Whether you eat together. The small rituals that, accumulated over time, become the texture of a shared life.</p>
-      <p>This section is about designing that texture — deliberately and with care — across three dimensions: daily practices, shared space, and the cultivation of adventure.</p>
+      <p>A relationship doesn't just happen in the big moments, the trips, the milestones, the crises. It lives in the ordinary. The morning routine. The way you greet each other at the end of the day. Who makes the coffee. Whether you eat together. The small rituals that, accumulated over time, become the foundation of a shared life.</p>
+      <p>This section is about designing that foundation, deliberately and with care, sewn together across three dimensions: daily practices, shared space, and the cultivation of adventure.</p>
     </div>
 
-    <h2 class="section-heading">Part 1 — Daily Practices</h2>
+    <h2 class="section-heading">Part 1 · Shared Practices</h2>
 
     <div class="prose">
-      <p>Small, consistent rituals carry enormous relational weight. A 30-second hug has measurable effects on stress and bonding. Saying goodbye with a real kiss changes the morning. A "how are you, really?" at the end of the day opens a different kind of conversation than silence.</p>
+      <p>Small, consistent rituals carry enormous relational weight. A 30-second hug has measurable effects on stress and bonding. Saying goodbye with a real kiss changes the morning. A "tell me about your day?" over dinner opens a different kind of conversation.</p>
     </div>
 
-    <div class="step-text" style="margin-bottom:0.75rem;">Tick the practices you want to bring into your daily life. Add your own at the bottom.</div>
+    <div class="step-text" style="margin-bottom:0.75rem;">Tick the practices you want to bring into your daily life, and choose how often for each. Add your own at the bottom.</div>
 
     <div class="practice-grid" id="practices-grid"></div>
 
@@ -168,25 +226,25 @@
     <input type="hidden" id="practices-state">
 
     <div class="reflection-block" style="margin-top:1.5rem;">
-      <span class="reflection-label">Our daily practices — what we're committing to</span>
+      <span class="reflection-label">Our daily practices: what we're committing to</span>
       <textarea class="reflection-textarea" id="r-practices" placeholder="Which practices feel most important to you, and why?…" rows="3"></textarea>
     </div>
 
-    <h2 class="section-heading">Part 2 — Shared Space</h2>
+    <h2 class="section-heading">Part 2 · Shared Space</h2>
 
     <div class="prose">
-      <p>The spaces we inhabit shape how we feel and how we relate. A home that's been thought about — that reflects both of you, that has places for quiet and for togetherness — holds the relationship differently than one that just accumulated.</p>
+      <p>The spaces we inhabit shape how we feel and how we relate. A home that reflects both of you has the capacity to hold the relationship in a state of resonance. That can be felt by yourselves and those who visit.</p>
     </div>
 
     <div class="prompt-box">
       <ul>
         <li>Is there a space in your home that feels truly <em>ours</em>? What makes it feel that way?</li>
-        <li>Is there a space that feels neglected — that could become a place of connection?</li>
-        <li>Are there things in your shared space that don't belong to either of you — clutter, objects from a different chapter — that it might be time to release?</li>
+        <li>Is there a physical place in your space that could receive more love and attention?</li>
+        <li>Are there items in your physical environment that do not serve who you both are, or want to be today? Are you ready to thank them and let them go?</li>
       </ul>
     </div>
 
-    <div class="step-text" style="margin:0.75rem 0;">Name some intentions for your shared space below:</div>
+    <div class="step-text" style="margin:0.75rem 0;">Set three intentions for your shared space below:</div>
     <div id="space-intentions">
       <div class="space-item">
         <div class="space-icon">🕯</div>
@@ -198,32 +256,32 @@
       </div>
       <div class="space-item">
         <div class="space-icon">✦</div>
-        <input type="text" class="space-input" id="space-3" placeholder="e.g. Add something that represents us — our story — to the room…">
+        <input type="text" class="space-input" id="space-3" placeholder="e.g. Add something that represents us, our story, to the room…">
       </div>
     </div>
 
     <div class="reflection-block">
-      <span class="reflection-label">What our shared space needs</span>
-      <textarea class="reflection-textarea" id="r-space" placeholder="How do you want your home to feel? What's one change you could make this week?…" rows="3"></textarea>
+      <span class="reflection-label">Notes on how we can bring these intentions to reality</span>
+      <textarea class="reflection-textarea" id="r-space" placeholder="Notes, ideas, next steps…" rows="3"></textarea>
     </div>
 
-    <h2 class="section-heading">Part 3 — Adventure & Newness</h2>
+    <h2 class="section-heading">Part 3 · Shared Adventure</h2>
 
     <div class="prose">
-      <p>Novelty is one of the most powerful forces in a long-term relationship. Couples who regularly do new things together — not necessarily dramatic things, just <em>new</em> things — report higher connection and satisfaction. Routine is necessary. But routine without newness slowly narrows the world.</p>
+      <p>Novelty is one of the most powerful forces in a long-term relationship. Couples who regularly try new things together, not necessarily extravagant things, just new things, report higher connection and satisfaction. Routine is necessary; however, routine without newness can slowly narrow the world and therefore shorten the horizon.</p>
     </div>
 
     <div class="prompt-box">
       <ul>
         <li>When did you last do something together for the first time? How did it feel?</li>
         <li>What's something you've each been wanting to try but haven't suggested yet?</li>
-        <li>What does adventure mean to each of you — it might be different?</li>
+        <li>What does adventure mean to each of you? Notice how it may be different.</li>
       </ul>
     </div>
 
-    <div class="step-text" style="margin:0.75rem 0 0.5rem;">Build your adventure list together — things to try, places to go, experiences to create:</div>
+    <div class="step-text" style="margin:0.75rem 0 0.5rem;">Build your adventure list together: things to try, places to go, experiences to create. Drag the handle to reorder.</div>
 
-    <div class="practice-grid" id="adventure-grid"></div>
+    <div class="adventure-grid" id="adventure-grid"></div>
     <div class="add-practice-row" style="margin-top:0.5rem;">
       <input type="text" class="add-practice-input" id="adventure-input" placeholder="Add an adventure…">
       <button class="add-practice-btn" onclick="addAdventure()">+ Add</button>
@@ -231,8 +289,8 @@
     <input type="hidden" id="adventures-state">
 
     <div class="reflection-block" style="margin-top:1.5rem;">
-      <span class="reflection-label">What we want to explore together</span>
-      <textarea class="reflection-textarea" id="r-adventure" placeholder="What's the first adventure you'll commit to?…" rows="3"></textarea>
+      <span class="reflection-label">From the list above, what is emerging for us to explore together?</span>
+      <textarea class="reflection-textarea" id="r-adventure" placeholder="Observe how you feel as you dream of these activities together?" rows="3"></textarea>
     </div>
 
     <label class="complete-toggle">
@@ -256,20 +314,35 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     const DAILY_PRACTICES = [
-      'Kiss goodbye every morning, even when you\'re in a rush',
-      'Hug for at least 30 seconds — long enough for your nervous systems to sync',
-      'Ask "how are you, really?" at the end of the day — and actually listen',
+      'Kiss goodbye, even when you\'re in a rush',
+      'Hug for at least 30 seconds, long enough for your nervous systems to sync',
+      'Ask "Tell me about something important that happened today?" and listen deeply',
       'Eat at least one meal together without screens',
-      'Say thank you for something specific each day',
-      'Have a weekly check-in — 20 minutes to catch up on how you\'re both doing',
-      'Share what you\'re grateful for at the end of the day',
-      'Leave a note or message for no reason — just to say you\'re thinking of them',
-      'Go to bed at the same time at least a few nights a week',
+      'Say thank you for something specific',
+      'Have a check-in, 20 minutes to catch up on how you\'re both doing',
+      'Share what you\'re grateful for',
+      'Leave a note or message for no reason',
+      'Agree on nights to go to bed at the same time',
       'Take a walk together, even a short one',
     ];
 
+    const FREQ_OPTIONS = [
+      { value: '', label: 'Frequency…' },
+      { value: 'daily', label: 'Daily' },
+      { value: 'weekly', label: 'Weekly' },
+      { value: 'monthly', label: 'Monthly' },
+      { value: 'annually', label: 'Annually' },
+      { value: 'other', label: 'Other…' },
+    ];
+    const FREQ_ORDER = { daily: 0, weekly: 1, monthly: 2, annually: 3, other: 4, '': 5 };
+    const FREQ_LABEL = { daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly', annually: 'Annually' };
+
     const practiceState = {};
-    DAILY_PRACTICES.forEach(p => practiceState[p] = false);
+    const practiceFrequency = {};
+    DAILY_PRACTICES.forEach(p => {
+      practiceState[p] = false;
+      practiceFrequency[p] = { value: '', otherText: '' };
+    });
 
     function buildPractices() {
       const grid = document.getElementById('practices-grid');
@@ -278,13 +351,41 @@
     }
 
     function renderPracticeItem(text, container) {
+      const freq = practiceFrequency[text] || { value: '', otherText: '' };
       const item = document.createElement('div');
       item.className = 'practice-item' + (practiceState[text] ? ' checked' : '');
-      item.onclick = () => togglePractice(text);
-      item.innerHTML = `
+
+      const checkArea = document.createElement('div');
+      checkArea.className = 'practice-check-area';
+      checkArea.onclick = () => togglePractice(text);
+      checkArea.innerHTML = `
         <div class="practice-check">${practiceState[text] ? '✓' : ''}</div>
         <div class="practice-text">${text}</div>
       `;
+
+      const select = document.createElement('select');
+      select.className = 'practice-freq';
+      select.innerHTML = FREQ_OPTIONS.map(o => `<option value="${o.value}"${o.value === freq.value ? ' selected' : ''}>${o.label}</option>`).join('');
+      select.onchange = () => setPracticeFrequency(text, select.value);
+
+      const otherInput = document.createElement('input');
+      otherInput.type = 'text';
+      otherInput.className = 'practice-freq-other';
+      otherInput.placeholder = 'e.g. once a season';
+      otherInput.value = freq.otherText || '';
+      otherInput.style.display = freq.value === 'other' ? '' : 'none';
+      otherInput.oninput = () => setPracticeFrequencyOther(text, otherInput.value);
+
+      const del = document.createElement('button');
+      del.className = 'practice-delete';
+      del.title = 'Remove';
+      del.textContent = '×';
+      del.onclick = () => removePractice(text);
+
+      item.appendChild(checkArea);
+      item.appendChild(select);
+      item.appendChild(otherInput);
+      item.appendChild(del);
       container.appendChild(item);
     }
 
@@ -295,11 +396,37 @@
       scheduleSave('module-3-4');
     }
 
+    function setPracticeFrequency(text, value) {
+      if (!practiceFrequency[text]) practiceFrequency[text] = { value: '', otherText: '' };
+      practiceFrequency[text].value = value;
+      buildPractices();
+      syncPracticesState();
+      scheduleSave('module-3-4');
+    }
+
+    function setPracticeFrequencyOther(text, value) {
+      if (!practiceFrequency[text]) practiceFrequency[text] = { value: 'other', otherText: '' };
+      practiceFrequency[text].otherText = value;
+      syncPracticesState();
+      scheduleSave('module-3-4');
+    }
+
+    function removePractice(text) {
+      const idx = DAILY_PRACTICES.indexOf(text);
+      if (idx > -1) DAILY_PRACTICES.splice(idx, 1);
+      delete practiceState[text];
+      delete practiceFrequency[text];
+      buildPractices();
+      syncPracticesState();
+      scheduleSave('module-3-4');
+    }
+
     function addCustomPractice() {
       const input = document.getElementById('practice-input');
       const val = input.value.trim();
       if (!val) return;
       practiceState[val] = true;
+      practiceFrequency[val] = { value: '', otherText: '' };
       DAILY_PRACTICES.push(val);
       buildPractices();
       input.value = '';
@@ -309,29 +436,93 @@
     }
 
     function syncPracticesState() {
-      document.getElementById('practices-state').value = JSON.stringify({ practices: DAILY_PRACTICES, practiceState });
+      document.getElementById('practices-state').value = JSON.stringify({ practices: DAILY_PRACTICES, practiceState, practiceFrequency });
     }
 
     document.getElementById('practice-input').addEventListener('keydown', e => {
       if (e.key === 'Enter') addCustomPractice();
     });
 
-    // Adventures
+    // ── Adventures (with drag-to-reorder) ──
     const adventures = [];
+    let dragFromIndex = null;
 
     function buildAdventures() {
       const grid = document.getElementById('adventure-grid');
       grid.innerHTML = '';
       adventures.forEach((a, i) => {
         const item = document.createElement('div');
-        item.className = 'practice-item' + (a.done ? ' checked' : '');
-        item.onclick = () => { adventures[i].done = !adventures[i].done; buildAdventures(); syncAdventuresState(); scheduleSave('module-3-4'); };
-        item.innerHTML = `
+        item.className = 'adventure-item' + (a.done ? ' checked' : '');
+        item.dataset.index = i;
+
+        const handle = document.createElement('div');
+        handle.className = 'adventure-drag-handle';
+        handle.textContent = '⠿';
+        handle.addEventListener('pointerdown', (e) => startAdventureDrag(e, i));
+
+        const checkArea = document.createElement('div');
+        checkArea.className = 'practice-check-area';
+        checkArea.onclick = () => { adventures[i].done = !adventures[i].done; buildAdventures(); syncAdventuresState(); scheduleSave('module-3-4'); };
+        checkArea.innerHTML = `
           <div class="practice-check">${a.done ? '✓' : ''}</div>
           <div class="practice-text">${a.text}</div>
         `;
+
+        const del = document.createElement('button');
+        del.className = 'adventure-delete';
+        del.title = 'Remove';
+        del.textContent = '×';
+        del.onclick = () => removeAdventure(i);
+
+        item.appendChild(handle);
+        item.appendChild(checkArea);
+        item.appendChild(del);
         grid.appendChild(item);
       });
+    }
+
+    function removeAdventure(i) {
+      adventures.splice(i, 1);
+      buildAdventures();
+      syncAdventuresState();
+      scheduleSave('module-3-4');
+    }
+
+    function startAdventureDrag(e, index) {
+      e.preventDefault();
+      dragFromIndex = index;
+      const grid = document.getElementById('adventure-grid');
+      const items = [...grid.querySelectorAll('.adventure-item')];
+      items[index].classList.add('dragging');
+
+      function onMove(ev) {
+        const y = ev.clientY;
+        const rows = [...grid.querySelectorAll('.adventure-item')];
+        let overIndex = rows.findIndex(row => {
+          const r = row.getBoundingClientRect();
+          return y >= r.top && y <= r.bottom;
+        });
+        if (overIndex === -1) return;
+        if (overIndex !== dragFromIndex) {
+          const [moved] = adventures.splice(dragFromIndex, 1);
+          adventures.splice(overIndex, 0, moved);
+          dragFromIndex = overIndex;
+          buildAdventures();
+          document.querySelector(`.adventure-item[data-index="${overIndex}"]`)?.classList.add('dragging');
+        }
+      }
+
+      function onUp() {
+        document.removeEventListener('pointermove', onMove);
+        document.removeEventListener('pointerup', onUp);
+        dragFromIndex = null;
+        buildAdventures();
+        syncAdventuresState();
+        scheduleSave('module-3-4');
+      }
+
+      document.addEventListener('pointermove', onMove);
+      document.addEventListener('pointerup', onUp);
     }
 
     function syncAdventuresState() {
@@ -375,14 +566,26 @@
         doc.text(lines, 20, y); y += lines.length * 5 + 8;
       }
 
-      const chosen = DAILY_PRACTICES.filter(p => practiceState[p]);
-      addBlock('Our daily practices', chosen.join('\n') || '(none selected)');
+      const chosen = DAILY_PRACTICES
+        .filter(p => practiceState[p])
+        .slice()
+        .sort((a, b) => {
+          const fa = practiceFrequency[a]?.value || '';
+          const fb = practiceFrequency[b]?.value || '';
+          return FREQ_ORDER[fa] - FREQ_ORDER[fb];
+        });
+      const practiceLines = chosen.map(p => {
+        const freq = practiceFrequency[p] || { value: '', otherText: '' };
+        const label = freq.value === 'other' ? (freq.otherText || 'Other') : (FREQ_LABEL[freq.value] || 'Not set');
+        return `${label}: ${p}`;
+      });
+      addBlock('Our shared practices, most frequent to least', practiceLines.join('\n') || '(none selected)');
       addBlock('Why these matter to us', document.getElementById('r-practices').value);
 
       const spaceInputs = [...document.querySelectorAll('#space-intentions .space-input')]
         .map(i => i.value.trim()).filter(Boolean);
       addBlock('Intentions for our shared space', spaceInputs.join('\n') || '(none)');
-      addBlock('What our shared space needs', document.getElementById('r-space').value);
+      addBlock('Notes on how we can bring these intentions to reality', document.getElementById('r-space').value);
 
       addBlock('Our adventure list', adventures.map(a => (a.done ? '✓ ' : '• ') + a.text).join('\n') || '(none)');
       addBlock('What we want to explore together', document.getElementById('r-adventure').value);
@@ -401,6 +604,9 @@
         DAILY_PRACTICES.push(...(saved.practices || []));
         Object.keys(practiceState).forEach(k => delete practiceState[k]);
         Object.assign(practiceState, saved.practiceState || {});
+        Object.keys(practiceFrequency).forEach(k => delete practiceFrequency[k]);
+        Object.assign(practiceFrequency, saved.practiceFrequency || {});
+        DAILY_PRACTICES.forEach(p => { if (!practiceFrequency[p]) practiceFrequency[p] = { value: '', otherText: '' }; });
         buildPractices();
       }
       if (data['adventures-state']) {

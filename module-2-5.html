@@ -238,7 +238,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     let nameA = 'Person A', nameB = 'Person B';
-    getProfile().then(p => { nameA = p?.display_name || 'Person A'; nameB = p?.partner_name || 'Person B'; });
+    getCoupleIdentity().then(identity => { nameA = identity?.nameA || 'Person A'; nameB = identity?.nameB || 'Person B'; });
 
     const ALL_CARDS = [
       { cat: 'Knowing each other', q: 'What is something you find stressful that I might not fully realise?' },

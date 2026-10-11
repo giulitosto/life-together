@@ -24,9 +24,6 @@
     .script-text p { margin: 0 0 0.75rem; }
     .script-text p:last-child { margin-bottom: 0; }
 
-    .closing-card { background: linear-gradient(135deg, rgba(143,188,176,0.12), rgba(196,149,106,0.06)); border: 1px solid rgba(143,188,176,0.25); border-radius: 16px; padding: 1.75rem; text-align: center; margin-top: 1rem; }
-    .closing-card p { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--ocean); line-height: 1.9; font-style: italic; }
-    .closing-sig { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; margin-top: 1rem; }
     .step-num-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--seafoam); color: var(--white); font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
   </style>
 </head>
@@ -325,14 +322,6 @@
 
     </div>
 
-    <div class="closing-card">
-      <p>You've completed the programme.<br><br>
-      You've done the work of knowing yourself,<br>seeing each other,<br>and tending the living thing between you.<br><br>
-      That is no small thing.<br>
-      It is, in fact, everything.</p>
-      <div class="closing-sig">— Drew & Giuli</div>
-    </div>
-
     <label class="complete-toggle">
       <input type="checkbox" id="complete-check" onclick="setCompleted('module-3-5', this.checked)">
       Mark this section complete
@@ -340,7 +329,7 @@
 
     <div class="btn-group">
       <button class="btn btn-rope" onclick="downloadReflections()">Download our reflections</button>
-      <a href="feedback.html" class="btn btn-primary">Share your experience →</a>
+      <a href="complete.html" class="btn btn-primary">Continue →</a>
     </div>
     <div style="margin-top:0.75rem;">
       <a href="menu.html" class="btn btn-outline">Back to menu</a>
@@ -371,9 +360,9 @@
 
     let nameA = '', nameB = '', coupleDisplay = '';
     (async () => {
-      const profile = await getProfile();
-      nameA = profile?.display_name || '';
-      nameB = profile?.partner_name || '';
+      const identity = await getCoupleIdentity();
+      nameA = identity?.nameA || '';
+      nameB = identity?.nameB || '';
       coupleDisplay = [nameA, nameB].filter(Boolean).join(' & ');
       if (coupleDisplay) {
         for (let i = 1; i <= 6; i++) {

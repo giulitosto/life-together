@@ -418,9 +418,9 @@
 
     let nameA = '', nameB = '', coupleDisplay = '';
     (async () => {
-      const profile = await getProfile();
-      nameA = profile?.display_name || '';
-      nameB = profile?.partner_name || '';
+      const identity = await getCoupleIdentity();
+      nameA = identity?.nameA || '';
+      nameB = identity?.nameB || '';
       coupleDisplay = [nameA, nameB].filter(Boolean).join(' & ');
       if (coupleDisplay) {
         for (let i = 1; i <= 6; i++) {

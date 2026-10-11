@@ -289,9 +289,9 @@
   <script>
     let nameA = 'Person A', nameB = 'Person B';
     (async () => {
-      const profile = await getProfile();
-      nameA = profile?.display_name || 'Person A';
-      nameB = profile?.partner_name || 'Person B';
+      const identity = await getCoupleIdentity();
+      nameA = identity?.nameA || 'Person A';
+      nameB = identity?.nameB || 'Person B';
       document.getElementById('name-a-display').textContent = nameA;
       document.getElementById('name-b-display').textContent = nameB;
       document.getElementById('avatar-a').textContent = nameA.charAt(0).toUpperCase();

@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Programme · Relation-ship</title>
+  <meta name="description" content="A self-guided couples course for partners who are still good, and want to make sure it stays that way. 3 modules, 15 sessions, at your own pace. From £50, or £200 per couple for the complete journey.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sand: #F5F0E8;
+      --sand-dark: #EAE3D2;
+      --ocean: #2C4A5A;
+      --ocean-light: #3D6475;
+      --ocean-deep: #1A2E3B;
+      --seafoam: #8FBCB0;
+      --seafoam-light: #B8D8D2;
+      --rope: #C4956A;
+      --rope-light: #DDB896;
+      --ink: #1E2D35;
+      --muted: #7A8D8A;
+      --white: #FDFAF5;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--sand);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    @keyframes fade-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 1.75rem; }
+
+    /* ── Minimal nav: logo only, this page has one job ── */
+    .top-bar {
+      padding: 1.5rem 0;
+      display: flex; justify-content: center;
+    }
+    .top-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 300; color: var(--ocean);
+      text-decoration: none;
+    }
+    .top-logo em { font-style: italic; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(152deg, var(--ocean-deep) 0%, var(--ocean) 55%, var(--ocean-light) 100%);
+      padding: 4rem 0 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.035; pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+    .hero-eyebrow {
+      font-size: 0.7rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--seafoam); margin-bottom: 1.5rem;
+      opacity: 0; animation: fade-up 0.8s ease forwards 0.15s;
+    }
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5.4vw, 3.4rem);
+      font-weight: 300; color: var(--white); line-height: 1.25;
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: fade-up 0.8s ease forwards 0.32s;
+    }
+    .hero-headline em { font-style: italic; color: var(--seafoam-light); }
+    .hero-sub {
+      font-size: 1.02rem; color: rgba(255,255,255,0.68); line-height: 1.85;
+      max-width: 540px; margin: 0 auto 2.25rem;
+      opacity: 0; animation: fade-up 0.8s ease forwards 0.5s;
+    }
+    .hero-cta-wrap { opacity: 0; animation: fade-up 0.8s ease forwards 0.68s; }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 1rem 2.25rem; border-radius: 40px;
+      font-family: 'Jost', sans-serif; font-size: 0.88rem;
+      font-weight: 400; letter-spacing: 0.06em; text-decoration: none;
+      background: var(--white); color: var(--ocean);
+      border: none; cursor: pointer;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(0,0,0,0.25); }
+    .btn-hint { font-size: 0.74rem; color: rgba(255,255,255,0.4); margin-top: 0.9rem; letter-spacing: 0.03em; }
+
+    /* ── Sections ── */
+    .section { padding: 4.5rem 0; }
+    .section.bg-white { background: var(--white); }
+    .section-eyebrow {
+      font-size: 0.68rem; font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--rope); margin-bottom: 0.9rem; text-align: center;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+      font-weight: 300; color: var(--ocean); line-height: 1.2;
+      text-align: center; margin-bottom: 1rem;
+    }
+    .section-title em { font-style: italic; }
+    .section-sub {
+      font-size: 0.95rem; color: var(--muted); line-height: 1.8;
+      text-align: center; max-width: 560px; margin: 0 auto 2.5rem;
+    }
+
+    .wave-sep { display: block; width: 100%; line-height: 0; overflow: hidden; }
+    .wave-sep svg { display: block; width: 100%; }
+
+    /* ── Problem validation ── */
+    .ache-list { max-width: 560px; margin: 0 auto; }
+    .ache-item {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-style: italic; color: var(--ocean-light);
+      text-align: center; padding: 1.1rem 0;
+      border-bottom: 1px solid var(--sand-dark);
+    }
+    .ache-item:last-child { border-bottom: none; }
+    .ache-item::before { content: '"'; }
+    .ache-item::after { content: '"'; }
+    .ache-note {
+      text-align: center; font-size: 0.92rem; color: var(--muted);
+      max-width: 540px; margin: 2rem auto 0; line-height: 1.85;
+    }
+
+    /* ── Benefits ── */
+    .benefit-list { max-width: 640px; margin: 0 auto; list-style: none; }
+    .benefit-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 0.9rem 0; border-bottom: 1px solid var(--sand-dark);
+      font-size: 0.95rem; color: var(--ink); line-height: 1.6;
+    }
+    .benefit-item:last-child { border-bottom: none; }
+    .benefit-mark {
+      flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(143,188,176,0.18); color: var(--ocean);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; margin-top: 1px;
+    }
+
+    /* ── Curriculum ── */
+    .module-card {
+      border-radius: 20px; overflow: hidden;
+      border: 1px solid rgba(44,74,90,0.08);
+      margin-bottom: 1.25rem;
+    }
+    .module-card-head { padding: 1.75rem 1.75rem 1.4rem; }
+    .module-card:nth-child(1) .module-card-head { background: #24404F; }
+    .module-card:nth-child(2) .module-card-head { background: var(--ocean); }
+    .module-card:nth-child(3) .module-card-head { background: var(--ocean-light); }
+    .module-num {
+      font-size: 0.65rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--seafoam-light); margin-bottom: 0.5rem;
+    }
+    .module-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 300; color: var(--white); line-height: 1.15;
+      margin-bottom: 0.4rem;
+    }
+    .module-timing { font-size: 0.72rem; color: rgba(255,255,255,0.45); }
+    .module-card-body { background: var(--white); padding: 1.4rem 1.75rem; }
+    .module-parts { list-style: none; }
+    .module-parts li {
+      font-size: 0.86rem; color: var(--muted); line-height: 1.5;
+      padding: 0.5rem 0; border-bottom: 1px solid var(--sand-dark);
+      display: flex; align-items: flex-start; gap: 0.6rem;
+    }
+    .module-parts li:last-child { border-bottom: none; }
+    .part-pip { width: 5px; height: 5px; border-radius: 50%; background: var(--seafoam); flex-shrink: 0; margin-top: 7px; }
+    .module-parts li strong { font-weight: 400; color: var(--ink); }
+
+    /* ── Bonuses ── */
+    .bonus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 700px; margin: 0 auto; }
+    @media (max-width: 640px) { .bonus-grid { grid-template-columns: 1fr; } }
+    .bonus-card {
+      background: var(--white); border: 1px solid rgba(44,74,90,0.08);
+      border-radius: 18px; padding: 1.75rem 1.5rem; text-align: center;
+    }
+    .bonus-icon { font-size: 1.4rem; margin-bottom: 0.85rem; }
+    .bonus-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--ocean); margin-bottom: 0.5rem; }
+    .bonus-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── About ── */
+    .about-grid { display: grid; grid-template-columns: 0.85fr 1fr; gap: 3rem; align-items: center; max-width: 760px; margin: 0 auto; }
+    @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-img { aspect-ratio: 4/3; border-radius: 20px; overflow: hidden; position: relative; }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .about-para { font-size: 0.92rem; color: var(--muted); line-height: 1.8; margin-bottom: 0.9rem; }
+    .about-sig { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--rope); margin-top: 1.25rem; }
+
+    /* ── Pricing ── */
+    .pricing-grid {
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch;
+      gap: 1.5rem; max-width: 800px; margin: 0 auto;
+    }
+    .pricing-wrap {
+      max-width: 380px; flex: 1 1 340px; margin: 0;
+      background: var(--ocean); border-radius: 26px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(26,46,59,0.25);
+      display: flex; flex-direction: column;
+    }
+    .pricing-wrap.tier-entry {
+      background: var(--white);
+      border: 1.5px solid rgba(44,74,90,0.15);
+      box-shadow: 0 12px 36px rgba(44,74,90,0.08);
+    }
+    .pricing-wrap.tier-entry .pricing-head { border-bottom-color: var(--sand-dark); }
+    .pricing-wrap.tier-entry .pricing-eyebrow { color: var(--rope); }
+    .pricing-wrap.tier-entry .pricing-currency,
+    .pricing-wrap.tier-entry .pricing-num { color: var(--ocean); }
+    .pricing-wrap.tier-entry .pricing-per { color: var(--muted); }
+    .pricing-wrap.tier-entry .pricing-list li { color: var(--ink); border-bottom-color: var(--sand-dark); }
+    .pricing-wrap.tier-entry .price-check { background: rgba(143,188,176,0.18); color: var(--ocean); }
+    .pricing-wrap.tier-entry .btn-primary { background: var(--ocean); color: var(--white); box-shadow: none; }
+    .pricing-wrap.tier-entry .btn-primary:hover { background: var(--ocean-light); }
+    .pricing-wrap.tier-entry .pricing-note { color: var(--muted); }
+    .pricing-save-badge {
+      display: inline-block; font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--rope-light); background: rgba(196,149,106,0.18); border-radius: 20px;
+      padding: 0.28rem 0.7rem; margin-bottom: 0.75rem;
+    }
+    .pricing-strike {
+      color: rgba(255,255,255,0.4); text-decoration: line-through;
+      font-size: 0.8rem; margin-left: 0.4rem; align-self: center;
+    }
+    .pricing-head { padding: 2.25rem 2.25rem 1.75rem; border-bottom: 1px solid rgba(255,255,255,0.09); text-align: center; }
+    .pricing-eyebrow { font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--seafoam-light); margin-bottom: 0.75rem; }
+    .pricing-amount { display: flex; align-items: baseline; justify-content: center; gap: 0.25rem; }
+    .pricing-currency { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: rgba(255,255,255,0.7); }
+    .pricing-num { font-family: 'Cormorant Garamond', serif; font-size: 3.8rem; font-weight: 300; color: var(--white); line-height: 1; }
+    .pricing-per { font-size: 0.76rem; color: rgba(255,255,255,0.45); margin-top: 0.4rem; }
+    .pricing-body { padding: 1.75rem 2.25rem 2.25rem; flex: 1; display: flex; flex-direction: column; }
+    .pricing-list { list-style: none; margin-bottom: 1.75rem; flex: 1; }
+    .pricing-list li {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.6rem 0; font-size: 0.86rem; color: rgba(255,255,255,0.78);
+      border-bottom: 1px solid rgba(255,255,255,0.07); line-height: 1.5;
+    }
+    .pricing-list li:last-child { border-bottom: none; }
+    .price-check {
+      width: 17px; height: 17px; border-radius: 50%; background: rgba(143,188,176,0.2);
+      flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center;
+      color: var(--seafoam-light); font-size: 0.62rem;
+    }
+    .pricing-note { text-align: center; margin-top: 1rem; font-size: 0.72rem; color: rgba(255,255,255,0.35); }
+    .pricing-body .btn-primary { width: 100%; justify-content: center; }
+
+    /* ── FAQ ── */
+    .faq-wrap { max-width: 620px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--sand-dark); }
+    .faq-q {
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 1.2rem 0; background: none; border: none; cursor: pointer; text-align: left;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.08rem; color: var(--ocean); font-weight: 400;
+    }
+    .faq-chevron { flex-shrink: 0; color: var(--seafoam); transition: transform 0.35s; font-size: 0.8rem; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a { font-size: 0.88rem; color: var(--muted); line-height: 1.8; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+    .faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.2rem; }
+
+    /* ── Final CTA ── */
+    .final { background: linear-gradient(152deg, var(--ocean-deep) 0%, var(--ocean) 100%); padding: 4.5rem 0; text-align: center; }
+    .final-headline {
+      font-family: 'Cormorant Garamond', serif; font-size: clamp(1.7rem, 4vw, 2.5rem);
+      font-weight: 300; color: var(--white); line-height: 1.25; margin-bottom: 1.25rem;
+    }
+    .final-headline em { font-style: italic; color: var(--seafoam-light); }
+    .final-wrap { max-width: 440px; margin: 0 auto; }
+
+    .page-footer { background: var(--ink); padding: 2.25rem 0; text-align: center; }
+    .page-footer p { font-size: 0.72rem; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; line-height: 1.8; }
+    .page-footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+    .page-footer a:hover { color: rgba(255,255,255,0.65); }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <a href="landing.html" class="top-logo"><em>Relation</em>-ship</a>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <p class="hero-eyebrow">A Life Together programme &nbsp;·&nbsp; by Giuli &amp; Drew</p>
+      <h1 class="hero-headline">If your biggest fear is growing apart <em>without ever meaning to</em>, you're in the right place.</h1>
+      <p class="hero-sub">A self-guided programme for couples who are still good, still together, and want to make sure it stays that way through whatever comes next.</p>
+      <div class="hero-cta-wrap">
+        <a href="#pricing" class="btn-primary">Begin the journey →</a>
+        <p class="btn-hint">From £50 · one-time payment · lifetime access</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROBLEM VALIDATION ═══ -->
+  <section class="section reveal">
+    <div class="wrap">
+      <p class="section-eyebrow">It's okay to feel this</p>
+      <h2 class="section-title">You're not imagining it</h2>
+      <div class="ache-list">
+        <div class="ache-item">We're fine, we just don't talk like we used to.</div>
+        <div class="ache-item">I love them. I'm just not sure I still know them.</div>
+        <div class="ache-item">What if we're not growing apart, we're just... coasting?</div>
+        <div class="ache-item">Everyone says the early years are the hardest. What if it's not getting easier?</div>
+      </div>
+      <p class="ache-note">None of this means something is wrong with you or your relationship. It means you've noticed something most couples don't let themselves notice until it's much harder to fix. That noticing is the whole opening.</p>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT / SOLUTION ═══ -->
+  <section class="section reveal">
+    <div class="wrap">
+      <p class="section-eyebrow">Who we are</p>
+      <h2 class="section-title">Made by a couple, <em>for couples</em></h2>
+      <p class="section-sub">This is why we built Relation-ship: not a fix for something broken, but a way to invest in what's already good.</p>
+      <div class="about-grid">
+        <div class="about-img"><img src="images/giuli-drew-web.jpg" alt="Giuli & Drew"></div>
+        <div>
+          <p class="about-para">We're Giuliano and Drew, partners in life and in this work. We built Relation-ship because we wanted something that didn't exist: a couples programme for people who are already okay, but want to be extraordinary together.</p>
+          <p class="about-para">Every exercise, every prompt, every session in this programme is something we have done ourselves. This isn't theory; it's practice. We've been in the waves. We know how to navigate them.</p>
+          <p class="about-para">We are trained coaches based in London. Relation-ship is the programme we wish existed when we needed it most.</p>
+          <p class="about-sig">~ Giuli &amp; Drew</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CURRICULUM ═══ -->
+  <section class="section reveal">
+    <div class="wrap">
+      <p class="section-eyebrow">Inside the programme</p>
+      <h2 class="section-title">Three modules. <em>One complete journey.</em></h2>
+      <p class="section-sub">Start with yourself. Then meet each other fully. Then build the relationship you actually want.</p>
+
+      <div class="module-card">
+        <div class="module-card-head">
+          <div class="module-num">Module 1 · Individual · ~3.5 hours</div>
+          <div class="module-name">Me</div>
+          <div class="module-timing">Do this solo, at your own pace</div>
+        </div>
+        <div class="module-card-body">
+          <ul class="module-parts">
+            <li><div class="part-pip"></div><strong>Where I am</strong>: Wheel of Life, a full picture of your life right now</li>
+            <li><div class="part-pip"></div><strong>Who I am</strong>: your origin story and the values that drive you</li>
+            <li><div class="part-pip"></div><strong>How I am</strong>: your lights and shadows, named with honesty</li>
+            <li><div class="part-pip"></div><strong>I am enough</strong>: self-love and how you give and receive love</li>
+            <li><div class="part-pip"></div><strong>Why I am</strong>: a guided visualisation into your life purpose</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-card-head">
+          <div class="module-num">Module 2 · Together · ~4 hours</div>
+          <div class="module-name">You and I</div>
+          <div class="module-timing">Come together and really see each other</div>
+        </div>
+        <div class="module-card-body">
+          <ul class="module-parts">
+            <li><div class="part-pip"></div><strong>Land work</strong>: mapping your inner world and your partner's</li>
+            <li><div class="part-pip"></div><strong>Seeing each other</strong>: your lights and shadows, together</li>
+            <li><div class="part-pip"></div><strong>Intentions and words</strong>: designing the language of your relationship</li>
+            <li><div class="part-pip"></div><strong>Love languages together</strong>: closing the gap between you</li>
+            <li><div class="part-pip"></div><strong>Conversation cards</strong>: knowing each other, intentionally</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-card-head">
+          <div class="module-num">Module 3 · Together · ~4.5 hours</div>
+          <div class="module-name">Relationship</div>
+          <div class="module-timing">Build the relationship you want to live in</div>
+        </div>
+        <div class="module-card-body">
+          <ul class="module-parts">
+            <li><div class="part-pip"></div><strong>1 + 1 = 3</strong>: your relationship as its own living thing</li>
+            <li><div class="part-pip"></div><strong>Our Wheel</strong>: a Wheel of Life for the relationship itself</li>
+            <li><div class="part-pip"></div><strong>Relationship Alliance</strong>: your shared compass going forward</li>
+            <li><div class="part-pip"></div><strong>Co-living</strong>: daily practices, shared space, and real adventure</li>
+            <li><div class="part-pip"></div><strong>Co-Dreaming</strong>: a guided visualisation of your shared future</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-sep" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 30 Q360 0 720 30 Q1080 60 1440 30 L1440 60 L0 60 Z" fill="#FDFAF5"/></svg>
+  </div>
+
+  <!-- ═══ BENEFITS ═══ -->
+  <section class="section bg-white reveal">
+    <div class="wrap">
+      <p class="section-eyebrow">After this programme</p>
+      <h2 class="section-title">You will</h2>
+      <ul class="benefit-list">
+        <li class="benefit-item"><span class="benefit-mark">✓</span>Know exactly where you each stand, individually, before trying to fix anything together</li>
+        <li class="benefit-item"><span class="benefit-mark">✓</span>Understand the story and values shaping how your partner shows up in the relationship</li>
+        <li class="benefit-item"><span class="benefit-mark">✓</span>Recognise your own patterns under stress, and your partner's, without taking them personally</li>
+        <li class="benefit-item"><span class="benefit-mark">✓</span>Speak a shared language for love and care, instead of guessing what the other one needs</li>
+        <li class="benefit-item"><span class="benefit-mark">✓</span>Know how to raise the hard things without it turning into a fight</li>
+        <li class="benefit-item"><span class="benefit-mark">✓</span>Have an actual plan for the life you're building together, not just a hope it works out</li>
+        <li class="benefit-item"><span class="benefit-mark">✓</span>Feel like a team again, on purpose, not by accident</li>
+        <li class="benefit-item"><span class="benefit-mark">✓</span>Walk away with a toolkit you can return to for the rest of the relationship, not just this course</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══ BONUSES ═══ -->
+  <section class="section bg-white reveal">
+    <div class="wrap">
+      <p class="section-eyebrow">Included</p>
+      <h2 class="section-title">Two things you'll keep using</h2>
+      <div class="bonus-grid">
+        <div class="bonus-card">
+          <div class="bonus-icon">☽</div>
+          <div class="bonus-title">Co-Dreaming audio</div>
+          <div class="bonus-desc">A guided visualisation, recorded by Giuli &amp; Drew, for imagining your shared future together.</div>
+        </div>
+        <div class="bonus-card">
+          <div class="bonus-icon">✦</div>
+          <div class="bonus-title">A toolkit PDF</div>
+          <div class="bonus-desc">Every exercise from the programme, explained and ready to revisit anytime, long after you finish.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-sep" aria-hidden="true" style="transform: scaleY(-1);">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 30 Q360 0 720 30 Q1080 60 1440 30 L1440 60 L0 60 Z" fill="#2C4A5A"/></svg>
+  </div>
+
+  <!-- ═══ PRICING ═══ -->
+  <section class="section reveal" style="background: linear-gradient(152deg, var(--ocean-deep) 0%, var(--ocean) 100%); padding-top: 0;" id="pricing">
+    <div class="wrap">
+      <p class="section-eyebrow" style="color: var(--seafoam);">Join the programme</p>
+      <h2 class="section-title" style="color: var(--white);">Start small. <em style="color: var(--seafoam-light);">Or dive all the way in.</em></h2>
+      <p class="section-sub" style="color: rgba(255,255,255,0.6);">Try Module 1 on your own, or commit to the complete journey upfront and save £97. No subscriptions, ever.</p>
+
+      <div class="pricing-grid">
+
+        <div class="pricing-wrap tier-entry">
+          <div class="pricing-head">
+            <p class="pricing-eyebrow">Start here</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">£</span>
+              <span class="pricing-num">50</span>
+            </div>
+            <p class="pricing-per">one-time payment · lifetime access to Module 1</p>
+          </div>
+          <div class="pricing-body">
+            <ul class="pricing-list">
+              <li><span class="price-check">✓</span>Module 1: the complete solo journey of self-discovery (~3.5 hours)</li>
+              <li><span class="price-check">✓</span>Wheel of Life, values and life-chapters exercises</li>
+              <li><span class="price-check">✓</span>Works on any device, no app needed</li>
+              <li><span class="price-check">✓</span>Add Modules 2 & 3 later for £247, or save £97 by starting with the complete journey</li>
+            </ul>
+            <a href="start.html" class="btn-primary">Start with Know Yourself, £50 →</a>
+            <p class="pricing-note">Secure checkout · questions? hello@lifetogether.uk</p>
+          </div>
+        </div>
+
+        <div class="pricing-wrap">
+          <div class="pricing-head">
+            <span class="pricing-save-badge">Best value · save £97</span>
+            <p class="pricing-eyebrow">Relation-ship Self-Paced Programme</p>
+            <div class="pricing-amount">
+              <span class="pricing-currency">£</span>
+              <span class="pricing-num">200</span>
+              <span class="pricing-strike">£297</span>
+            </div>
+            <p class="pricing-per">per couple · one-time payment · lifetime access</p>
+          </div>
+          <div class="pricing-body">
+            <ul class="pricing-list">
+              <li><span class="price-check">✓</span>3 modules, 15 sessions, around 12 hours of guided exercises</li>
+              <li><span class="price-check">✓</span>Co-Dreaming audio and a toolkit PDF, included</li>
+              <li><span class="price-check">✓</span>Works on any device, no app needed</li>
+              <li><span class="price-check">✓</span>Lifetime access, revisit whenever life shifts</li>
+            </ul>
+            <a href="start.html" class="btn-primary">Join the Complete Journey, £200 →</a>
+            <p class="pricing-note">Secure checkout · 14-day satisfaction guarantee · questions? hello@lifetogether.uk</p>
+          </div>
+        </div>
+
+      </div>
+
+      <p style="text-align: center; margin-top: 2rem; font-size: 0.78rem; color: rgba(255,255,255,0.55); letter-spacing: 0.02em;">🔒 Secure checkout &nbsp;·&nbsp; 14-day satisfaction guarantee &nbsp;·&nbsp; encrypted payment</p>
+    </div>
+  </section>
+
+  <!-- ═══ FAQ ═══ -->
+  <section class="section bg-white reveal">
+    <div class="wrap">
+      <p class="section-eyebrow">Questions</p>
+      <h2 class="section-title">Frequently asked</h2>
+      <div class="faq-wrap">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do we need to be going through a hard time to do this?
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6 L8 11 L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="faq-a">Absolutely not. Relation-ship is specifically designed for couples who are already doing well and want to invest proactively in their relationship. Think of it the way you would think about physical health: you don't wait until you're ill to exercise.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How long does each session take?
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6 L8 11 L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="faq-a">Sessions range from about 30 to 60 minutes, with one longer, immersive session designed to take around 2 hours. There's no time pressure; you decide the pace. Most couples spread it over a few weeks.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can we do the programme if we don't live together?
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6 L8 11 L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="faq-a">Yes. Module 1 is done independently so distance doesn't matter. For Modules 2 and 3, the exercises work well over video call; many couples have done them this way. A stable connection and a quiet hour or two is all you need.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What if I want support beyond the programme?
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6 L8 11 L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="faq-a">We also offer 2:2 relationship coaching and group cohorts directly with Giuli & Drew. If you'd like to explore those, reach out at hello@lifetogether.uk and we'll tell you what's available.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What if I only buy Module 1 and want the rest later?
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6 L8 11 L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="faq-a">You can add Modules 2 & 3 at any point for £247. Buying the complete journey upfront is £200 total, a £97 saving over adding them in stages.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FINAL CTA ═══ -->
+  <section class="final reveal">
+    <div class="wrap final-wrap">
+      <h2 class="final-headline">The waves will come. <em>Navigate them together.</em></h2>
+      <a href="#pricing" class="btn-primary">Begin the journey →</a>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <p>
+      Relation-ship &nbsp;·&nbsp; A Life Together programme<br>
+      <a href="mailto:hello@lifetogether.uk">hello@lifetogether.uk</a>
+    </p>
+  </footer>
+
+  <script>
+    // ── Scroll reveal ──
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in-view'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── FAQ accordion ──
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+      });
+    });
+  </script>
+</body>
+</html>
